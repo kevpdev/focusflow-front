@@ -13,7 +13,10 @@ export const authGuard: CanActivateFn = (route, state) => {
             console.log('isAuthenticated guard');
             return authService.isAuthenticated()
         }),
-        map(() => true),
+        map(() => {
+            authService.isAuthenticatedSubject.next(true);
+            return true
+        }),
         catchError((error) => {
             console.error("the user is not authenticated !", error);
             return authService.refreshToken().pipe(
