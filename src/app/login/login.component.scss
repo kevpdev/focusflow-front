@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-card {
+    padding:16px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    border-radius: 1%;
+}
+
+form {
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    padding-top: 16px;  
+}

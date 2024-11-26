@@ -1,0 +1,12 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    flex-grow: 1; /* Permet de pousser le titre au centre */
+    text-align: center; /* Centrer le texte */
+  }
+
+  

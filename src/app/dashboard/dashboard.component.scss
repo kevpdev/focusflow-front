@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+@use '../../m3-theme.scss';
+
+.side {
+    background-color: mat.get-theme-color(m3-theme.$light-theme, primary, 80);
+    width: 300px;
+}
+
+.center {
+    background-color: mat.get-theme-color(m3-theme.$light-theme, primary, 90);
+}
+
+.sub-container mat-sidenav, .sub-container section {
+    height: 100dvh;
+  }

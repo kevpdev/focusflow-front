@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+//@use './theme.scss';
+//@use './custom-mat-theme.scss';
+@use '@angular/material' as mat;
+@use './m3-theme.scss';
+@use './messages.scss';
+
+
+@include mat.core();
+
+html {
+    @include mat.core-theme(m3-theme.$light-theme);
+    @include mat.button-theme(m3-theme.$light-theme);
+    // @include mat.all-component-themes(m3-theme.$light-theme);
+    background-color: mat.get-theme-color(m3-theme.$light-theme, primary, 50);
+}
+
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    
+ }
+
+ header mat-toolbar {
+    background: mat.get-theme-color(m3-theme.$light-theme, primary, 10);
+}
+
+ footer {
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 999;
+    background-color: mat.get-theme-color(m3-theme.$light-theme, primary, 20);
+ }
+
+

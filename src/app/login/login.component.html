@@ -1,0 +1,42 @@
+<div class="container">
+    <mat-card>
+        <mat-card-title>Connectez-vous : </mat-card-title>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="email" autocomplete="username">
+
+                @if(loginForm.get('email')?.hasError('required')){
+                <mat-error>L'email est manquant</mat-error>
+                }
+                @if(loginForm.get('email')?.hasError('pattern')){
+                <mat-error>Veuillez entrer une email valide</mat-error>
+                }
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Mot de passe</mat-label>
+                <input matInput placeholder="Mot de passe" formControlName="password" type="password"
+                    autocomplete="current-password">
+
+                @if(loginForm.get('password')?.hasError('required')){
+                <mat-error>Le mot de passe est manquant</mat-error>
+                }
+                @if(loginForm.get('password')?.hasError('minLength')){
+                <mat-error>Votre mot de passe doit faire au minimum 8 caractères</mat-error>
+                }
+                @if(loginForm.get('password')?.hasError('pattern')){
+                <mat-error>Votre mot de passe doit comporter au minimum une majuscule, une miniscule et un
+                    chiffre</mat-error>
+                }
+            </mat-form-field>
+            <br>
+            <button mat-raised-button color="primary" type="submit">Se connecter</button>
+            <br>
+            @if (errorMessage) {
+            <mat-error> {{errorMessage}} </mat-error>
+            }
+        </form>
+    </mat-card>
+</div>

@@ -1,0 +1,61 @@
+@use '@angular/material' as mat;
+@use './m3-theme.scss';
+@use 'sass:map';
+
+@include mat.core();
+
+// Définition des palettes Material
+$app-primary: mat.define-palette(mat.$blue-palette, 100);
+$app-accent: mat.define-palette(mat.$green-palette, 300);
+$app-warn: mat.define-palette(mat.$red-palette, 300);
+
+// Palette personnalisée pour les couleurs de fond
+$background-palette: (
+  background: #1D3557, // Couleur de fond de la page
+  card: #A8DADC,       // Couleur de fond des cartes ou composants secondaires
+  dialog: #3A4A5F,
+  app-bar: #2E3B4E,
+  hover: #A8DADC,
+  status-bar: #1E2836,
+);
+
+
+// // Définition du thème clair
+// $app-theme: mat.m2-define-light-theme((
+//   color: (
+//     primary: $app-primary,
+//     accent: $app-accent,
+//     warn: $app-warn,
+//     background: $background-palette, // Association des couleurs de fond
+//   ),
+//   typography: mat.m2-define-typography-config(),
+//   density: 0,
+// ));
+
+// // Définition du thème sombre (si nécessaire)
+// $my-theme: mat.m2-define-dark-theme((
+//   color: (
+//     primary: $app-primary,
+//     accent: $app-accent,
+//     warn: $app-warn,
+//     background: $background-palette, // Association des couleurs de fond
+//   ),
+// ));
+
+$elements: (
+  body: background,
+  mat-card: card,
+  mat-dialog-container: dialog,
+  mat-toolbar: app-bar,
+  '.status-bar': status-bar,
+);
+
+@each $element, $color-key in $elements {
+  #{$element} {
+    background-color: map.get($background-palette, $color-key);
+  }
+}
+
+// Application des thèmes à tous les composants Material
+@include mat.all-component-themes($light-theme);
+
