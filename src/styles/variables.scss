@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+@use './m3-theme.scss' as theme;
+
+
+:root {
+
+  /* Layout */
+  --footer-height: 64px;
+  --toolbar-height: 64px;
+  --mobile-toolbar-height: 56px;
+
+    /* Thème clair */
+  --background-default: #{mat.get-theme-color(theme.$light-theme, primary, 100)};
+  --background-app-bar: #{mat.get-theme-color(theme.$light-theme, primary, 100)};
+  --background-footer: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
+  --foreground-primary-text: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
+  --foreground-secondary-text: #{mat.get-theme-color(theme.$light-theme, tertiary, 90)};
+  --border-color: #{mat.get-theme-color(theme.$light-theme, primary, 95)};
+  --box-shadow-color: #{mat.get-theme-color(theme.$light-theme, primary, 80 )};
+
+
+  
+}
+
+/* Thème sombre */
+// --background-default: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
+// --background-app-bar: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
+// --background-footer: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
+// --foreground-primary-text: #{mat.get-theme-color(theme.$light-theme, primary, 90)};
+// --foreground-secondary-text: #{mat.get-theme-color(theme.$light-theme, tertiary, 80)};
+// --border-color: #{mat.get-theme-color(theme.$light-theme, primary, 25)};
+// --box-shadow-color: #{mat.get-theme-color(theme.$light-theme, primary, 20 )};

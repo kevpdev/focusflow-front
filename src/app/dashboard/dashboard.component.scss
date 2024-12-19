@@ -1,15 +1,43 @@
 @use '@angular/material' as mat;
-@use '../../m3-theme.scss';
+@use '../../styles/m3-theme.scss';
+@use '../../styles/variables.scss';
 
-.side {
-    background-color: mat.get-theme-color(m3-theme.$light-theme, primary, 80);
-    width: 300px;
+:host {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
 }
 
-.center {
-    background-color: mat.get-theme-color(m3-theme.$light-theme, primary, 90);
+
+.task-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
-.sub-container mat-sidenav, .sub-container section {
-    height: 100dvh;
-  }
+@media (max-width: 768px) {
+    .task-board {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 10px;
+    }
+    
+}
+
+@media (max-width: 480px) {
+    .task-board {
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 10px;
+    }
+    
+}
+
+.task-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.column-status {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    overflow: auto;
+}

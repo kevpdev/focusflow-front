@@ -2,10 +2,12 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { catchError, map, of, switchMap, timer } from 'rxjs';
 import { AuthService } from '../services';
+import { AuthStateService } from '../services/auth-state.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
 
     const authService = inject(AuthService);
+    const authStateService = inject(AuthStateService);
     const router = inject(Router);
 
     return timer(500).pipe( // Ajoute un délai de 100 ms
@@ -14,7 +16,7 @@ export const authGuard: CanActivateFn = (route, state) => {
             return authService.isAuthenticated()
         }),
         map(() => {
-            authService.isAuthenticatedSubject.next(true);
+            authStateService.isAuthenticatedSubject.next(true);
             return true
         }),
         catchError((error) => {

@@ -6,6 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../core/services';
+import { AuthStateService } from '../core/services/auth-state.service';
 
 @Component({
   selector: 'app-root',
@@ -22,10 +23,10 @@ export class AppComponent implements OnInit {
   title = 'focusflow';
   public isLoggedIn = false;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authStateService: AuthStateService, private authService: AuthService, private router: Router) { }
 
   public ngOnInit(): void {
-    this.authService.isAuthenticated$
+    this.authStateService.isAuthenticated$
       .subscribe((value) => {
         this.isLoggedIn = value;
       });

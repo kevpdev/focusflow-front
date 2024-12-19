@@ -4,21 +4,18 @@
 // Styles centralisés pour les messages d'erreur ou avertissement
 .message-error {
   color: mat.get-theme-color(m3-theme.$light-theme, error, 50); // Rouge du thème Material
-  font-size: 14px;
   font-weight: 500;
   margin-top: 8px;
 }
 
 .message-warning {
     color: mat.get-theme-color(m3-theme.$light-theme, error, 90); // Jaune du thème Material
-  font-size: 14px;
   font-weight: 500;
   margin-top: 8px;
 }
 
 .message-info {
     color: mat.get-theme-color(m3-theme.$light-theme, secondary, 40); // Bleu du thème Material
-  font-size: 14px;
   font-weight: 500;
   margin-top: 8px;
 }

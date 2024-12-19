@@ -2,9 +2,11 @@ import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from
 import { inject } from '@angular/core';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services';
+import { AuthStateService } from '../services/auth-state.service';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService); // Injection de AuthService
+  const authStateService = inject(AuthStateService);
   // Clone the request to ensure withCredentials is enabled
   const clonedReq = req.clone({ withCredentials: true });
 
@@ -26,7 +28,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
     console.log('handle401Error', request);
 
     // Ensure only one refresh token request at a time
-    if (authService.isLoggedIn() && authService.isRefreshing) {
+    if (authStateService.isLoggedIn() && authService.isRefreshing) {
       authService.isRefreshing = true;
       console.log('refreshToken interceptor');
       return authService.refreshToken().pipe(

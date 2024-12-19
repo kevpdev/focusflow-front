@@ -1,0 +1,49 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+// Importer les fonctionnalités Angular Material
+@include mat.core();
+
+// =============================
+// 1. Définir les Palettes de Couleurs
+// =============================
+
+
+
+
+// Définir le thème clair Angular Material
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  typography: (
+    use-system-variables: true,
+  ),
+));
+
+// Définir le thème sombre Angular Material
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  typography: (
+    use-system-variables: true,
+  ),
+));
+
+// =============================
+// 3. Générer des Variables CSS
+// =============================
+:root {
+  @include mat.all-component-themes($light-theme);
+  
+  
+}
+
+
+
+

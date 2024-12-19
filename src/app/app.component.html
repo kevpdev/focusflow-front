@@ -1,37 +1,39 @@
-<header>
-    <mat-toolbar>
-        <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-            <mat-icon>menu</mat-icon>
-        </button> -->
+<div class="app-container">
+    <header>
+        <mat-toolbar>
+            <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+                <mat-icon>menu</mat-icon>
+            </button> -->
 
-        <span class="title">FocusFlow</span>
+            <h1 class="title">FocusFlow</h1>
 
-
-        @if(isLoggedIn) {
-        <button mat-icon-button class="notification-icon" aria-label="Notification icon button">
-            <mat-icon>notifications</mat-icon>
-        </button>
-
-        <!-- Profil button with menu trigger -->
-        <button mat-button [matMenuTriggerFor]="menu">Profil</button>
-
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item aria-label="logout" (click)="logout()">
-                <mat-icon>logout</mat-icon>
-                <span>Se déconnecter</span>
+            @if(isLoggedIn) {
+            <button mat-icon-button class="notification-icon" aria-label="Notification icon button">
+                <mat-icon>notifications</mat-icon>
             </button>
-            <button mat-menu-item>
-                <mat-icon>settings</mat-icon>
-                <span>Paramètres</span>
-            </button>
-        </mat-menu>
-        }
-    </mat-toolbar>
-</header>
 
-<main class="container">
-    <router-outlet></router-outlet>
-</main>
+            <!-- Profil button with menu trigger -->
+            <button mat-button [matMenuTriggerFor]="menu">Profil</button>
 
-<footer>
-</footer>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item aria-label="logout" (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Se déconnecter</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>settings</mat-icon>
+                    <span>Paramètres</span>
+                </button>
+            </mat-menu>
+            }
+        </mat-toolbar>
+    </header>
+
+    <main class="main-container">
+        <router-outlet></router-outlet>
+    </main>
+
+    <footer>
+        <p>COUCOU !</p>
+    </footer>
+</div>

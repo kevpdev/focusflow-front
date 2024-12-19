@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { AuthEndpoint } from '../endpoints';
-import { UserResponse } from '../models';
 import { User } from '../models/user.model';
+import { AuthStateService } from './auth-state.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public userInfoSubject = new BehaviorSubject<User | null>(null);
-  public readonly userInfo$ = this.userInfoSubject.asObservable();
-  public isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  public readonly isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
+
   public readonly userStorageId = 'user';
   public isRefreshing = false;
 
-  constructor(private authEndpoint: AuthEndpoint) { }
+  constructor(private authEndpoint: AuthEndpoint, private authStateService: AuthStateService) { }
 
 
   public login(email: string, password: string): Observable<User> {
@@ -23,7 +21,7 @@ export class AuthService {
     return this.authEndpoint.login(email, password)
       .pipe(
         tap(data => {
-          this.setUser(data);
+          this.authStateService.setUser(data);
         }),
         map(userResponse => new User({ // Transformation de UserResponse en User
           email: userResponse.email,
@@ -47,42 +45,24 @@ export class AuthService {
       );
   }
 
-  public setUser(userResponse: UserResponse): void {
-    const user = new User(
-      {
-        email: userResponse.email,
-        roles: userResponse.roles
-      })
 
-    this.userInfoSubject.next(user);
 
-  }
 
-  public hasRoles(role: string): boolean {
-
-    let userInfoSubjectValue = this.userInfoSubject.value;
-
-    if (userInfoSubjectValue && userInfoSubjectValue.roles) {
-      return userInfoSubjectValue.roles.includes(role);
-    }
-
-    return false;
-  }
 
   public refreshToken(): Observable<boolean> {
 
     return this.authEndpoint.refreshToken()
       .pipe(
         tap(user => {
-          this.setUser(user);
+          this.authStateService.setUser(user);
         }),
-        map(() => this.isLoggedIn()),
+        map(() => this.authStateService.isLoggedIn()),
         catchError(error => {
 
           console.error('Refresh failed', error);
 
-          this.userInfoSubject.next(null);
-          this.isAuthenticatedSubject.next(false);
+          this.authStateService.userInfoSubject.next(null);
+          this.authStateService.isAuthenticatedSubject.next(false);
 
           return throwError(() => error);
         })
@@ -92,8 +72,8 @@ export class AuthService {
   public logout(): Observable<void> {
     return this.authEndpoint.logout()
       .pipe(map(() => {
-        this.userInfoSubject.next(null);
-        this.isAuthenticatedSubject.next(false);
+        this.authStateService.userInfoSubject.next(null);
+        this.authStateService.isAuthenticatedSubject.next(false);
       }),
         catchError(err => {
           console.error(err);
@@ -101,9 +81,6 @@ export class AuthService {
         }));
   }
 
-  public isLoggedIn(): boolean {
-    return this.isAuthenticatedSubject.value;
-  }
 
   public isAuthenticated(): Observable<boolean> {
     return this.authEndpoint.isAuthenticated();

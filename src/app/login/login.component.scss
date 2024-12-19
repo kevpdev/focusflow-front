@@ -1,6 +1,7 @@
-.container {
+:host {
     display: flex;
-    height: 100vh;
+    flex: 1;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
