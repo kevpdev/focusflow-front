@@ -33,17 +33,7 @@ $dark-theme: mat.define-theme((
   typography: (
     use-system-variables: true,
   ),
-));
-
-// =============================
-// 3. Générer des Variables CSS
-// =============================
-:root {
-  @include mat.all-component-themes($light-theme);
-  
-  
-}
-
+)); 
 
 
 

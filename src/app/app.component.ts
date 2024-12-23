@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -23,9 +23,15 @@ export class AppComponent implements OnInit {
   title = 'focusflow';
   public isLoggedIn = false;
 
-  constructor(private authStateService: AuthStateService, private authService: AuthService, private router: Router) { }
+  constructor(private authStateService: AuthStateService,
+    private authService: AuthService,
+    private router: Router,
+    private renderer: Renderer2) { }
 
   public ngOnInit(): void {
+
+    this.renderer.addClass(document.documentElement, 'light-theme');
+
     this.authStateService.isAuthenticated$
       .subscribe((value) => {
         this.isLoggedIn = value;

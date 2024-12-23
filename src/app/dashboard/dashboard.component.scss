@@ -9,35 +9,10 @@
     align-items: center;    
 }
 
-
-.task-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-@media (max-width: 768px) {
-    .task-board {
-        grid-template-columns: repeat(2, 1fr);
-        row-gap: 10px;
-    }
-    
-}
-
-@media (max-width: 480px) {
-    .task-board {
-        grid-template-columns: repeat(1, 1fr);
-        row-gap: 10px;
-    }
-    
-}
-
-.task-container {
+.dashboard-container {
+    flex: 1;
     display: flex;
-    flex-direction: column;
+    width: 100%;
 }
 
-.column-status {
-    border: 1px solid var(--border-color);
-    padding: 10px;
-    overflow: auto;
-}
+

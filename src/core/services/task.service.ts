@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { TaskEndpoint } from '../endpoints';
 import { ETaskStatus, Task } from '../models/task.model';
@@ -60,5 +60,25 @@ export class TaskService {
   private handleError(error: any): Observable<never> {
     console.error(this.ERROR_MESSAGE, error);
     return throwError(() => new Error(this.ERROR_MESSAGE + error.message));
+  }
+
+  /**
+   * Modifie le status des taches
+   * @param modifiedTasks liste des taches modifiés par l'utilisateur
+   * @returns la liste des taches modifiées
+   */
+  public fetchUpdateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
+
+    return of([]);
+
+  }
+
+  /**
+ * 
+ * @param id Id de la tache à supprimer
+ * @returns 
+ */
+  public fetchDeleteTask(id: number): Observable<void> {
+    return of()
   }
 }

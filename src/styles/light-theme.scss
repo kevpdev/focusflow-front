@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+@use './m3-theme.scss' as theme;
+
+:root.light-theme {
+   // @include mat.all-component-themes(theme.$light-theme);
+    --background-main: #{mat.get-theme-color(theme.$light-theme, primary, 100)};
+    --background-app-bar: #{mat.get-theme-color(theme.$light-theme, primary, 100)};
+    --background-footer: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
+    --background-button: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
+    --foreground-primary-text: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
+    --foreground-secondary-text: #{mat.get-theme-color(theme.$light-theme, tertiary, 90)};
+    --border-color: #{mat.get-theme-color(theme.$light-theme, primary, 95)};
+    --box-shadow-color: #{mat.get-theme-color(theme.$light-theme, primary, 80)};
+    --background-board-column: #{mat.get-theme-color(theme.$light-theme, primary, 95)};
+  }

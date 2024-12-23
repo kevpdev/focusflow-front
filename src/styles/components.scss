@@ -1,0 +1,6 @@
+@use './variables.scss';
+
+
+mat-card {
+    background-color: var(--background-main) !important;
+}

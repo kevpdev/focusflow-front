@@ -1,7 +1,30 @@
-<h3>Tâches</h3>
-
-<app-task-list-card [tasks$]="inProgressTasks$" [title]="inProgessTasksTitleCard"></app-task-list-card>
-
-<app-task-list-card [tasks$]="inProgressTasks$" [title]="pendingTasksTitleCard"></app-task-list-card>
-
-<app-task-list-card [tasks$]="finishedTasks$" [title]="finishedTasksTitleCard"></app-task-list-card>
+<div class="task-container">
+        <h2>Gestion des tâches</h2>
+        <div class="task-board">
+                <div class="column-status">
+                        <app-task-list-card [tasks$]="pendingTasks$" [title]="pendingTasksTitleCard"
+                                [tasksColumnId]="tasksColumnId.PENDING"
+                                [connectTo]="[tasksColumnId.IN_PROGRESS, tasksColumnId.DONE]" (dropEvent)="drop($event)"
+                                (deleteTaskEvent)="deleteTask($event)">
+                        </app-task-list-card>
+                </div>
+                <div class="column-status">
+                        <app-task-list-card [tasks$]="inProgressTasks$" [title]="inProgessTasksTitleCard"
+                                [tasksColumnId]="tasksColumnId.IN_PROGRESS"
+                                [connectTo]="[tasksColumnId.PENDING, tasksColumnId.DONE]" (dropEvent)="drop($event)"
+                                (deleteTaskEvent)="deleteTask($event)">
+                        </app-task-list-card>
+                </div>
+                <div class="column-status">
+                        <app-task-list-card [tasks$]="finishedTasks$" [title]="finishedTasksTitleCard"
+                                [tasksColumnId]="tasksColumnId.DONE"
+                                [connectTo]="[tasksColumnId.PENDING, tasksColumnId.IN_PROGRESS]"
+                                (dropEvent)="drop($event)" (deleteTaskEvent)="deleteTask($event)">
+                        </app-task-list-card>
+                </div>
+        </div>
+        <div class="action">
+                <button mat-flat-button (click)="saveChanges()" class="mat-button"
+                        [disabled]="modifiedTasks.length === 0">Enregistrer</button>
+        </div>
+</div>

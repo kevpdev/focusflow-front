@@ -1,27 +1,32 @@
-<mat-card>
-    <mat-card-header>
-        <h4 mat-card-title>Tâches non terminées</h4>
-    </mat-card-header>
-    <mat-selection-list #tasks>
-        @for (task of tasks$ | async; track task.id) {
-        <mat-list-option [selected]="task.status === tasksStatus.DONE">
-            <!-- <mat-checkbox [checked]="task.status === tasksStatus.DONE"></mat-checkbox> -->
+<h4 mat-card-title>{{title}}</h4>
+
+@if(tasks$ | async; as tasks) {
+<div class="task-list-card-content">
+    <div cdkDropList [id]="tasksColumnId" [cdkDropListData]="tasks" [cdkDropListConnectedTo]="connectTo"
+        class="task-list" (cdkDropListDropped)="onDrop($event)">
+
+        @if (tasks.length === 0) {
+        <div class="placeholder">
+            Glissez une tâche ici
+        </div>
+        }
+
+
+
+        @for (task of tasks; track task.id) {
+        <mat-card class="task-card" cdkDrag>
             <span class="title-option">{{task.title}}</span>
             <br>
             <div class="info-option">
-                <span class="date-option">{{task.dueDate | date:'d/M/yy, hh:mm'}}</span>
+                <span class="date-option">{{task.dueDate | date:'dd/M/yy, hh:mm'}}</span>
                 <span class="priority-option">Priorité : {{task.priority}}</span>
                 <span class="priority-option">Statut : {{task.status}}</span>
             </div>
-        </mat-list-option>
+            <mat-action-list>
+                <button mat-mini-fab (click)="delete(task)"><mat-icon>delete</mat-icon></button>
+            </mat-action-list>
+        </mat-card>
         }
-    </mat-selection-list>
-
-    <p>
-        Options selected: {{tasks.selectedOptions.selected.length}}
-    </p>
-
-    <mat-action-list>
-        <button mat-list-item (click)="delete(tasks)" color="tertiary"><mat-icon>delete</mat-icon></button>
-    </mat-action-list>
-</mat-card>
+    </div>
+</div>
+}

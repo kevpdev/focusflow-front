@@ -5,6 +5,8 @@
 @use './m3-theme.scss';
 @use './messages.scss';
 @use './variables.scss';
+@use './components.scss';
+@use './light-theme.scss';
 
 
 @include mat.core();
@@ -14,7 +16,7 @@ body {
     margin: 0; 
     height: 100vh;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: var(--background-default);
+    background-color: var(--background-main);
     
 }
 
@@ -45,6 +47,7 @@ body {
 .mat-typography {
   font-size: clamp(12px, 2vw, 16px) !important; /* Ajuste le corps de texte */
 }
+
 
 
 /* Composant material angular */

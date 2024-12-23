@@ -1,1 +1,49 @@
+:host {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;    
+}
 
+.task-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .task-board {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 10px;
+    }
+    
+}
+
+@media (max-width: 480px) {
+    .task-board {
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 10px;
+    }
+    
+}
+
+.task-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.column-status {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    overflow: auto;
+    background-color: var(--background-board-column);
+}
+
+.action {
+    display: flex;
+    justify-content: end;
+    padding: 16px;
+}

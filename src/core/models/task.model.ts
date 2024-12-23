@@ -4,7 +4,8 @@ export enum ETaskStatus {
     PENDING = "PENDING",
     DONE = "DONE",
     IN_PROGRESS = "IN_PROGRESS",
-    CANCELLED = "CANCELLED"
+    CANCELLED = "CANCELLED",
+    NO_STATUS = "NO_STATUS"
 }
 
 export class Task {

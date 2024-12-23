@@ -88,4 +88,32 @@ export class TaskServiceMock {
         return this.fetchTasksByStatus(ETaskStatus.DONE);
     }
 
+    /**
+     * Modifie le status des taches
+     * @param modifiedTasks liste des taches modifiés par l'utilisateur
+     * @returns la liste des taches modifiées
+     */
+    public fetchUpdateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
+        console.log('Mock: Mise à jour du status des tâches');
+        modifiedTasks.map(modifiedTask => {
+            let task = this.mockTasks.find(mockTask => mockTask.id === modifiedTask.id);
+            if (task) {
+                task.status = modifiedTask.status;
+            }
+        })
+        return of(this.mockTasks);
+
+    }
+
+    /**
+     * Suppression d'une tâche
+     * @param id Id de la tache à supprimer
+     * @returns 
+     */
+    public fetchDeleteTask(id: number): Observable<void> {
+        console.log('Mock: Suppression de la tâche : ', id);
+        this.mockTasks = this.mockTasks.filter(task => task.id === id);
+        return of(void 0);
+    }
+
 }
