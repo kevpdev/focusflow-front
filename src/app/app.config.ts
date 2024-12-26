@@ -2,6 +2,7 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { jwtInterceptor } from '../core/interceptors/jwt.interceptor';
 import { AuthService } from '../core/services/auth.service';
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideHttpClient(
       withInterceptors([jwtInterceptor])
     ), provideAnimationsAsync(),
+    provideNativeDateAdapter(),
     {
       provide: AuthService,
       useClass: environment.useMocks ? AuthServiceMock : AuthService

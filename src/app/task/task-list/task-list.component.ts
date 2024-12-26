@@ -1,9 +1,11 @@
 import { CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { map, Observable } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/services/task.service';
+import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { TaskListCardComponent } from '../task-list-card/task-list-card.component';
 
 @Component({
@@ -23,9 +25,10 @@ export class TaskListComponent implements OnInit {
   public finishedTasksTitleCard = "Tâches terminées";
   public tasksColumnId = ETaskStatus;
   public modifiedTasks: Task[] = [];
+  public isEditMode = false;
 
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.inProgressTasks$ = this.taskService.fetchAllInProgressTasks();
@@ -37,51 +40,11 @@ export class TaskListComponent implements OnInit {
   public saveChanges(): void {
     console.log('saveChanges');
     console.log(this.modifiedTasks);
-    this.taskService.fetchUpdateTaskStatus(this.modifiedTasks);
+    this.taskService.updateTaskStatus(this.modifiedTasks);
 
   }
 
-  public deleteTask(task: Task): void {
 
-    console.log('deleteTask', task.status);
-
-    let updatedTasks$;
-
-    switch (task.status) {
-      case ETaskStatus.PENDING:
-        updatedTasks$ = this.pendingTasks$.pipe(
-          map(tasks => {
-            return tasks.filter(pendingTask => pendingTask.id != task.id)
-          })
-        );
-        this.pendingTasks$ = updatedTasks$;
-        break;
-      case ETaskStatus.IN_PROGRESS:
-        updatedTasks$ = this.inProgressTasks$.pipe(
-          map(tasks => {
-            return tasks.filter(inProgressTasks => inProgressTasks.id != task.id)
-          })
-        );
-        this.inProgressTasks$ = updatedTasks$;
-        break;
-      case ETaskStatus.DONE:
-        updatedTasks$ = this.finishedTasks$.pipe(
-          map(tasks => {
-            return tasks.filter(finishedTasks => finishedTasks.id != task.id)
-          })
-        );
-        this.finishedTasks$ = updatedTasks$;
-        break;
-    }
-
-    console.log('updatedTasks$', updatedTasks$);
-
-    if (updatedTasks$) {
-      this.taskService.fetchDeleteTask(task.id).subscribe(() => {
-        console.log("La tâche a bien été supprimée : ", task.id);
-      })
-    }
-  }
 
   public drop(event: CdkDragDrop<Task[]>) {
 
@@ -133,6 +96,66 @@ export class TaskListComponent implements OnInit {
       return ETaskStatus.NO_STATUS;
     }
     return key as ETaskStatus;
+  }
+
+  public addNewTask(): void {
+    this.isEditMode = false;
+    const dialogRef = this.dialog.open(EditTaskComponent, {
+      data: { isEditMode: this.isEditMode }
+    });
+  }
+
+  public updateTask(task: Task): void {
+    console.log('updateTask', task);
+    this.isEditMode = true;
+    const dialogRef = this.dialog.open(EditTaskComponent, {
+      data: {
+        isUpdateMode: this.isEditMode,
+        task: task
+      }
+    });
+  }
+
+  public deleteTask(task: Task): void {
+
+    console.log('deleteTask', task.status);
+
+    let updatedTasks$;
+
+    switch (task.status) {
+      case ETaskStatus.PENDING:
+        updatedTasks$ = this.pendingTasks$.pipe(
+          map(tasks => {
+            return tasks.filter(pendingTask => pendingTask.id != task.id)
+          })
+        );
+        this.pendingTasks$ = updatedTasks$;
+        break;
+      case ETaskStatus.IN_PROGRESS:
+        updatedTasks$ = this.inProgressTasks$.pipe(
+          map(tasks => {
+            return tasks.filter(inProgressTasks => inProgressTasks.id != task.id)
+          })
+        );
+        this.inProgressTasks$ = updatedTasks$;
+        break;
+      case ETaskStatus.DONE:
+        updatedTasks$ = this.finishedTasks$.pipe(
+          map(tasks => {
+            return tasks.filter(finishedTasks => finishedTasks.id != task.id)
+          })
+        );
+        this.finishedTasks$ = updatedTasks$;
+        break;
+    }
+
+    console.log('updatedTasks$', updatedTasks$);
+
+    if (updatedTasks$) {
+      this.taskService.deleteTask(task.id).subscribe(() => {
+        console.log("La tâche a bien été supprimée : ", task.id);
+      })
+    }
   }
 
 

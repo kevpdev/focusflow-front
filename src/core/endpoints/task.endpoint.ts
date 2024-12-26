@@ -10,17 +10,40 @@ import { ETaskStatus, Task } from "../models/task.model";
 export class TaskEndpoint {
 
     public http = inject(HttpClient);
-    public apiUrl = environment.apiURL;
+    public apiUrl = environment.apiURL + 'tasks/';
 
-    public findAllTasks(): Observable<Task[]> {
-        return this.http.get<Task[]>(this.apiUrl + 'tasks');
+    public fetchAllTasks(): Observable<Task[]> {
+        return this.http.get<Task[]>(this.apiUrl);
     }
 
-    public findAllTasksByStatus(status: ETaskStatus): Observable<Task[]> {
+    public fetchAllTasksByStatus(status: ETaskStatus): Observable<Task[]> {
         console.log(status);
         const options = { params: new HttpParams().set('status', status) };
         console.log(options);
-        return this.http.get<Task[]>(this.apiUrl + 'tasks/search', options);
+        return this.http.get<Task[]>(this.apiUrl + 'search', options);
+    }
+
+    public fetchDeleteTask(id: number): Observable<void> {
+        return this.http.delete<void>(this.apiUrl + id)
+    }
+
+    /**
+     * Modifie le status des taches
+     * @param modifiedTasks liste des taches modifiés par l'utilisateur
+     * @returns la liste des taches modifiées
+     */
+    public fetchUpdateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
+        return this.http.post<Task[]>(this.apiUrl + 'status', modifiedTasks);
+    }
+
+
+    public fetchUpdateTask(modifiedTask: Task): Observable<Task> {
+        return this.http.post<Task>(this.apiUrl, modifiedTask);
+    }
+
+
+    public fetchAddNewTask(newTask: Task): Observable<Task> {
+        return this.http.post<Task>(this.apiUrl, newTask);
     }
 
 }

@@ -1,11 +1,21 @@
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { BehaviorSubject, map, Observable, of, Subject, throwError } from "rxjs";
 import { ETaskStatus, Task } from "../../models/task.model";
+import { ITaskService } from "../interfaces/itask.service";
+import { UtilityService } from "../utility.service";
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskServiceMock {
+export class TaskServiceMock implements ITaskService {
+
+    private tasksSubject = new BehaviorSubject<Task[]>([]);
+
+    // Observables publics pour les composants
+    readonly tasks$ = this.tasksSubject.asObservable();
+
+    private destroy$: Subject<void> = new Subject();
+
     private mockTasks: Task[] = [
         new Task({
             id: 1,
@@ -49,12 +59,24 @@ export class TaskServiceMock {
         }),
     ];
 
+    constructor(private utilityService: UtilityService) { }
+
+    /**
+     * Récupère l'état actuel de la liste des tâches dans le sujet
+     * @returns Un tableau de tâche
+     */
+    private currentTasks(): Task[] {
+        return this.tasksSubject.getValue();
+    }
+
+
     /**
      * Récupère toutes les tâches
      */
-    public findAllTasks(): Observable<Task[]> {
+    public fetchAllTasks(): Observable<Task[]> {
         console.log('Mock: Récupération de toutes les tâches');
-        return of(this.mockTasks);
+        this.tasksSubject.next(this.mockTasks);
+        return this.tasks$;
     }
 
     /**
@@ -63,8 +85,9 @@ export class TaskServiceMock {
      */
     public fetchTasksByStatus(status: ETaskStatus): Observable<Task[]> {
         console.log(`Mock: Récupération des tâches avec le statut ${status}`);
-        const filteredTasks = this.mockTasks.filter(task => task.status === status);
-        return of(filteredTasks);
+        return this.fetchAllTasks()
+            .pipe(
+                map(tasks => tasks.filter(task => task.status === status)));
     }
 
     /**
@@ -93,27 +116,64 @@ export class TaskServiceMock {
      * @param modifiedTasks liste des taches modifiés par l'utilisateur
      * @returns la liste des taches modifiées
      */
-    public fetchUpdateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
+    public updateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
         console.log('Mock: Mise à jour du status des tâches');
-        modifiedTasks.map(modifiedTask => {
-            let task = this.mockTasks.find(mockTask => mockTask.id === modifiedTask.id);
-            if (task) {
-                task.status = modifiedTask.status;
+        const updatedTasks = this.currentTasks().map(currentTask => {
+            const modifiedTask = modifiedTasks.find(modifiedTask => modifiedTask.id === currentTask.id);
+            if (modifiedTask) {
+                currentTask.status = modifiedTask.status;
             }
-        })
-        return of(this.mockTasks);
+            return currentTask;
+        });
 
+        this.tasksSubject.next(updatedTasks);
+        return of(updatedTasks);
     }
 
     /**
-     * Suppression d'une tâche
-     * @param id Id de la tache à supprimer
-     * @returns 
+     * Ajout d'une nouvelle tâche
+     * @param newTask Nouvelle tâche
+     * @returns La nouvelle tâche
      */
-    public fetchDeleteTask(id: number): Observable<void> {
-        console.log('Mock: Suppression de la tâche : ', id);
-        this.mockTasks = this.mockTasks.filter(task => task.id === id);
+    public updateTask(updatedTask: Task): Observable<Task> {
+        console.log("Mock: Mise à jour d'une tâche");
+        let currentTasks = this.currentTasks();
+        const taskIndex = currentTasks.findIndex(task => task.id === updatedTask.id);
+        if (taskIndex !== -1) {
+            currentTasks[taskIndex] = updatedTask;
+            this.tasksSubject.next(currentTasks);
+            return of(updatedTask);
+        } else {
+            console.error('Tâche introuvable dans le taskSubject');
+            return this.handleError(null, 'Tâche introuvable');
+        }
+    }
+
+
+    public addNewTask(newTask: Task): Observable<Task> {
+        const generatedTempId = this.utilityService.generateTempId();
+        const taskWithGenerateId = { ...newTask, tempId: generatedTempId };
+        const currentTasks = this.currentTasks();
+        const updatedTasks = [...currentTasks, taskWithGenerateId];
+        this.tasksSubject.next(updatedTasks);
+        return of(taskWithGenerateId);
+    }
+
+    public deleteTask(id: number): Observable<void> {
+        const updatedTasksAfterDelete = this.currentTasks().filter(task => task.id !== id);
+        this.tasksSubject.next(updatedTasksAfterDelete);
         return of(void 0);
     }
+
+    public deleteTasktByTempId(tempId: string): void {
+        const updatedTasksAfterDelete = this.currentTasks().filter(task => task.tempId !== tempId);
+        this.tasksSubject.next(updatedTasksAfterDelete);
+    }
+
+    private handleError(error: any, errorMessage = 'Une erreur est survenue côté serveur'): Observable<never> {
+        console.error(errorMessage, error);
+        return throwError(() => new Error(errorMessage));
+    }
+
 
 }

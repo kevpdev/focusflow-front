@@ -4,11 +4,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { Observable } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
-import { TaskService } from '../../../core/services';
+import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-task-list-card',
@@ -39,16 +40,31 @@ export class TaskListCardComponent {
   public dropEvent = new EventEmitter<CdkDragDrop<Task[]>>();
   @Output()
   public deleteTaskEvent = new EventEmitter<Task>();
+  @Output()
+  public updateTaskEvent = new EventEmitter<Task>();
   public modifiedTasks: Task[] = [];
 
-  constructor(private taskService: TaskService) { }
-
+  constructor(private dialog: MatDialog) { }
 
   public delete(task: Task): void {
 
     console.log("tâche à supprimer : ", task);
-    this.deleteTaskEvent.emit(task);
 
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { message: `Voulez-vous vraiment supprimer la tâche : \n ${task.title} ?` }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log("result", result);
+        this.deleteTaskEvent.emit(task);
+      }
+    })
+
+  }
+
+  public update(task: Task) {
+    this.updateTaskEvent.emit(task);
   }
 
   public onDrop(event: CdkDragDrop<Task[]>) {

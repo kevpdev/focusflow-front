@@ -1,0 +1,43 @@
+<div class="edit-container">
+    <h2 mat-dialog-title>{{title}}</h2>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <mat-label>Titre</mat-label>
+            <input matInput placeholder="Titre" formControlName="title">
+
+            @if(editForm.get('title')?.hasError('required')){
+            <mat-error>Le titre est manquant</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+
+            @if(editForm.get('description')?.hasError('required')){
+            <mat-error>La description est manquante</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Priorité</mat-label>
+            <mat-select matNativeControl required formControlName="priority">
+                <mat-option>Choisissez une priorité</mat-option>
+                <mat-option value="1">1 : Basse priorité (non urgente)</mat-option>
+                <mat-option value="2">2 : Moyenne priorité (à traiter prochainement)</mat-option>
+                <mat-option value="3">3 : Haute priorité (critique ou urgente)</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Choisissez une date d'échéance</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dueDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-dialog-actions>
+            <button mat-button mat-dialog-close>Annuler</button>
+            <button mat-button [mat-dialog-close]="true" type="submit">Valider</button>
+        </mat-dialog-actions>
+
+    </form>
+
+</div>

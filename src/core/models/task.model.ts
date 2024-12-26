@@ -10,6 +10,7 @@ export enum ETaskStatus {
 
 export class Task {
     public id: number;
+    public tempId: string;
     public user: User;
     public title: string;
     public description: string;
@@ -21,6 +22,7 @@ export class Task {
 
     constructor({
         id = 0,
+        tempId = '',
         user = new User({}),
         title = '',
         description = '',
@@ -31,6 +33,7 @@ export class Task {
         updatedAt = new Date(),
     }: {
         id?: number;
+        tempId?: string;
         user?: User;
         title?: string;
         description?: string;
@@ -41,6 +44,7 @@ export class Task {
         updatedAt?: Date;
     }) {
         this.id = id;
+        this.tempId = tempId;
         this.user = user;
         this.title = title;
         this.description = description;
