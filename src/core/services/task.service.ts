@@ -11,10 +11,10 @@ import { UtilityService } from './utility.service';
 })
 export class TaskService implements ITaskService {
   readonly ERROR_MESSAGE = 'Une erreur est survenue coté serveur : ';
-  // Les BehaviorSubjects pour stocker les tâches
+  // BehaviorSubjects to store tasks
   private tasksSubject = new BehaviorSubject<Task[]>([]);
 
-  // Observables publics pour les composants
+  // Public observables for components
   public tasks$ = this.tasksSubject.asObservable();
 
   private destroy$: Subject<void> = new Subject();
@@ -23,18 +23,36 @@ export class TaskService implements ITaskService {
     private utilityService: UtilityService
   ) { }
 
-
   /**
-  * Récupère l'état actuel de la liste des tâches dans le sujet
-  * @returns Un tableau de tâche
+  * Retrieves the current state of the task list in the subject
+  * @returns An array of tasks
   */
   private currentTasks(): Task[] {
     return this.tasksSubject.getValue();
   }
 
+  /**
+   * Retrieves a task by its ID
+   * @param id Task ID
+   * @returns A task
+   */
+  public getTask(id: number): Task {
+
+    const index = this.currentTasks()
+      .findIndex(currentask => currentask.id === id);
+
+    if (!index) {
+      const errorMessage = 'Task not found';
+      console.error(errorMessage);
+      throw new Error(errorMessage)
+    }
+
+    return this.currentTasks()[index];
+
+  }
 
   /**
-   * Récupère toutes les tâches
+   * Retrieves all tasks
    */
   public fetchAllTasks(): Observable<Task[]> {
     return this.taskEndpoint.fetchAllTasks()
@@ -49,8 +67,8 @@ export class TaskService implements ITaskService {
   }
 
   /**
-   * Récupère toutes les tâches filtrées par leur statut
-   * @param status Le statut à filtrer
+   * Retrieves all tasks filtered by their status
+   * @param status Status to filter by
    */
   public fetchTasksByStatus(status: ETaskStatus): Observable<Task[]> {
     return this.tasks$
@@ -61,28 +79,28 @@ export class TaskService implements ITaskService {
   }
 
   /**
-   * Récupère les tâches en attente
+   * Retrieves pending tasks
    */
   public fetchAllPendingTasks(): Observable<Task[]> {
     return this.fetchTasksByStatus(ETaskStatus.PENDING);
   }
 
   /**
-   * Récupère les tâches en cours
+   * Retrieves tasks in progress
    */
   public fetchAllInProgressTasks(): Observable<Task[]> {
     return this.fetchTasksByStatus(ETaskStatus.IN_PROGRESS);
   }
 
   /**
-   * Récupère les tâches terminées
+   * Retrieves finished tasks
    */
   public fetchFinishedTasks(): Observable<Task[]> {
     return this.fetchTasksByStatus(ETaskStatus.DONE);
   }
 
   /**
-   * Gestion centralisée des erreurs
+   * Centralized error handling
    * @param error 
    * @returns 
    */
@@ -92,15 +110,15 @@ export class TaskService implements ITaskService {
   }
 
   /**
-   * Modifie le status des taches
-   * @param modifiedTasks liste des taches modifiés par l'utilisateur
-   * @returns la liste des taches modifiées
+   * Updates the status of tasks
+   * @param modifiedTasks List of tasks modified by the user
+   * @returns List of modified tasks
    */
   public updateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
     return this.taskEndpoint.fetchUpdateTaskStatus(modifiedTasks)
       .pipe(
         map(successfullyModifiedTasks => {
-          // Modification qu'en cas de succes
+          // Update only in case of success
           successfullyModifiedTasks.map(sfModifiedTask => {
             this.updateTaskSubject(sfModifiedTask);
           })
@@ -111,55 +129,60 @@ export class TaskService implements ITaskService {
   }
 
   /**
-   * Suppression d'une tâche
-   * @param id Id de la tache à supprimer
+   * Deletes a task
+   * @param id ID of the task to delete
    * @returns 
    */
   public deleteTask(id: number): Observable<void> {
-    //sauvegarder la liste actuelle dans le subject
+    // Save the current list in the subject
     const currentTasks = this.currentTasks();
-    // supprimer l'id dans le subject
+    // Remove the ID in the subject
     this.removeTaskSubject(id);
-    //appeler l'api pour suppression
+    // Call the API to delete
     return this.taskEndpoint.fetchDeleteTask(id)
       .pipe(
         catchError((error) => {
-          //si echec remettre l'ancien liste dans le subject
+          // If failed, restore the previous list in the subject
           this.tasksSubject.next(currentTasks);
           return this.handleError(error);
         }));
   }
 
   /**
- * Ajout d'une nouvelle tâche 
- * @param newTask Nouvelle tâche
- * @returns La nouvelle tâche
- */
+   * Adds a new task
+   * @param newTask New task
+   * @returns The new task
+   */
   public addNewTask(newTask: Task): Observable<Task> {
 
-    // générer un id 
+    // Generate an ID 
     const generatedTempId = this.utilityService.generateTempId();
 
-    // mettreà jour la tache avec l'id généré
+    // Update the task with the generated ID
     newTask = { ...newTask, tempId: generatedTempId };
-    // ajouter tache dans subject en premier pour la réactivité
+    // Add the task to the subject first for reactivity
     this.addTaskSubject(newTask);
-    //mettre a jour la tache dans l'api
+    // Update the task in the API
     return this.taskEndpoint.fetchAddNewTask(newTask)
       .pipe(
         map(addedTask => {
-          // si api succes, mettre a jour id géneré par id api
+          // If API succeeds, update the generated ID with the API ID
           this.currentTasks().map(currentTask => currentTask.tempId === generatedTempId ? addedTask : currentTask);
           return addedTask;
         }),
         catchError(error => {
-          //si error supprimé la tache dans subjet
+          // If error, remove the task in the subject
           this.removeTaskSubjectByTempId(generatedTempId);
           return this.handleError(error);
         }));
 
   }
 
+  /**
+   * Updates a task
+   * @param modifiedTask Task to update
+   * @returns The updated task
+   */
   public updateTask(modifiedTask: Task): Observable<Task> {
     const taskBeforeUpdate = this.currentTasks()
       .find(currentTask => currentTask.id === modifiedTask.id);
@@ -169,19 +192,16 @@ export class TaskService implements ITaskService {
       return this.taskEndpoint.fetchUpdateTask(modifiedTask)
         .pipe(
           catchError(error => {
-            // retour arrière
+            // Rollback
             this.updateTaskSubject(taskBeforeUpdate);
             return this.handleError(error);
           }));
     } else {
-      console.error('La tâche à modifier est introuvable dans le store');
-      return this.handleError(new Error('La tâche à modifier est introuvable'));
+      console.error('The task to update is not found in the store');
+      return this.handleError(new Error('The task to update is not found'));
     }
 
   }
-
-
-
 
   /** CRUD TASK SUBJECT STORE **/
 
@@ -192,8 +212,8 @@ export class TaskService implements ITaskService {
       currentTasks[taskIndex] = updatedTask;
       this.tasksSubject.next(currentTasks);
     } else {
-      console.error('Tâche introuvable dans le taskSubject');
-      throw new Error('Tâche introuvable');
+      console.error('Task not found in the taskSubject');
+      throw new Error('Task not found');
     }
   }
 
@@ -202,7 +222,6 @@ export class TaskService implements ITaskService {
     const updatedTasks = [...currentTasks, newTask];
     this.tasksSubject.next(updatedTasks);
   }
-
 
   private removeTaskSubject(id: number): void {
     const updatedTasksAfterDelete = this.currentTasks().filter(task => task.id !== id);
@@ -214,9 +233,9 @@ export class TaskService implements ITaskService {
     this.tasksSubject.next(updatedTasksAfterDelete);
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
 }
+
+
+
+
+

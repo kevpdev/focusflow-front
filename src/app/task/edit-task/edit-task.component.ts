@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose } from '@angular/mate
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { Subject, takeUntil } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/services';
 
@@ -24,8 +25,9 @@ import { TaskService } from '../../../core/services';
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss'
 })
-export class EditTaskComponent {
+export class EditTaskComponent implements OnInit, OnDestroy {
 
+  public unsubscribe$ = new Subject<void>();
   public title: string | undefined;
   public isEditMode: boolean;
   public task: Task;
@@ -33,7 +35,8 @@ export class EditTaskComponent {
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     priority: new FormControl('', [Validators.required]),
-    dueDate: new FormControl('', [Validators.required]),
+    status: new FormControl('', [Validators.required]),
+    dueDate: new FormControl(new Date(), [Validators.required]),
 
   });
 
@@ -41,16 +44,21 @@ export class EditTaskComponent {
     private taskService: TaskService) {
 
     this.task = data.task;
+    this.isEditMode = data.isEditMode;
+    console.log('data', data);
+    console.log('isEditMode', this.isEditMode);
+
+
+  }
+
+
+  ngOnInit(): void {
 
     if (this.task) {
       this.initTaskForm();
     }
 
-    this.isEditMode = data.isEditMode;
-    console.log();
-
     this.isEditMode ? this.title = 'Modifier une tâche' : this.title = 'Créer une tâche';
-
   }
 
 
@@ -58,37 +66,47 @@ export class EditTaskComponent {
     this.task.title ? this.editForm.get('title')?.setValue(this.task.title) : '';
     this.task.description ? this.editForm.get('description')?.setValue(this.task.description) : '';
     this.task.priority ? this.editForm.get('priority')?.setValue(String(this.task.priority)) : '';
-    this.task.dueDate ? this.editForm.get('dueDate')?.setValue(this.task.dueDate.toDateString()) : '';
+    this.task.priority ? this.editForm.get('status')?.setValue(String(this.task.status)) : '';
+    this.task.dueDate ? this.editForm.get('dueDate')?.setValue(this.task.dueDate) : '';
   }
 
 
 
   public onSubmit(): void {
     console.log('form', this.editForm);
+
     if (this.editForm.valid) {
-      // Récupérer les données du formulaire
+
       const formData = this.editForm.value;
 
-      // Construire un objet Task à partir des données du formulaire
       const newTask = new Task({
+        id: this.isEditMode ? this.task.id : undefined,
         title: formData.title as string,
         description: formData.description as string,
-        status: ETaskStatus.PENDING,
+        status: this.isEditMode ? formData.status as ETaskStatus : ETaskStatus.PENDING,
         priority: Number(formData.priority),
         dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined
       });
 
-      console.log('Nouvelle tâche à créer :', newTask);
+      console.log('Nouvelle tâche à créer ou mdofier :', newTask);
 
-      // Appeler le service pour créer ou modifier la tâche
+      if (this.isEditMode) {
+        this.taskService.updateTask(newTask).
+          pipe(takeUntil(this.unsubscribe$))
+          .subscribe();
+      } else {
+        this.taskService.addNewTask(newTask)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe();
+      }
 
-      this.editForm ?
-        this.taskService.updateTask(newTask).subscribe() :
-        this.taskService.addNewTask(newTask).subscribe();
-    } else {
-      console.log('Formulaire invalide');
     }
 
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.complete();
+    this.unsubscribe$.next();
   }
 
 }

@@ -1,5 +1,11 @@
 <div class="task-container">
         <h1>Gestion des tâches</h1>
+        <div class="action">
+                <button mat-mini-fab (click)="addNewTask()" class="add-task-button"><mat-icon>add</mat-icon></button>
+                <button mat-mini-fab (click)="saveChanges()"
+                        [ngClass]="{'save-button-enabled': modifiedTasks.length > 0}"
+                        [disabled]="modifiedTasks.length === 0"><mat-icon>save</mat-icon></button>
+        </div>
         <div class="task-board">
                 <div class="column-status">
                         <app-task-list-card [tasks$]="pendingTasks$" [title]="pendingTasksTitleCard"
@@ -23,10 +29,5 @@
                                 (updateTaskEvent)="updateTask($event)">
                         </app-task-list-card>
                 </div>
-        </div>
-        <div class="action">
-                <button mat-flat-button (click)="saveChanges()" class="mat-button"
-                        [disabled]="modifiedTasks.length === 0">Enregistrer</button>
-                <button mat-raised-button (click)="addNewTask()" class="add-task-button">Ajouter une tâche</button>
         </div>
 </div>

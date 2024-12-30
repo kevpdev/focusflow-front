@@ -1,21 +1,25 @@
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { CustomDatePipe } from '../../../shared/pipes/custom-date.pipe';
+import { TranslateTaskStatusPipe } from '../../../shared/pipes/translate-task-status.pipe';
 
 @Component({
   selector: 'app-task-list-card',
   standalone: true,
   imports: [AsyncPipe,
     DatePipe,
+    CustomDatePipe,
+    TranslateTaskStatusPipe,
     MatListModule,
     MatCardModule,
     MatIconModule,
@@ -26,7 +30,7 @@ import { ConfirmationDialogComponent } from '../../../shared/components/confirma
   templateUrl: './task-list-card.component.html',
   styleUrl: './task-list-card.component.scss'
 })
-export class TaskListCardComponent {
+export class TaskListCardComponent implements OnDestroy {
 
   @Input()
   public tasks$: Observable<Task[]> | undefined;
@@ -43,23 +47,23 @@ export class TaskListCardComponent {
   @Output()
   public updateTaskEvent = new EventEmitter<Task>();
   public modifiedTasks: Task[] = [];
+  public unSubscribe$ = new Subject<void>();
 
   constructor(private dialog: MatDialog) { }
 
   public delete(task: Task): void {
 
-    console.log("tâche à supprimer : ", task);
-
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { message: `Voulez-vous vraiment supprimer la tâche : \n ${task.title} ?` }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log("result", result);
-        this.deleteTaskEvent.emit(task);
-      }
-    })
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.unSubscribe$))
+      .subscribe(result => {
+        if (result) {
+          this.deleteTaskEvent.emit(task);
+        }
+      })
 
   }
 
@@ -71,7 +75,10 @@ export class TaskListCardComponent {
     this.dropEvent.emit(event);
   }
 
-
+  ngOnDestroy() {
+    this.unSubscribe$.next();
+    this.unSubscribe$.complete();
+  }
 
 
 

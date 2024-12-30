@@ -112,8 +112,8 @@
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles/styles.scss",
-              "src/styles/m3-theme.scss",
-              "src/styles/light-theme.scss"
+              "src/styles/themes/m3-theme.scss",
+              "src/styles/themes/light-theme.scss"
             ],
             "scripts": []
           }

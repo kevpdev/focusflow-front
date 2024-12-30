@@ -12,4 +12,8 @@
     --border-color: #{mat.get-theme-color(theme.$light-theme, primary, 95)};
     --box-shadow-color: #{mat.get-theme-color(theme.$light-theme, primary, 80)};
     --background-board-column: #{mat.get-theme-color(theme.$light-theme, primary, 95)};
+    --background-button-delete: rgba(200, 37, 37, 0.518);
+    --background-button-update: #{mat.get-theme-color(theme.$light-theme, tertiary, 80)};
+    --background-button-add: rgba(107, 180, 104, 0.518);
+    --background-button-save: #{mat.get-theme-color(theme.$light-theme, primary, 60)};
   }

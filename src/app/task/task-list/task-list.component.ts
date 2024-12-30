@@ -1,17 +1,23 @@
 import { CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { map, Observable } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/services/task.service';
+import { UtilityService } from '../../../core/services/utility.service';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { TaskListCardComponent } from '../task-list-card/task-list-card.component';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [TaskListCardComponent, MatButtonModule],
+  imports: [TaskListCardComponent,
+    MatButtonModule,
+    MatIconModule,
+    CommonModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
 })
@@ -28,7 +34,10 @@ export class TaskListComponent implements OnInit {
   public isEditMode = false;
 
 
-  constructor(private taskService: TaskService, private dialog: MatDialog) { }
+  constructor(private taskService: TaskService,
+    private dialog: MatDialog,
+    private utilityService: UtilityService
+  ) { }
 
   ngOnInit(): void {
     this.inProgressTasks$ = this.taskService.fetchAllInProgressTasks();
@@ -69,13 +78,13 @@ export class TaskListComponent implements OnInit {
   }
 
   private updateTaskStatus(eventContainer: CdkDropList<Task[]>, currentIndex: number) {
-    let newTaskStatus = this.getEnumKeyFromValue(eventContainer.id);
+    let newTaskStatus = this.utilityService.getEnumKeyFromValue(ETaskStatus, eventContainer.id, ETaskStatus.NO_STATUS);
     let selectedTask = eventContainer.data[currentIndex];
 
     // Pour eliminer les taches qui se déplacent dans la même colonne
     if (selectedTask.status !== newTaskStatus) {
 
-      selectedTask.status = newTaskStatus;
+      selectedTask.status = newTaskStatus as ETaskStatus;
 
       // Mise à jour du tableau drag & drop avec le nouveau status
       eventContainer.data.splice(currentIndex, 1, selectedTask);
@@ -90,13 +99,7 @@ export class TaskListComponent implements OnInit {
     }
   }
 
-  public getEnumKeyFromValue(value: string): ETaskStatus {
-    const key = Object.keys(ETaskStatus).find(key => ETaskStatus[key as keyof typeof ETaskStatus] === value);
-    if (!key) {
-      return ETaskStatus.NO_STATUS;
-    }
-    return key as ETaskStatus;
-  }
+
 
   public addNewTask(): void {
     this.isEditMode = false;
@@ -110,7 +113,7 @@ export class TaskListComponent implements OnInit {
     this.isEditMode = true;
     const dialogRef = this.dialog.open(EditTaskComponent, {
       data: {
-        isUpdateMode: this.isEditMode,
+        isEditMode: this.isEditMode,
         task: task
       }
     });

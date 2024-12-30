@@ -23,7 +23,7 @@ export class AuthService {
         tap(data => {
           this.authStateService.setUser(data);
         }),
-        map(userResponse => new User({ // Transformation de UserResponse en User
+        map(userResponse => new User({
           email: userResponse.email,
           roles: userResponse.roles
         })),
@@ -45,10 +45,10 @@ export class AuthService {
       );
   }
 
-
-
-
-
+  /**
+   * Retrieves an acces token if refresh token is still valid.
+   * Update authentication state.
+   */
   public refreshToken(): Observable<boolean> {
 
     return this.authEndpoint.refreshToken()

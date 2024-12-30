@@ -37,6 +37,7 @@
 
 .column-status {
     border: 1px solid var(--border-color);
+    border-radius: 12px;
     padding: 10px;
     overflow: auto;
     background-color: var(--background-board-column);
@@ -44,6 +45,19 @@
 
 .action {
     display: flex;
-    justify-content: end;
     padding: 16px;
+}
+
+.action button {
+    margin-right: 8px;
+}
+
+.add-task-button {
+    background-color: var(--background-button-add) !important;
+}
+
+.save-button-enabled {
+    background-color: var(--background-button-save) !important;
+    color: var(--background-main) !important;
+    transition: background-color 2s !important; 
 }

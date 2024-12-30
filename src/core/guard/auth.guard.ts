@@ -10,10 +10,10 @@ export const authGuard: CanActivateFn = (route, state) => {
     const authStateService = inject(AuthStateService);
     const router = inject(Router);
 
-    return timer(500).pipe( // Ajoute un délai de 100 ms
+    return timer(500).pipe( // Adds a 500 ms delay
         switchMap(() => {
             console.log('isAuthenticated guard');
-            return authService.isAuthenticated()
+            return authService.isAuthenticated();
         }),
         map(() => {
             authStateService.isAuthenticatedSubject.next(true);
@@ -24,7 +24,7 @@ export const authGuard: CanActivateFn = (route, state) => {
             return authService.refreshToken().pipe(
                 map(() => true),
                 catchError((err => {
-                    // refreh token expirated
+                    // refresh token expirated
                     console.error("The refresh token has expirated !", err);
                     router.navigate(['/login'])
                     return of(false);

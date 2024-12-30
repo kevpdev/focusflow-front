@@ -1,9 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection, } from '@angular/core';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter } from '@angular/router';
 import { jwtInterceptor } from '../core/interceptors/jwt.interceptor';
 import { AuthService } from '../core/services/auth.service';
 import { AuthServiceMock } from '../core/services/mocks/auth.service.mock';
@@ -26,6 +25,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: TaskService,
       useClass: environment.useMocks ? TaskServiceMock : TaskService
-    }
+    },
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
   ]
 };
