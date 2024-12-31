@@ -1,29 +1,21 @@
-import { TestBed } from '@angular/core/testing';
 
-import { AuthEndpoint } from '../endpoints/auth.endpoint';
+import { AuthEndpoint } from '../endpoints';
+import { AuthStateService } from './auth-state.service';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
 
   // inititialisation
   let service: AuthService;
-  let endpointSpy: jasmine.SpyObj<AuthEndpoint>;
-  const mockAuthEndpoint = jasmine.createSpyObj('AutEndpoint', ['login']) as jasmine.SpyObj<AuthEndpoint>;
+  //const mockAuthEndpoint = jasmine.createSpyObj('AutEndpoint', ['login']) as jasmine.SpyObj<AuthEndpoint>;
 
   beforeEach(() => {
 
-    //Spy
-    
-    TestBed.configureTestingModule({
-      providers: [
-        AuthService,
-        { provide: AuthEndpoint, useValue: mockAuthEndpoint },
-      ],
-    });
-    
-    // Injection
-    service = TestBed.inject(AuthService);
-  
+    //Injection
+    let mockAuthEndpoint = {} as jest.Mocked<AuthEndpoint>;
+    let mockAuthStateService = {} as jest.Mocked<AuthStateService>;
+    service = new AuthService(mockAuthEndpoint, mockAuthStateService);
+
 
   });
 
@@ -37,7 +29,7 @@ describe('AuthService', () => {
 
   //   //mock call login method endpoint
   //   mockAuthEndpoint.login.and.returnValue(of(mockResponse));
-  
+
   //   //C
   //   service.login(mockUserCredentials.email, mockUserCredentials.password)
   //   .subscribe(data => {
@@ -47,5 +39,5 @@ describe('AuthService', () => {
 
   // });
 
-  
+
 });

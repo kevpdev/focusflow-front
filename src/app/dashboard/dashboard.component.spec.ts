@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { testProviders } from '../app.test.config';
 import { DashboardComponent } from './dashboard.component';
 
 describe('DashboardComponent', () => {
@@ -8,9 +9,10 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardComponent]
+      imports: [DashboardComponent],
+      providers: [...testProviders]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
