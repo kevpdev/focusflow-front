@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { map, Observable } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
-import { TaskService } from '../../../core/services/task.service';
+import { TaskStoreService } from '../../../core/services/task/task-store.service';
 import { UtilityService } from '../../../core/services/utility.service';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { TaskListCardComponent } from '../task-list-card/task-list-card.component';
@@ -34,7 +34,7 @@ export class TaskListComponent implements OnInit {
   public isEditMode = false;
 
 
-  constructor(private taskService: TaskService,
+  constructor(private taskService: TaskStoreService,
     private dialog: MatDialog,
     private utilityService: UtilityService
   ) { }

@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil, tap } from 'rxjs/operators';
-import { TaskEndpoint } from '../endpoints';
-import { ETaskStatus, Task } from '../models/task.model';
-import { ITaskService } from './interfaces/itask.service';
-import { UtilityService } from './utility.service';
+import { TaskEndpoint } from '../../endpoints';
+import { ETaskStatus, Task } from '../../models/task.model';
+import { ITaskStoreService } from '../interfaces/itask-store.service';
+import { UtilityService } from '../utility.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TaskService implements ITaskService {
+export class TaskStoreService implements ITaskStoreService {
   readonly ERROR_MESSAGE = 'Une erreur est survenue coté serveur : ';
   // BehaviorSubjects to store tasks
   private tasksSubject = new BehaviorSubject<Task[]>([]);

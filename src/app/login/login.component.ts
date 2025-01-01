@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { catchError, Subject, takeUntil } from 'rxjs';
-import { AuthService } from '../../core/services';
+import { AuthStoreService } from '../../core/services';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public errorMessage: string | null = null;
   unSubscribe$ = new Subject<void>();
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthStoreService, private router: Router) { }
 
   public ngOnInit() {
 

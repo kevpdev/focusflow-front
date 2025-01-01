@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from '../../../core/models/task.model';
 import { User } from '../../../core/models/user.model';
-import { TaskService } from '../../../core/services';
+import { TaskStoreService } from '../../../core/services';
 import { testProviders } from '../../app.test.config';
 import { EditTaskComponent } from './edit-task.component';
 
@@ -31,7 +31,7 @@ describe('EditTaskComponent', () => {
           provide: MAT_DIALOG_DATA,
           useValue: { data }
         },
-        TaskService]
+        TaskStoreService]
     })
       .compileComponents();
 

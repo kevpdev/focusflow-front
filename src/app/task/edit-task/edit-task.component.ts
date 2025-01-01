@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Subject, takeUntil } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
-import { TaskService } from '../../../core/services';
+import { TaskStoreService } from '../../../core/services';
 
 @Component({
   selector: 'app-edit-task',
@@ -41,7 +41,7 @@ export class EditTaskComponent implements OnInit, OnDestroy {
   });
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { isEditMode: boolean, task: Task },
-    private taskService: TaskService) {
+    private taskService: TaskStoreService) {
 
     this.task = data.task;
     this.isEditMode = data.isEditMode;

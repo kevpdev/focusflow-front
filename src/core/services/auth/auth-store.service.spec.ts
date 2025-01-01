@@ -1,20 +1,18 @@
 
-import { AuthEndpoint } from '../endpoints';
-import { AuthStateService } from './auth-state.service';
-import { AuthService } from './auth.service';
+import { AuthEndpoint } from '../../endpoints';
+import { AuthStoreService } from './auth-store.service';
 
 describe('AuthService', () => {
 
   // inititialisation
-  let service: AuthService;
+  let service: AuthStoreService;
   //const mockAuthEndpoint = jasmine.createSpyObj('AutEndpoint', ['login']) as jasmine.SpyObj<AuthEndpoint>;
 
   beforeEach(() => {
 
     //Injection
     let mockAuthEndpoint = {} as jest.Mocked<AuthEndpoint>;
-    let mockAuthStateService = {} as jest.Mocked<AuthStateService>;
-    service = new AuthService(mockAuthEndpoint, mockAuthStateService);
+    service = new AuthStoreService(mockAuthEndpoint);
 
 
   });

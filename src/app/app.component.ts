@@ -6,8 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterOutlet } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { AuthService } from '../core/services';
-import { AuthStateService } from '../core/services/auth-state.service';
+import { AuthStoreService } from '../core/services';
 
 @Component({
   selector: 'app-root',
@@ -24,8 +23,8 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'focusflow';
   public isLoggedIn = false;
   public unsubscribe$ = new Subject<void>();
-  constructor(private authStateService: AuthStateService,
-    private authService: AuthService,
+  constructor(
+    private authService: AuthStoreService,
     private router: Router,
     private renderer: Renderer2) { }
 
@@ -33,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.renderer.addClass(document.documentElement, 'light-theme');
 
-    this.authStateService.isAuthenticated$
+    this.authService.isAuthenticated$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((value) => {
         this.isLoggedIn = value;
@@ -42,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public logout(): void {
     this.authService.logout()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.router.navigate(['/login']));
   }
 

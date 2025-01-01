@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, map, Observable, of, throwError } from "rxjs";
 import { ETaskStatus, Task } from "../../models/task.model";
-import { ITaskService } from "../interfaces/itask.service";
+import { ITaskStoreService } from "../interfaces/itask-store.service";
 import { UtilityService } from "../utility.service";
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskServiceMock implements ITaskService {
+export class TaskStoreServiceMock implements ITaskStoreService {
 
     private tasksSubject = new BehaviorSubject<Task[]>([]);
 

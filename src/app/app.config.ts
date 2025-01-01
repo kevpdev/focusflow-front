@@ -4,10 +4,10 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { jwtInterceptor } from '../core/interceptors/jwt.interceptor';
-import { AuthService } from '../core/services/auth.service';
-import { AuthServiceMock } from '../core/services/mocks/auth.service.mock';
-import { TaskServiceMock } from '../core/services/mocks/task.service.mock';
-import { TaskService } from '../core/services/task.service';
+import { AuthStoreService } from '../core/services/auth/auth-store.service';
+import { AuthStoreServiceMock } from '../core/services/mocks/auth-store.service.mock';
+import { TaskStoreServiceMock } from '../core/services/mocks/task-store.service.mock';
+import { TaskStoreService } from '../core/services/task/task-store.service';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 
@@ -19,12 +19,12 @@ export const appConfig: ApplicationConfig = {
     ), provideAnimationsAsync(),
     provideNativeDateAdapter(),
     {
-      provide: AuthService,
-      useClass: environment.useMocks ? AuthServiceMock : AuthService
+      provide: AuthStoreService,
+      useClass: environment.useMocks ? AuthStoreServiceMock : AuthStoreService
     },
     {
-      provide: TaskService,
-      useClass: environment.useMocks ? TaskServiceMock : TaskService
+      provide: TaskStoreService,
+      useClass: environment.useMocks ? TaskStoreServiceMock : TaskStoreService
     },
     { provide: LOCALE_ID, useValue: 'fr-FR' },
   ]

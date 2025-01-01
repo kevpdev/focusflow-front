@@ -1,5 +1,4 @@
-export * from './auth-state.service';
-export * from './auth.service';
-export * from './task.service';
+export * from './auth/auth-store.service';
+export * from './task/task-store.service';
 export * from './utility.service';
 

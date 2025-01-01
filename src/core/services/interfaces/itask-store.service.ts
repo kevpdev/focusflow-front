@@ -1,7 +1,7 @@
 import { Observable } from "rxjs/internal/Observable";
 import { ETaskStatus, Task } from "../../models/task.model";
 
-export interface ITaskService {
+export interface ITaskStoreService {
 
     getTask(id: number): Task;
     fetchAllTasks(): Observable<Task[]>;

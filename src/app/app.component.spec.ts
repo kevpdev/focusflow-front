@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthService } from '../core/services';
+import { AuthStoreService } from '../core/services';
 import { AppComponent } from './app.component';
 import { testProviders } from './app.test.config';
 
@@ -14,7 +14,7 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
-        AuthService,
+        AuthStoreService,
         ...testProviders,
       ]
     }).compileComponents();
