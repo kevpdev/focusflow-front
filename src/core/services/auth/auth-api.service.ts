@@ -1,13 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { environment } from "../../environments/environment.development";
-import { UserRequest, UserResponse } from "../models";
+import { environment } from "../../../environments/environment.development";
+import { UserRequest, UserResponse } from "../../models";
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthEndpoint {
+export class AuthApiService {
 
     public http = inject(HttpClient);
     public apiUrl = environment.apiURL;

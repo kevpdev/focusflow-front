@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
-import { AuthEndpoint } from '../../endpoints';
 import { UserResponse } from '../../models/user-response.model';
 import { User } from '../../models/user.model';
+import { AuthApiService } from './auth-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,12 @@ export class AuthStoreService {
   public isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public readonly isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private authEndpoint: AuthEndpoint) { }
+  constructor(private authApiService: AuthApiService) { }
 
 
   public login(email: string, password: string): Observable<User> {
 
-    return this.authEndpoint.login(email, password)
+    return this.authApiService.login(email, password)
       .pipe(
         map(userResponse => {
 
@@ -60,7 +60,7 @@ export class AuthStoreService {
    */
   public refreshToken(): Observable<boolean> {
 
-    return this.authEndpoint.refreshToken()
+    return this.authApiService.refreshToken()
       .pipe(
         map(user => {
           this.setUser(user);
@@ -79,7 +79,7 @@ export class AuthStoreService {
   }
 
   public logout(): Observable<boolean> {
-    return this.authEndpoint.logout()
+    return this.authApiService.logout()
       .pipe(
         tap(() => {
           console.log('logout');
@@ -89,14 +89,15 @@ export class AuthStoreService {
         }),
         map(() => true),
         catchError(err => {
+          let errorMessage = 'Un problème est survenue lors de la tentative de déconnexion.';
           console.error(err);
-          return throwError(() => err)
+          return throwError(() => new Error(errorMessage))
         }));
   }
 
 
   public isAuthenticated(): Observable<boolean> {
-    return this.authEndpoint.isAuthenticated();
+    return this.authApiService.isAuthenticated();
   }
 
 
@@ -109,17 +110,6 @@ export class AuthStoreService {
 
     this.userInfoSubject.next(user);
 
-  }
-
-  public hasRoles(role: string): boolean {
-
-    let userInfoSubjectValue = this.userInfoSubject.value;
-
-    if (userInfoSubjectValue && userInfoSubjectValue.roles) {
-      return userInfoSubjectValue.roles.includes(role);
-    }
-
-    return false;
   }
 
 

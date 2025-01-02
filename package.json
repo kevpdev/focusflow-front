@@ -9,7 +9,7 @@
     "test": "jest --colors --maxWorkers=3",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand",
-    "test:cov": "npm test-- --coverage"
+    "test:cov": "npm test -- --coverage"
   },
   "private": true,
   "dependencies": {

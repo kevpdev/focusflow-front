@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { environment } from "../../environments/environment.development";
-import { ETaskStatus, Task } from "../models/task.model";
+import { environment } from "../../../environments/environment.development";
+import { ETaskStatus, Task } from "../../models/task.model";
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskEndpoint {
+export class TaskApiService {
 
     public http = inject(HttpClient);
     public apiUrl = environment.apiURL + 'tasks/';

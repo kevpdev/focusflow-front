@@ -1,14 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AuthEndpoint } from '../../core/endpoints';
 import { AuthStoreService } from '../../core/services';
+import { AuthApiService } from '../../core/services/auth/auth-api.service';
 import { testProviders } from '../app.test.config';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let authEndpointMock: jest.Mocked<AuthEndpoint>;
+  let authEndpointMock: jest.Mocked<AuthApiService>;
 
   beforeEach(async () => {
 
@@ -17,7 +16,7 @@ describe('LoginComponent', () => {
       refreshToken: jest.fn(),
       logout: jest.fn(),
       isAuthenticated: jest.fn(),
-    } as Partial<AuthEndpoint> as jest.Mocked<AuthEndpoint>;
+    } as Partial<AuthApiService> as jest.Mocked<AuthApiService>;
 
     await TestBed.configureTestingModule({
       imports: [LoginComponent],

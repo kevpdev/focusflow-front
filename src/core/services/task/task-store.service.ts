@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil, tap } from 'rxjs/operators';
-import { TaskEndpoint } from '../../endpoints';
 import { ETaskStatus, Task } from '../../models/task.model';
 import { ITaskStoreService } from '../interfaces/itask-store.service';
 import { UtilityService } from '../utility.service';
+import { TaskApiService } from './task-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,14 +12,14 @@ import { UtilityService } from '../utility.service';
 export class TaskStoreService implements ITaskStoreService {
   readonly ERROR_MESSAGE = 'Une erreur est survenue coté serveur : ';
   // BehaviorSubjects to store tasks
-  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  public tasksSubject = new BehaviorSubject<Task[]>([]);
 
   // Public observables for components
   public tasks$ = this.tasksSubject.asObservable();
 
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private taskEndpoint: TaskEndpoint,
+  constructor(private taskApiService: TaskApiService,
     private utilityService: UtilityService
   ) { }
 
@@ -55,7 +55,7 @@ export class TaskStoreService implements ITaskStoreService {
    * Retrieves all tasks
    */
   public fetchAllTasks(): Observable<Task[]> {
-    return this.taskEndpoint.fetchAllTasks()
+    return this.taskApiService.fetchAllTasks()
       .pipe(
         takeUntil(this.destroy$),
         tap(tasks => console.log('Task list : ', tasks)),
@@ -63,7 +63,7 @@ export class TaskStoreService implements ITaskStoreService {
           this.tasksSubject.next(tasks);
           return tasks;
         }),
-        catchError(this.handleError.bind(this)));
+        catchError(err => this.handleError(err, 'Une erreur est survenue lors de la récupération de toutes les tâches.')));
   }
 
   /**
@@ -74,8 +74,7 @@ export class TaskStoreService implements ITaskStoreService {
     return this.tasks$
       .pipe(
         map(tasks => tasks.filter(task => task.status === status)),
-        catchError(this.handleError.bind(this))
-      );
+        catchError(err => this.handleError(err, 'Une erreur est survenue lors de la récupération des tâches ' + status)));
   }
 
   /**
@@ -104,9 +103,9 @@ export class TaskStoreService implements ITaskStoreService {
    * @param error 
    * @returns 
    */
-  private handleError(error: any): Observable<never> {
-    console.error(this.ERROR_MESSAGE, error);
-    return throwError(() => new Error(this.ERROR_MESSAGE + error.message));
+  private handleError(error: any, message: string): Observable<never> {
+    console.error(message, error);
+    return throwError(() => new Error(message));
   }
 
   /**
@@ -115,7 +114,7 @@ export class TaskStoreService implements ITaskStoreService {
    * @returns List of modified tasks
    */
   public updateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
-    return this.taskEndpoint.fetchUpdateTaskStatus(modifiedTasks)
+    return this.taskApiService.fetchUpdateTaskStatus(modifiedTasks)
       .pipe(
         map(successfullyModifiedTasks => {
           // Update only in case of success
@@ -124,7 +123,10 @@ export class TaskStoreService implements ITaskStoreService {
           })
           return successfullyModifiedTasks;
         }),
-        catchError(this.handleError.bind(this))
+        catchError(err => {
+          const errorMessage = 'Une erreur est survenue lors de la modification du statut des tâches.';
+          return this.handleError(err, errorMessage);
+        })
       );
   }
 
@@ -139,12 +141,12 @@ export class TaskStoreService implements ITaskStoreService {
     // Remove the ID in the subject
     this.removeTaskSubject(id);
     // Call the API to delete
-    return this.taskEndpoint.fetchDeleteTask(id)
+    return this.taskApiService.fetchDeleteTask(id)
       .pipe(
         catchError((error) => {
           // If failed, restore the previous list in the subject
           this.tasksSubject.next(currentTasks);
-          return this.handleError(error);
+          return this.handleError(error, 'Une erreur est survenue lors de la suppression de la tâche.');
         }));
   }
 
@@ -163,17 +165,18 @@ export class TaskStoreService implements ITaskStoreService {
     // Add the task to the subject first for reactivity
     this.addTaskSubject(newTask);
     // Update the task in the API
-    return this.taskEndpoint.fetchAddNewTask(newTask)
+    return this.taskApiService.fetchAddNewTask(newTask)
       .pipe(
         map(addedTask => {
           // If API succeeds, update the generated ID with the API ID
-          this.currentTasks().map(currentTask => currentTask.tempId === generatedTempId ? addedTask : currentTask);
+          const updatedTasks = this.currentTasks().map(currentTask => currentTask.tempId === generatedTempId ? addedTask : currentTask);
+          this.tasksSubject.next(updatedTasks);
           return addedTask;
         }),
         catchError(error => {
           // If error, remove the task in the subject
           this.removeTaskSubjectByTempId(generatedTempId);
-          return this.handleError(error);
+          return this.handleError(error, "Une erreur est survenue lors de l'ajout de la tâches.");
         }));
 
   }
@@ -189,16 +192,15 @@ export class TaskStoreService implements ITaskStoreService {
 
     if (taskBeforeUpdate) {
       this.updateTaskSubject(modifiedTask);
-      return this.taskEndpoint.fetchUpdateTask(modifiedTask)
+      return this.taskApiService.fetchUpdateTask(modifiedTask)
         .pipe(
           catchError(error => {
             // Rollback
             this.updateTaskSubject(taskBeforeUpdate);
-            return this.handleError(error);
+            return this.handleError(error, 'Une erreur est survenu lors de la modification de la tâche.');
           }));
     } else {
-      console.error('The task to update is not found in the store');
-      return this.handleError(new Error('The task to update is not found'));
+      return this.handleError(new Error('The task to update is not found in the store'), '');
     }
 
   }
