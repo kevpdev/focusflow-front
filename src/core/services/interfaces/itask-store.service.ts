@@ -3,7 +3,7 @@ import { ETaskStatus, Task } from "../../models/task.model";
 
 export interface ITaskStoreService {
 
-    getTask(id: number): Task;
+    getTaskById(id: number): Task;
     fetchAllTasks(): Observable<Task[]>;
     fetchTasksByStatus(status: ETaskStatus): Observable<Task[]>;
     fetchAllPendingTasks(): Observable<Task[]>;

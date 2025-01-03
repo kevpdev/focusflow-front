@@ -54,7 +54,6 @@ describe('AuthStoreService', () => {
   });
 
   it('should handle login error (status 401)', (done) => {
-
     authApiMock.login.mockReturnValue(throwError(() => ({ status: 401 })));
     service.login('test@example.com', 'password').subscribe({
       error: err => {
@@ -135,15 +134,12 @@ describe('AuthStoreService', () => {
 
   it('should handle log out error', (done) => {
     authApiMock.logout.mockReturnValue(throwError(() => new Error()));
-
     service.logout()
       .subscribe({
         next: () => {
           fail('Expected an error, but got a response');
         },
         error: err => {
-          console.log(err);
-
           expect(err.message).toBe('Un problème est survenue lors de la tentative de déconnexion.');
           expect(service.isAuthenticatedSubject.value).toBeFalsy();;
           expect(authApiMock.logout).toHaveBeenCalled();

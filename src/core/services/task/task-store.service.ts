@@ -12,10 +12,8 @@ import { TaskApiService } from './task-api.service';
 export class TaskStoreService implements ITaskStoreService {
   readonly ERROR_MESSAGE = 'Une erreur est survenue coté serveur : ';
   // BehaviorSubjects to store tasks
-  public tasksSubject = new BehaviorSubject<Task[]>([]);
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
 
-  // Public observables for components
-  public tasks$ = this.tasksSubject.asObservable();
 
   private destroy$: Subject<void> = new Subject();
 
@@ -27,8 +25,22 @@ export class TaskStoreService implements ITaskStoreService {
   * Retrieves the current state of the task list in the subject
   * @returns An array of tasks
   */
-  private currentTasks(): Task[] {
+
+  get tasks$(): Observable<Task[]> {
+    return this.tasksSubject.asObservable();
+  }
+
+  public getTasks(): Task[] {
     return this.tasksSubject.getValue();
+  }
+
+
+  /**
+   * Set the tasks store for tests
+   * @param tasks 
+   */
+  public setTasksForTest(tasks: Task[]): void {
+    return this.tasksSubject.next(tasks);
   }
 
   /**
@@ -36,18 +48,17 @@ export class TaskStoreService implements ITaskStoreService {
    * @param id Task ID
    * @returns A task
    */
-  public getTask(id: number): Task {
+  public getTaskById(id: number): Task {
 
-    const index = this.currentTasks()
+    const index = this.getTasks()
       .findIndex(currentask => currentask.id === id);
 
-    if (!index) {
-      const errorMessage = 'Task not found';
-      console.error(errorMessage);
+    if (index < 0) {
+      const errorMessage = 'La tâche est introuvable.';
       throw new Error(errorMessage)
     }
 
-    return this.currentTasks()[index];
+    return this.getTasks()[index];
 
   }
 
@@ -137,7 +148,7 @@ export class TaskStoreService implements ITaskStoreService {
    */
   public deleteTask(id: number): Observable<void> {
     // Save the current list in the subject
-    const currentTasks = this.currentTasks();
+    const currentTasks = this.getTasks();
     // Remove the ID in the subject
     this.removeTaskSubject(id);
     // Call the API to delete
@@ -169,7 +180,7 @@ export class TaskStoreService implements ITaskStoreService {
       .pipe(
         map(addedTask => {
           // If API succeeds, update the generated ID with the API ID
-          const updatedTasks = this.currentTasks().map(currentTask => currentTask.tempId === generatedTempId ? addedTask : currentTask);
+          const updatedTasks = this.getTasks().map(currentTask => currentTask.tempId === generatedTempId ? addedTask : currentTask);
           this.tasksSubject.next(updatedTasks);
           return addedTask;
         }),
@@ -187,7 +198,7 @@ export class TaskStoreService implements ITaskStoreService {
    * @returns The updated task
    */
   public updateTask(modifiedTask: Task): Observable<Task> {
-    const taskBeforeUpdate = this.currentTasks()
+    const taskBeforeUpdate = this.getTasks()
       .find(currentTask => currentTask.id === modifiedTask.id);
 
     if (taskBeforeUpdate) {
@@ -197,10 +208,10 @@ export class TaskStoreService implements ITaskStoreService {
           catchError(error => {
             // Rollback
             this.updateTaskSubject(taskBeforeUpdate);
-            return this.handleError(error, 'Une erreur est survenu lors de la modification de la tâche.');
+            return this.handleError(error, 'Une erreur est survenue lors de la modification de la tâche.');
           }));
     } else {
-      return this.handleError(new Error('The task to update is not found in the store'), '');
+      return this.handleError(new Error(), "La tâche est introuvable dans le store.");
     }
 
   }
@@ -208,30 +219,29 @@ export class TaskStoreService implements ITaskStoreService {
   /** CRUD TASK SUBJECT STORE **/
 
   private updateTaskSubject(updatedTask: Task): void {
-    let currentTasks = this.currentTasks();
+    let currentTasks = this.getTasks();
     const taskIndex = currentTasks.findIndex(task => task.id === updatedTask.id);
     if (taskIndex !== -1) {
       currentTasks[taskIndex] = updatedTask;
       this.tasksSubject.next(currentTasks);
     } else {
-      console.error('Task not found in the taskSubject');
-      throw new Error('Task not found');
+      throw new Error('La tâche est introuvable.');
     }
   }
 
   private addTaskSubject(newTask: Task): void {
-    const currentTasks = this.currentTasks();
+    const currentTasks = this.getTasks();
     const updatedTasks = [...currentTasks, newTask];
     this.tasksSubject.next(updatedTasks);
   }
 
   private removeTaskSubject(id: number): void {
-    const updatedTasksAfterDelete = this.currentTasks().filter(task => task.id !== id);
+    const updatedTasksAfterDelete = this.getTasks().filter(task => task.id !== id);
     this.tasksSubject.next(updatedTasksAfterDelete);
   }
 
   private removeTaskSubjectByTempId(tempId: string): void {
-    const updatedTasksAfterDelete = this.currentTasks().filter(task => task.tempId !== tempId);
+    const updatedTasksAfterDelete = this.getTasks().filter(task => task.tempId !== tempId);
     this.tasksSubject.next(updatedTasksAfterDelete);
   }
 

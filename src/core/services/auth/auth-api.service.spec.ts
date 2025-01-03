@@ -9,7 +9,7 @@ let service: AuthApiService;
 let httpTesting: HttpTestingController;
 let apiUrl: String;
 
-describe('authApiService', () => {
+describe('AuthApiService', () => {
 
     beforeEach(() => {
 

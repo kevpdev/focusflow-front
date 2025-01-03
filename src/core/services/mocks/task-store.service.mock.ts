@@ -72,7 +72,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * @param id Task ID.
      * @returns The task matching the ID.
      */
-    public getTask(id: number): Task {
+    public getTaskById(id: number): Task {
         const index = this.currentTasks().findIndex(task => task.id === id);
 
         if (!index) {

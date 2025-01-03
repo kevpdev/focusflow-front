@@ -11,7 +11,7 @@ let httpTesting: HttpTestingController;
 let apiUrl: string;
 let mockTasks: Task[];
 
-describe('taskApiService', () => {
+describe('TaskApiService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
