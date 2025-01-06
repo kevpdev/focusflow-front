@@ -7,8 +7,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
+import { TranslationService } from '../../../core/services/translation.service';
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { CustomDatePipe } from '../../../shared/pipes/custom-date.pipe';
 import { TranslateTaskStatusPipe } from '../../../shared/pipes/translate-task-status.pipe';
@@ -26,7 +28,8 @@ import { TranslateTaskStatusPipe } from '../../../shared/pipes/translate-task-st
     MatCheckboxModule,
     CdkDropList,
     CdkDrag,
-    MatButtonModule],
+    MatButtonModule,
+    TranslateModule],
   templateUrl: './task-list-card.component.html',
   styleUrl: './task-list-card.component.scss'
 })
@@ -49,12 +52,12 @@ export class TaskListCardComponent implements OnDestroy {
   public modifiedTasks: Task[] = [];
   public unSubscribe$ = new Subject<void>();
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private translationService: TranslationService) { }
 
   public delete(task: Task): void {
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { message: `Voulez-vous vraiment supprimer la tâche : \n ${task.title} ?` }
+      data: { message: `${this.translationService.instant('TASK.CARD.LIST.DELETE')} \n ${task.title} ?` }
     });
 
     dialogRef.afterClosed()

@@ -1,0 +1,94 @@
+{
+    "APP": {
+        "TITLE": "FocusFlow",
+        "PROFILE": "Profil",
+        "LOGOUT": "Se déconnecter",
+        "SETTINGS": "Paramètres",
+        "FOOTER": {
+            "COPYRIGHT": "Tout droits réservés"
+        }
+    },
+    "LOGIN": {
+        "FORM": {
+            "TITLE": "Connectez-vous :",
+            "EMAIL": {
+                "LABEL": "Email",
+                "PLACEHOLDER": "Email",
+                "ERRORS": {
+                    "REQUIRED": "L'email est manquant",
+                    "PATTERN": "Veuillez entrer une adresse email valide"
+                }
+            },
+            "PASSWORD": {
+                "LABEL": "Mot de passe",
+                "PLACEHOLDER": "Mot de passe",
+                "ERRORS": {
+                    "REQUIRED": "Le mot de passe est manquant",
+                    "MIN_LENGTH": "Votre mot de passe doit faire au minimum 8 caractères",
+                    "PATTERN": "Votre mot de passe doit comporter au minimum une majuscule, une minuscule et un chiffre"
+                }
+            },
+            "SUBMIT": "Se connecter",
+            "ERROR_MESSAGE": "Une erreur est survenue"
+        }
+    },
+    "TASK": {
+        "TITLE": "Gestion des tâches",
+        "CARD": {
+            "LIST": {
+                "TITLES": {
+                    "PENDING": "Tâches à faire",
+                    "IN_PROGRESS": "Tâches en cours",
+                    "FINISHED": "Tâches terminées"
+                },
+                "DELETE": "Voulez-vous vraiment supprimer la tâche : ",
+                "PLACEHOLDER": "Glissez une tâche ici",
+                "TITLE": "Titre",
+                "DUE_DATE": "Date de fin : ",
+                "PRIORITY": "Priorité : ",
+                "STATUS": "Statut : "
+            },
+            "EDIT": {
+                "EDIT_MODE_TITLE": "Modifier une tâche",
+                "ADD_MODE_TITLE": "'Créer une tâche",
+                "FORM": {
+                    "TITLE": {
+                        "LABEL": "Titre",
+                        "PLACEHOLDER": "Titre",
+                        "ERROR_REQUIRED": "Le titre est manquant"
+                    },
+                    "DESCRIPTION": {
+                        "LABEL": "Description",
+                        "PLACEHOLDER": "Description",
+                        "ERROR_REQUIRED": "La description est manquante"
+                    },
+                    "PRIORITY": {
+                        "LABEL": "Priorité",
+                        "OPTIONS": {
+                            "CHOOSE": "Choisissez une priorité",
+                            "1": "1 : Basse priorité (non urgente)",
+                            "2": "2 : Moyenne priorité (à traiter prochainement)",
+                            "3": "3 : Haute priorité (critique ou urgente)"
+                        }
+                    },
+                    "STATUS": {
+                        "LABEL": "Statut",
+                        "OPTIONS": {
+                            "CHOOSE": "Choisissez un Statut",
+                            "PENDING": "A Faire",
+                            "IN_PROGRESS": "En cours",
+                            "DONE": "Terminée"
+                        }
+                    },
+                    "DUE_DATE": {
+                        "LABEL": "Choisissez une date d'échéance"
+                    },
+                    "ACTIONS": {
+                        "CANCEL": "Annuler",
+                        "SUBMIT": "Valider"
+                    }
+                }
+            }
+        }
+    }
+}

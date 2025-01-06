@@ -5,7 +5,7 @@
                 <mat-icon>menu</mat-icon>
             </button> -->
 
-            <span class="title">FocusFlow</span>
+            <span class="title">{{'APP.TITLE' | translate }}</span>
 
             @if(isLoggedIn) {
             <button mat-icon-button class="notification-icon" aria-label="Notification icon button">
@@ -13,16 +13,16 @@
             </button>
 
             <!-- Profil button with menu trigger -->
-            <button mat-button [matMenuTriggerFor]="menu">Profil</button>
+            <button mat-button [matMenuTriggerFor]="menu">{{'APP.PROFILE' | translate }}</button>
 
             <mat-menu #menu="matMenu">
                 <button mat-menu-item aria-label="logout" (click)="logout()">
                     <mat-icon>logout</mat-icon>
-                    <span>Se déconnecter</span>
+                    <span>{{'APP.LOGOUT' | translate }}</span>
                 </button>
                 <button mat-menu-item>
                     <mat-icon>settings</mat-icon>
-                    <span>Paramètres</span>
+                    <span>{{'APP.SETTINGS' | translate }}</span>
                 </button>
             </mat-menu>
             }
@@ -34,6 +34,6 @@
     </main>
 
     <footer>
-        <p>COUCOU !</p>
+        <p>{{'APP.FOOTER.COPYRIGHT' | translate }}</p>
     </footer>
 </div>

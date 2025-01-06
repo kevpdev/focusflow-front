@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { catchError, Subject, takeUntil } from 'rxjs';
 import { AuthStoreService } from '../../core/services';
 
@@ -16,7 +17,8 @@ import { AuthStoreService } from '../../core/services';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule],
+    MatCardModule,
+    TranslateModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

@@ -5,6 +5,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterOutlet } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthStoreService } from '../core/services';
 
@@ -15,7 +16,8 @@ import { AuthStoreService } from '../core/services';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    MatSidenavModule],
+    MatSidenavModule,
+    TranslateModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

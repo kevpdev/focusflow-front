@@ -1,40 +1,48 @@
 <mat-card>
-    <mat-card-title>Connectez-vous : </mat-card-title>
+    <mat-card-title>{{ 'LOGIN.FORM.TITLE' | translate }}</mat-card-title>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
         <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="Email" formControlName="email" autocomplete="username">
+            <mat-label>{{ 'LOGIN.FORM.EMAIL.LABEL' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'LOGIN.FORM.EMAIL.PLACEHOLDER' | translate }}" formControlName="email"
+                autocomplete="username">
 
-            @if(loginForm.get('email')?.hasError('required')){
-            <mat-error>L'email est manquant</mat-error>
+            @if(loginForm.get('email')?.hasError('required')) {
+            <mat-error>{{ 'LOGIN.FORM.EMAIL.ERRORS.REQUIRED' | translate }}</mat-error>
             }
-            @if(loginForm.get('email')?.hasError('pattern')){
-            <mat-error>Veuillez entrer une email valide</mat-error>
+            @if(loginForm.get('email')?.hasError('pattern')) {
+            <mat-error>{{ 'LOGIN.FORM.EMAIL.ERRORS.PATTERN' | translate }}</mat-error>
             }
         </mat-form-field>
+
         <br>
+
         <mat-form-field appearance="fill">
-            <mat-label>Mot de passe</mat-label>
-            <input matInput placeholder="Mot de passe" formControlName="password" type="password"
-                autocomplete="current-password">
+            <mat-label>{{ 'LOGIN.FORM.PASSWORD.LABEL' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'LOGIN.FORM.PASSWORD.PLACEHOLDER' | translate }}" formControlName="password"
+                type="password" autocomplete="current-password">
 
-            @if(loginForm.get('password')?.hasError('required')){
-            <mat-error>Le mot de passe est manquant</mat-error>
+            @if(loginForm.get('password')?.hasError('required')) {
+            <mat-error>{{ 'LOGIN.FORM.PASSWORD.ERRORS.REQUIRED' | translate }}</mat-error>
             }
-            @if(loginForm.get('password')?.hasError('minLength')){
-            <mat-error>Votre mot de passe doit faire au minimum 8 caractères</mat-error>
+            @if(loginForm.get('password')?.hasError('minlength')) {
+            <mat-error>{{ 'LOGIN.FORM.PASSWORD.ERRORS.MIN_LENGTH' | translate }}</mat-error>
             }
-            @if(loginForm.get('password')?.hasError('pattern')){
-            <mat-error>Votre mot de passe doit comporter au minimum une majuscule, une miniscule et un
-                chiffre</mat-error>
+            @if(loginForm.get('password')?.hasError('pattern')) {
+            <mat-error>{{ 'LOGIN.FORM.PASSWORD.ERRORS.PATTERN' | translate }}</mat-error>
             }
         </mat-form-field>
+
         <br>
-        <button mat-raised-button color="primary" type="submit">Se connecter</button>
+
+        <button mat-raised-button color="primary" type="submit">
+            {{ 'LOGIN.FORM.SUBMIT' | translate }}
+        </button>
+
         <br>
+
         @if (errorMessage) {
-        <mat-error> {{errorMessage}} </mat-error>
+        <mat-error>{{ 'LOGIN.FORM.ERROR_MESSAGE' | translate }}</mat-error>
         }
     </form>
 </mat-card>

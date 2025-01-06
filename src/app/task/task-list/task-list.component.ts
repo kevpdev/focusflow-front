@@ -4,9 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 import { map, Observable } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
 import { TaskStoreService } from '../../../core/services/task/task-store.service';
+import { TranslationService } from '../../../core/services/translation.service';
 import { UtilityService } from '../../../core/services/utility.service';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { TaskListCardComponent } from '../task-list-card/task-list-card.component';
@@ -17,7 +19,8 @@ import { TaskListCardComponent } from '../task-list-card/task-list-card.componen
   imports: [TaskListCardComponent,
     MatButtonModule,
     MatIconModule,
-    CommonModule],
+    CommonModule,
+    TranslateModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
 })
@@ -26,9 +29,9 @@ export class TaskListComponent implements OnInit {
   public inProgressTasks$!: Observable<Task[]>;
   public pendingTasks$!: Observable<Task[]>;
   public finishedTasks$!: Observable<Task[]>;
-  public inProgessTasksTitleCard = "Tâches en cours";
-  public pendingTasksTitleCard = "Tâches à faire";
-  public finishedTasksTitleCard = "Tâches terminées";
+  public inProgessTasksTitleCard: string | undefined;
+  public pendingTasksTitleCard: string | undefined;
+  public finishedTasksTitleCard: string | undefined;
   public tasksColumnId = ETaskStatus;
   public modifiedTasks: Task[] = [];
   public isEditMode = false;
@@ -36,10 +39,15 @@ export class TaskListComponent implements OnInit {
 
   constructor(private taskService: TaskStoreService,
     private dialog: MatDialog,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private translationService: TranslationService
   ) { }
 
   ngOnInit(): void {
+
+    this.pendingTasksTitleCard = this.translationService.instant('TASK.CARD.LIST.TITLES.PENDING');
+    this.inProgessTasksTitleCard = this.translationService.instant('TASK.CARD.LIST.TITLES.IN_PROGRESS');
+    this.finishedTasksTitleCard = this.translationService.instant('TASK.CARD.LIST.TITLES.FINISHED');
     this.inProgressTasks$ = this.taskService.fetchAllInProgressTasks();
     this.pendingTasks$ = this.taskService.fetchAllPendingTasks();
     this.finishedTasks$ = this.taskService.fetchFinishedTasks();

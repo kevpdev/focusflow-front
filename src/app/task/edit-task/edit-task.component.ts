@@ -6,9 +6,11 @@ import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose } from '@angular/mate
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ETaskStatus, Task } from '../../../core/models/task.model';
 import { TaskStoreService } from '../../../core/services';
+import { TranslationService } from '../../../core/services/translation.service';
 
 @Component({
   selector: 'app-edit-task',
@@ -21,7 +23,8 @@ import { TaskStoreService } from '../../../core/services';
     MatDatepickerModule,
     MatDialogClose,
     MatDialogActions,
-    MatSelectModule],
+    MatSelectModule,
+    TranslateModule],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss'
 })
@@ -41,7 +44,8 @@ export class EditTaskComponent implements OnInit, OnDestroy {
   });
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { isEditMode: boolean, task: Task },
-    private taskService: TaskStoreService) {
+    private taskService: TaskStoreService,
+    private translationService: TranslationService) {
 
     this.task = data.task;
     this.isEditMode = data.isEditMode;
@@ -58,7 +62,8 @@ export class EditTaskComponent implements OnInit, OnDestroy {
       this.initTaskForm();
     }
 
-    this.isEditMode ? this.title = 'Modifier une tâche' : this.title = 'Créer une tâche';
+    this.isEditMode ? this.title = this.translationService.instant('TASK.CARD.EDIT.EDIT_MODE_TITLE')
+      : this.title = this.translationService.instant('TASK.CARD.EDIT.ADD_MODE_TITLE');
   }
 
 

@@ -2,51 +2,60 @@
     <h2 mat-dialog-title>{{title}}</h2>
     <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill">
-            <mat-label>Titre</mat-label>
-            <input matInput placeholder="Titre" formControlName="title">
+            <mat-label>{{ 'TASK.CARD.EDIT.FORM.TITLE.LABEL' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'TASK.CARD.EDIT.FORM.TITLE.PLACEHOLDER' | translate }}"
+                formControlName="title">
 
-            @if(editForm.get('title')?.hasError('required')){
-            <mat-error>Le titre est manquant</mat-error>
+            @if(editForm.get('title')?.hasError('required')) {
+            <mat-error>{{ 'TASK.CARD.EDIT.FORM.TITLE.ERROR_REQUIRED' | translate }}</mat-error>
             }
         </mat-form-field>
+
         <mat-form-field appearance="fill">
-            <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+            <mat-label>{{ 'TASK.CARD.EDIT.FORM.DESCRIPTION.LABEL' | translate }}</mat-label>
+            <textarea matInput placeholder="{{ 'TASK.CARD.EDIT.FORM.DESCRIPTION.PLACEHOLDER' | translate }}"
+                formControlName="description"></textarea>
 
-            @if(editForm.get('description')?.hasError('required')){
-            <mat-error>La description est manquante</mat-error>
+            @if(editForm.get('description')?.hasError('required')) {
+            <mat-error>{{ 'TASK.CARD.EDIT.FORM.DESCRIPTION.ERROR_REQUIRED' | translate }}</mat-error>
             }
         </mat-form-field>
+
         <mat-form-field>
-            <mat-label>Priorité</mat-label>
+            <mat-label>{{ 'TASK.CARD.EDIT.FORM.PRIORITY.LABEL' | translate }}</mat-label>
             <mat-select matNativeControl required formControlName="priority">
-                <mat-option>Choisissez une priorité</mat-option>
-                <mat-option value="1">1 : Basse priorité (non urgente)</mat-option>
-                <mat-option value="2">2 : Moyenne priorité (à traiter prochainement)</mat-option>
-                <mat-option value="3">3 : Haute priorité (critique ou urgente)</mat-option>
+                <mat-option>{{ 'TASK.CARD.EDIT.FORM.PRIORITY.OPTIONS.CHOOSE' | translate }}</mat-option>
+                <mat-option value="1">{{ 'TASK.CARD.EDIT.FORM.PRIORITY.OPTIONS.1' | translate }}</mat-option>
+                <mat-option value="2">{{ 'TASK.CARD.EDIT.FORM.PRIORITY.OPTIONS.2' | translate }}</mat-option>
+                <mat-option value="3">{{ 'TASK.CARD.EDIT.FORM.PRIORITY.OPTIONS.3' | translate }}</mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-form-field>
-            <mat-label>Statut</mat-label>
+            <mat-label>{{ 'TASK.CARD.EDIT.FORM.STATUS.LABEL' | translate }}</mat-label>
             <mat-select matNativeControl required formControlName="status">
-                <mat-option>Choisissez un Statut</mat-option>
-                <mat-option value="PENDING">A Faire</mat-option>
-                <mat-option value="IN_PROGRESS">En cours</mat-option>
-                <mat-option value="DONE">Terminée</mat-option>
+                <mat-option>{{ 'TASK.CARD.EDIT.FORM.STATUS.OPTIONS.CHOOSE' | translate }}</mat-option>
+                <mat-option value="PENDING">{{ 'TASK.CARD.EDIT.FORM.STATUS.OPTIONS.PENDING' | translate }}</mat-option>
+                <mat-option value="IN_PROGRESS">{{ 'TASK.CARD.EDIT.FORM.STATUS.OPTIONS.IN_PROGRESS' | translate
+                    }}</mat-option>
+                <mat-option value="DONE">{{ 'TASK.CARD.EDIT.FORM.STATUS.OPTIONS.DONE' | translate }}</mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-form-field>
-            <mat-label>Choisissez une date d'échéance</mat-label>
+            <mat-label>{{ 'TASK.CARD.EDIT.FORM.DUE_DATE.LABEL' | translate }}</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="dueDate">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <mat-dialog-actions>
-            <button mat-button mat-dialog-close>Annuler</button>
-            <button mat-button [mat-dialog-close]="true" type="submit" [disabled]="!editForm.valid">Valider</button>
+            <button mat-button mat-dialog-close>{{ 'TASK.CARD.EDIT.FORM.ACTIONS.CANCEL' | translate }}</button>
+            <button mat-button [mat-dialog-close]="true" type="submit" [disabled]="!editForm.valid">
+                {{ 'TASK.CARD.EDIT.FORM.ACTIONS.SUBMIT' | translate }}
+            </button>
         </mat-dialog-actions>
-
     </form>
+
 
 </div>
