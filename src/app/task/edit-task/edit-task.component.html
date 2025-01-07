@@ -1,61 +1,75 @@
-<div class="edit-container">
-    <h2 mat-dialog-title>{{title}}</h2>
-    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'TASK.CARD.EDIT.FORM.TITLE.LABEL' | translate }}</mat-label>
-            <input matInput placeholder="{{ 'TASK.CARD.EDIT.FORM.TITLE.PLACEHOLDER' | translate }}"
-                formControlName="title">
-
+<div class="edit-container" data-cy="edit-container">
+    <h2 mat-dialog-title data-cy="edit-dialog-title">{{title}}</h2>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" data-cy="edit-form">
+        <mat-form-field appearance="fill" data-cy="edit-title-field">
+            <mat-label>{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.TITLE.LABEL' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.TITLE.PLACEHOLDER' | translate }}"
+                formControlName="title" data-cy="edit-title-input">
             @if(editForm.get('title')?.hasError('required')) {
-            <mat-error>{{ 'TASK.CARD.EDIT.FORM.TITLE.ERROR_REQUIRED' | translate }}</mat-error>
+            <mat-error data-cy="edit-title-error-required">
+                {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.TITLE.ERROR_REQUIRED' | translate }}
+            </mat-error>
             }
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'TASK.CARD.EDIT.FORM.DESCRIPTION.LABEL' | translate }}</mat-label>
-            <textarea matInput placeholder="{{ 'TASK.CARD.EDIT.FORM.DESCRIPTION.PLACEHOLDER' | translate }}"
-                formControlName="description"></textarea>
-
+        <mat-form-field appearance="fill" data-cy="edit-description-field">
+            <mat-label>{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.DESCRIPTION.LABEL' | translate }}</mat-label>
+            <textarea matInput placeholder="{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.DESCRIPTION.PLACEHOLDER' | translate }}"
+                formControlName="description" data-cy="edit-description-textarea"></textarea>
             @if(editForm.get('description')?.hasError('required')) {
-            <mat-error>{{ 'TASK.CARD.EDIT.FORM.DESCRIPTION.ERROR_REQUIRED' | translate }}</mat-error>
+            <mat-error data-cy="edit-description-error-required">
+                {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.DESCRIPTION.ERROR_REQUIRED' | translate }}
+            </mat-error>
             }
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>{{ 'TASK.CARD.EDIT.FORM.PRIORITY.LABEL' | translate }}</mat-label>
-            <mat-select matNativeControl required formControlName="priority">
-                <mat-option>{{ 'TASK.CARD.EDIT.FORM.PRIORITY.OPTIONS.CHOOSE' | translate }}</mat-option>
-                <mat-option value="1">{{ 'TASK.CARD.EDIT.FORM.PRIORITY.OPTIONS.1' | translate }}</mat-option>
-                <mat-option value="2">{{ 'TASK.CARD.EDIT.FORM.PRIORITY.OPTIONS.2' | translate }}</mat-option>
-                <mat-option value="3">{{ 'TASK.CARD.EDIT.FORM.PRIORITY.OPTIONS.3' | translate }}</mat-option>
+        <mat-form-field data-cy="edit-priority-field">
+            <mat-label>{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.PRIORITY.LABEL' | translate }}</mat-label>
+            <mat-select matNativeControl required formControlName="priority" data-cy="edit-priority-select">
+                <mat-option>{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.PRIORITY.OPTIONS.CHOOSE' | translate }}</mat-option>
+                <mat-option value="1" data-cy="edit-priority-option-1">
+                    {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.PRIORITY.OPTIONS.1' | translate }}
+                </mat-option>
+                <mat-option value="2" data-cy="edit-priority-option-2">
+                    {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.PRIORITY.OPTIONS.2' | translate }}
+                </mat-option>
+                <mat-option value="3" data-cy="edit-priority-option-3">
+                    {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.PRIORITY.OPTIONS.3' | translate }}
+                </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>{{ 'TASK.CARD.EDIT.FORM.STATUS.LABEL' | translate }}</mat-label>
-            <mat-select matNativeControl required formControlName="status">
-                <mat-option>{{ 'TASK.CARD.EDIT.FORM.STATUS.OPTIONS.CHOOSE' | translate }}</mat-option>
-                <mat-option value="PENDING">{{ 'TASK.CARD.EDIT.FORM.STATUS.OPTIONS.PENDING' | translate }}</mat-option>
-                <mat-option value="IN_PROGRESS">{{ 'TASK.CARD.EDIT.FORM.STATUS.OPTIONS.IN_PROGRESS' | translate
-                    }}</mat-option>
-                <mat-option value="DONE">{{ 'TASK.CARD.EDIT.FORM.STATUS.OPTIONS.DONE' | translate }}</mat-option>
+        <mat-form-field data-cy="edit-status-field">
+            <mat-label>{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.STATUS.LABEL' | translate }}</mat-label>
+            <mat-select matNativeControl required formControlName="status" data-cy="edit-status-select">
+                <mat-option>{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.STATUS.OPTIONS.CHOOSE' | translate }}</mat-option>
+                <mat-option value="PENDING" data-cy="edit-status-option-pending">
+                    {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.STATUS.OPTIONS.PENDING' | translate }}
+                </mat-option>
+                <mat-option value="IN_PROGRESS" data-cy="edit-status-option-in-progress">
+                    {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.STATUS.OPTIONS.IN_PROGRESS' | translate }}
+                </mat-option>
+                <mat-option value="DONE" data-cy="edit-status-option-done">
+                    {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.STATUS.OPTIONS.DONE' | translate }}
+                </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>{{ 'TASK.CARD.EDIT.FORM.DUE_DATE.LABEL' | translate }}</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="dueDate">
+        <mat-form-field data-cy="edit-due-date-field">
+            <mat-label>{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.DUE_DATE.LABEL' | translate }}</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dueDate" data-cy="edit-due-date-input">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <mat-dialog-actions>
-            <button mat-button mat-dialog-close>{{ 'TASK.CARD.EDIT.FORM.ACTIONS.CANCEL' | translate }}</button>
-            <button mat-button [mat-dialog-close]="true" type="submit" [disabled]="!editForm.valid">
-                {{ 'TASK.CARD.EDIT.FORM.ACTIONS.SUBMIT' | translate }}
+        <mat-dialog-actions data-cy="edit-actions">
+            <button mat-button mat-dialog-close data-cy="edit-cancel-button">
+                {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.ACTIONS.CANCEL' | translate }}
+            </button>
+            <button mat-button [mat-dialog-close]="true" type="submit" [disabled]="!editForm.valid"
+                data-cy="edit-submit-button">
+                {{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.ACTIONS.SUBMIT' | translate }}
             </button>
         </mat-dialog-actions>
     </form>
-
-
 </div>

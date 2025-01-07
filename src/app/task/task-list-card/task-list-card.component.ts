@@ -57,7 +57,7 @@ export class TaskListCardComponent implements OnDestroy {
   public delete(task: Task): void {
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { message: `${this.translationService.instant('TASK.CARD.LIST.DELETE')} \n ${task.title} ?` }
+      data: { message: `${this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.DELETE')} \n ${task.title} ?` }
     });
 
     dialogRef.afterClosed()

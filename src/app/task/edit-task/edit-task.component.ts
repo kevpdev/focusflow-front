@@ -62,8 +62,8 @@ export class EditTaskComponent implements OnInit, OnDestroy {
       this.initTaskForm();
     }
 
-    this.isEditMode ? this.title = this.translationService.instant('TASK.CARD.EDIT.EDIT_MODE_TITLE')
-      : this.title = this.translationService.instant('TASK.CARD.EDIT.ADD_MODE_TITLE');
+    this.isEditMode ? this.title = this.translationService.instant('TASK_MANAGEMENT.CARD.EDIT.EDIT_MODE_TITLE')
+      : this.title = this.translationService.instant('TASK_MANAGEMENT.CARD.EDIT.ADD_MODE_TITLE');
   }
 
 

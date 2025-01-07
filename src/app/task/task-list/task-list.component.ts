@@ -45,9 +45,9 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.pendingTasksTitleCard = this.translationService.instant('TASK.CARD.LIST.TITLES.PENDING');
-    this.inProgessTasksTitleCard = this.translationService.instant('TASK.CARD.LIST.TITLES.IN_PROGRESS');
-    this.finishedTasksTitleCard = this.translationService.instant('TASK.CARD.LIST.TITLES.FINISHED');
+    this.pendingTasksTitleCard = this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.TITLES.PENDING');
+    this.inProgessTasksTitleCard = this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.TITLES.IN_PROGRESS');
+    this.finishedTasksTitleCard = this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.TITLES.DONE');
     this.inProgressTasks$ = this.taskService.fetchAllInProgressTasks();
     this.pendingTasks$ = this.taskService.fetchAllPendingTasks();
     this.finishedTasks$ = this.taskService.fetchFinishedTasks();

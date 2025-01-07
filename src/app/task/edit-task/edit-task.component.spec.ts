@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 import { Task } from '../../../core/models/task.model';
 import { User } from '../../../core/models/user.model';
 import { TaskStoreService } from '../../../core/services';
@@ -24,7 +25,7 @@ describe('EditTaskComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [EditTaskComponent],
+      imports: [EditTaskComponent, TranslateModule.forRoot()],
       providers: [
         ...testProviders,
         {

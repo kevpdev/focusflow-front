@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { TranslateModule } from '@ngx-translate/core';
 import { testProviders } from '../app.test.config';
 import { DashboardComponent } from './dashboard.component';
 
@@ -9,7 +10,7 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardComponent],
+      imports: [DashboardComponent, TranslateModule.forRoot()],
       providers: [...testProviders]
     })
       .compileComponents();

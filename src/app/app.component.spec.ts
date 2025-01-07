@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { AuthStoreService } from '../core/services';
 import { AppComponent } from './app.component';
 import { testProviders } from './app.test.config';
@@ -12,7 +13,7 @@ describe('AppComponent', () => {
 
 
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, TranslateModule.forRoot()],
       providers: [
         AuthStoreService,
         ...testProviders,

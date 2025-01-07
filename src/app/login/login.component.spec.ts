@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { AuthStoreService } from '../../core/services';
 import { AuthApiService } from '../../core/services/auth/auth-api.service';
 import { testProviders } from '../app.test.config';
@@ -19,7 +20,7 @@ describe('LoginComponent', () => {
     } as Partial<AuthApiService> as jest.Mocked<AuthApiService>;
 
     await TestBed.configureTestingModule({
-      imports: [LoginComponent],
+      imports: [LoginComponent, TranslateModule.forRoot()],
       providers: [
         ...testProviders,
         AuthStoreService]
