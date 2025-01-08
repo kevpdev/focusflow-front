@@ -1,27 +1,33 @@
-# Focusflow
+# FocusFlow
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.4.
+**FocusFlow** est une application Angular conçue pour aider les développeurs, notamment ceux atteints de **TDAH**, à mieux gérer leur productivité. Elle propose des outils simples pour organiser leurs tâches, se concentrer efficacement grâce au **Mode Hyperfocus**, et suivre leur progression avec un tableau de bord.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## ✨ **Fonctionnalités**
 
-## Code scaffolding
+- **Gestion des tâches** : Créer, modifier, supprimer, et organiser les tâches par priorité et statut (à faire, en cours, terminé).
+- **Mode Hyperfocus** : Interface épurée avec un chronomètre pour minimiser les distractions.
+- **Notifications minimisées** : Rappels discrets pour les échéances et les fins de sessions.
+- **Tableau de bord** : Suivi des tâches accomplies et statistiques de productivité.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## 🛠 **Technologies utilisées**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Angular 18** : Framework principal pour le développement du front-end.
+- **Angular Material** : Bibliothèque pour les composants UI modernes et accessibles.
+- **RxJS** : Gestion des flux de données asynchrones (ex. : tâches en temps réel).
+- **Cypress** : Tests end-to-end pour valider les flux utilisateur.
+- **Jest** : Tests unitaires pour assurer la fiabilité des services et composants.
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🚀 **Installation**
 
-## Running end-to-end tests
+### 1. Cloner le projet
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+git clone https://github.com/username/focusflow-front.git
+cd focusflow
+```
