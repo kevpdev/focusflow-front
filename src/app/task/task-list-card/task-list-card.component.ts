@@ -71,6 +71,8 @@ export class TaskListCardComponent implements OnDestroy {
   }
 
   public update(task: Task) {
+    console.log('update task', task);
+
     this.updateTaskEvent.emit(task);
   }
 

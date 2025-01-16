@@ -48,9 +48,10 @@ export class TaskListComponent implements OnInit {
     this.pendingTasksTitleCard = this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.TITLES.PENDING');
     this.inProgessTasksTitleCard = this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.TITLES.IN_PROGRESS');
     this.finishedTasksTitleCard = this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.TITLES.DONE');
-    this.inProgressTasks$ = this.taskService.fetchAllInProgressTasks();
-    this.pendingTasks$ = this.taskService.fetchAllPendingTasks();
-    this.finishedTasks$ = this.taskService.fetchFinishedTasks();
+    this.taskService.fetchAllTasks();
+    this.pendingTasks$ = this.taskService.pendingTasks$;
+    this.inProgressTasks$ = this.taskService.inProgressTasks$;
+    this.finishedTasks$ = this.taskService.doneTasks$;
 
   }
 

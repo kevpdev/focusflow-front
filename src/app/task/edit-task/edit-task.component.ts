@@ -49,30 +49,48 @@ export class EditTaskComponent implements OnInit, OnDestroy {
 
     this.task = data.task;
     this.isEditMode = data.isEditMode;
-    console.log('data', data);
-    console.log('isEditMode', this.isEditMode);
-
 
   }
 
 
   ngOnInit(): void {
+    console.log('task to edit or save', this.task);
 
-    if (this.task) {
+
+    if (this.task && this.isEditMode) {
       this.initTaskForm();
+      this.setEditMode();
+    } else {
+      this.setAddMode();
     }
 
-    this.isEditMode ? this.title = this.translationService.instant('TASK_MANAGEMENT.CARD.EDIT.EDIT_MODE_TITLE')
-      : this.title = this.translationService.instant('TASK_MANAGEMENT.CARD.EDIT.ADD_MODE_TITLE');
   }
 
 
   private initTaskForm(): void {
-    this.task.title ? this.editForm.get('title')?.setValue(this.task.title) : '';
-    this.task.description ? this.editForm.get('description')?.setValue(this.task.description) : '';
-    this.task.priority ? this.editForm.get('priority')?.setValue(String(this.task.priority)) : '';
-    this.task.priority ? this.editForm.get('status')?.setValue(String(this.task.status)) : '';
-    this.task.dueDate ? this.editForm.get('dueDate')?.setValue(this.task.dueDate) : '';
+    this.editForm.patchValue({
+      title: this.task.title || '',
+      description: this.task.description || '',
+      priority: this.task.priority ? String(this.task.priority) : '',
+      status: this.task.status ? String(this.task.status) : '',
+      dueDate: this.task.dueDate || ''
+    });
+  }
+
+  /** 
+   * Configuration spécifique au mode édition 
+   */
+  private setEditMode(): void {
+    this.title = this.translationService.instant('TASK_MANAGEMENT.CARD.EDIT.EDIT_MODE_TITLE');
+    this.editForm.get('status')?.enable();  // S'assure que le champ est actif
+  }
+
+  /** 
+   * Configuration spécifique au mode ajout 
+   */
+  private setAddMode(): void {
+    this.title = this.translationService.instant('TASK_MANAGEMENT.CARD.EDIT.ADD_MODE_TITLE');
+    this.editForm.get('status')?.disable();
   }
 
 
@@ -90,7 +108,8 @@ export class EditTaskComponent implements OnInit, OnDestroy {
         description: formData.description as string,
         status: this.isEditMode ? formData.status as ETaskStatus : ETaskStatus.PENDING,
         priority: Number(formData.priority),
-        dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined
+        dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
+        userId: this.isEditMode ? this.task.userId : undefined
       });
 
       console.log('Nouvelle tâche à créer ou mdofier :', newTask);

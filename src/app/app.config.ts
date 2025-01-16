@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, LOCALE_ID, provideZoneChangeDetection, } from '@angular/core';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -25,8 +25,10 @@ export function initializeTranslation(translationService: TranslationService) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes), provideHttpClient()
-    , provideAnimationsAsync(),
+    provideRouter(routes), provideHttpClient(
+      withInterceptorsFromDi()
+    ),
+    provideAnimationsAsync(),
     provideNativeDateAdapter(),
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {

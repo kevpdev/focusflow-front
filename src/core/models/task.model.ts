@@ -1,4 +1,3 @@
-import { User } from "./user.model";
 
 export enum ETaskStatus {
     PENDING = "PENDING",
@@ -11,7 +10,7 @@ export enum ETaskStatus {
 export class Task {
     public id: number;
     public tempId: string;
-    public user: User;
+    public userId: number;
     public title: string;
     public description: string;
     public status: ETaskStatus;
@@ -23,7 +22,7 @@ export class Task {
     constructor({
         id = 0,
         tempId = '',
-        user = new User({}),
+        userId = 0,
         title = '',
         description = '',
         status = ETaskStatus.PENDING, // Remplacez par une valeur par défaut appropriée
@@ -34,7 +33,7 @@ export class Task {
     }: {
         id?: number;
         tempId?: string;
-        user?: User;
+        userId?: number;
         title?: string;
         description?: string;
         status?: ETaskStatus;
@@ -45,7 +44,7 @@ export class Task {
     }) {
         this.id = id;
         this.tempId = tempId;
-        this.user = user;
+        this.userId = userId;
         this.title = title;
         this.description = description;
         this.status = status;

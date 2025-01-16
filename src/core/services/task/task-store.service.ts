@@ -14,8 +14,20 @@ export class TaskStoreService implements ITaskStoreService {
   // BehaviorSubjects to store tasks
   private tasksSubject = new BehaviorSubject<Task[]>([]);
 
-
   private destroy$: Subject<void> = new Subject();
+
+  // Observables pour les composants
+  public pendingTasks$: Observable<Task[]> = this.tasks$.pipe(
+    map(tasks => tasks.filter(task => task.status === ETaskStatus.PENDING))
+  );
+
+  public inProgressTasks$: Observable<Task[]> = this.tasks$.pipe(
+    map(tasks => tasks.filter(task => task.status === ETaskStatus.IN_PROGRESS))
+  );
+
+  public doneTasks$: Observable<Task[]> = this.tasks$.pipe(
+    map(tasks => tasks.filter(task => task.status === ETaskStatus.DONE))
+  );
 
   constructor(private taskApiService: TaskApiService,
     private utilityService: UtilityService
@@ -65,8 +77,8 @@ export class TaskStoreService implements ITaskStoreService {
   /**
    * Retrieves all tasks
    */
-  public fetchAllTasks(): Observable<Task[]> {
-    return this.taskApiService.fetchAllTasks()
+  public fetchAllTasks(): void {
+    this.taskApiService.fetchAllTasks()
       .pipe(
         takeUntil(this.destroy$),
         tap(tasks => console.log('Task list : ', tasks)),
@@ -74,7 +86,8 @@ export class TaskStoreService implements ITaskStoreService {
           this.tasksSubject.next(tasks);
           return tasks;
         }),
-        catchError(err => this.handleError(err, 'Une erreur est survenue lors de la récupération de toutes les tâches.')));
+        catchError(err => this.handleError(err, 'Une erreur est survenue lors de la récupération de toutes les tâches.')))
+      .subscribe();
   }
 
   /**
@@ -215,6 +228,8 @@ export class TaskStoreService implements ITaskStoreService {
     }
 
   }
+
+
 
   /** CRUD TASK SUBJECT STORE **/
 

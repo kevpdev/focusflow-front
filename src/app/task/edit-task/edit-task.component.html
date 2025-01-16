@@ -39,6 +39,7 @@
             </mat-select>
         </mat-form-field>
 
+        @if(isEditMode){
         <mat-form-field data-cy="edit-status-field">
             <mat-label>{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.STATUS.LABEL' | translate }}</mat-label>
             <mat-select matNativeControl required formControlName="status" data-cy="edit-status-select">
@@ -54,6 +55,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+        }
 
         <mat-form-field data-cy="edit-due-date-field">
             <mat-label>{{ 'TASK_MANAGEMENT.CARD.EDIT.FORM.DUE_DATE.LABEL' | translate }}</mat-label>
