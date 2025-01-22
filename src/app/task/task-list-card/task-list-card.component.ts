@@ -70,6 +70,10 @@ export class TaskListCardComponent implements OnDestroy {
 
   }
 
+  public isExpired(dueDateMillisValue: number) {
+    return dueDateMillisValue < Date.now();
+  }
+
   public update(task: Task) {
     console.log('update task', task);
 

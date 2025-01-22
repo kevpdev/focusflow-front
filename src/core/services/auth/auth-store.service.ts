@@ -25,10 +25,7 @@ export class AuthStoreService {
     return this.authApiService.login(email, password)
       .pipe(
         map(userResponse => {
-          console.log('connecté', userResponse);
-
           this.setUser(userResponse);
-
           const user = new User({
             email: userResponse.email,
             roles: userResponse.roles

@@ -30,8 +30,6 @@ export class JwtInterceptor implements HttpInterceptor {
       });
     }
 
-    console.log('clonedReq', clonedReq);
-
     return next.handle(clonedReq).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && !req.url.includes('/login')) {

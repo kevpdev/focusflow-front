@@ -18,15 +18,22 @@
             <span class="title-option" data-cy="task-title">{{task.title}}</span>
             <br>
             <div class="info-option">
-                <span class="date-option" data-cy="task-due-date">
-                    {{'TASK_MANAGEMENT.CARD.LIST.DUE_DATE' | translate }}{{task.dueDate | customDate }}
-                </span>
-                <span class="priority-option" data-cy="task-priority">
-                    {{'TASK_MANAGEMENT.CARD.LIST.PRIORITY' | translate }}{{task.priority}}
-                </span>
-                <span class="priority-option" data-cy="task-status">
-                    {{'TASK_MANAGEMENT.CARD.LIST.STATUS' | translate }} {{task.status | translateTaskStatus}}
-                </span>
+                <div class="date-option" data-cy="task-due-date">
+                    <span>{{'TASK_MANAGEMENT.CARD.LIST.DUE_DATE' | translate }}{{task.dueDate | customDate }}</span>
+                    @if(isExpired(task.dueDate.getTime())){
+                    <div class="expired-message-container">
+                        <mat-icon>warning</mat-icon>
+                        <span class="duedate-expired-message">La date de fin est expirée</span>
+                    </div>
+                    }
+                </div>
+                <div class="priority-option" data-cy="task-priority">
+                    <span>{{'TASK_MANAGEMENT.CARD.LIST.PRIORITY' | translate }}{{task.priority}}</span>
+                </div>
+                <div class="priority-option" data-cy="task-status">
+                    <span>{{'TASK_MANAGEMENT.CARD.LIST.STATUS' | translate }} {{task.status |
+                        translateTaskStatus}}</span>
+                </div>
             </div>
             <mat-action-list>
                 <button mat-mini-fab (click)="update(task)" class="update-button" data-cy="update-task-button">

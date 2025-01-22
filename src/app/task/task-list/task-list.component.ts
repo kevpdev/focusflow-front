@@ -48,7 +48,7 @@ export class TaskListComponent implements OnInit {
     this.pendingTasksTitleCard = this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.TITLES.PENDING');
     this.inProgessTasksTitleCard = this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.TITLES.IN_PROGRESS');
     this.finishedTasksTitleCard = this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.TITLES.DONE');
-    this.taskService.fetchAllTasks();
+    this.taskService.fetchAllTasks().subscribe();
     this.pendingTasks$ = this.taskService.pendingTasks$;
     this.inProgressTasks$ = this.taskService.inProgressTasks$;
     this.finishedTasks$ = this.taskService.doneTasks$;
@@ -58,7 +58,7 @@ export class TaskListComponent implements OnInit {
   public saveChanges(): void {
     console.log('saveChanges');
     console.log(this.modifiedTasks);
-    this.taskService.updateTaskStatus(this.modifiedTasks);
+    this.taskService.updateTaskStatus(this.modifiedTasks).subscribe(() => this.modifiedTasks = []);
 
   }
 

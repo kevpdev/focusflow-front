@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
-import { catchError, map, takeUntil, tap } from 'rxjs/operators';
+import { catchError, map, takeUntil } from 'rxjs/operators';
 import { ETaskStatus, Task } from '../../models/task.model';
 import { ITaskStoreService } from '../interfaces/itask-store.service';
 import { UtilityService } from '../utility.service';
@@ -77,17 +77,16 @@ export class TaskStoreService implements ITaskStoreService {
   /**
    * Retrieves all tasks
    */
-  public fetchAllTasks(): void {
-    this.taskApiService.fetchAllTasks()
+  public fetchAllTasks(): Observable<Task[]> {
+    return this.taskApiService.fetchAllTasks()
       .pipe(
         takeUntil(this.destroy$),
-        tap(tasks => console.log('Task list : ', tasks)),
+        //tap(tasks => console.log('Task list : ', tasks)),
         map(tasks => {
           this.tasksSubject.next(tasks);
           return tasks;
         }),
-        catchError(err => this.handleError(err, 'Une erreur est survenue lors de la récupération de toutes les tâches.')))
-      .subscribe();
+        catchError(err => this.handleError(err, 'Une erreur est survenue lors de la récupération de toutes les tâches.')));
   }
 
   /**

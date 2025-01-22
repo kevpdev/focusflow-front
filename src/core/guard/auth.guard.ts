@@ -10,7 +10,6 @@ export const authGuard: CanActivateFn = (route, state) => {
 
     return timer(500).pipe( // Adds a 500 ms delay
         switchMap(() => {
-            console.log('isAuthenticated guard');
             return authService.isAuthenticated();
         }),
         map(() => {
