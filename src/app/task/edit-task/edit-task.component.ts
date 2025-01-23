@@ -54,16 +54,12 @@ export class EditTaskComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    console.log('task to edit or save', this.task);
-
-
     if (this.task && this.isEditMode) {
       this.initTaskForm();
       this.setEditMode();
     } else {
       this.setAddMode();
     }
-
   }
 
 
@@ -96,8 +92,6 @@ export class EditTaskComponent implements OnInit, OnDestroy {
 
 
   public onSubmit(): void {
-    console.log('form', this.editForm);
-
     if (this.editForm.valid) {
 
       const formData = this.editForm.value;
@@ -111,8 +105,6 @@ export class EditTaskComponent implements OnInit, OnDestroy {
         dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
         userId: this.isEditMode ? this.task.userId : undefined
       });
-
-      console.log('Nouvelle tâche à créer ou mdofier :', newTask);
 
       if (this.isEditMode) {
         this.taskService.updateTask(newTask).

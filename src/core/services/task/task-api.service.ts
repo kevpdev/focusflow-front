@@ -17,9 +17,7 @@ export class TaskApiService {
     }
 
     public fetchAllTasksByStatus(status: ETaskStatus): Observable<Task[]> {
-        console.log(status);
-        const options = { params: new HttpParams().set('/status', status) };
-        console.log(options);
+        const options = { params: new HttpParams().set('status', status) };
         return this.http.get<Task[]>(this.apiUrl + '/search', options);
     }
 

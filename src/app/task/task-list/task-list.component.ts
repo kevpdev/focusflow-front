@@ -56,8 +56,6 @@ export class TaskListComponent implements OnInit {
   }
 
   public saveChanges(): void {
-    console.log('saveChanges');
-    console.log(this.modifiedTasks);
     this.taskService.updateTaskStatus(this.modifiedTasks).subscribe(() => this.modifiedTasks = []);
 
   }
@@ -65,8 +63,6 @@ export class TaskListComponent implements OnInit {
 
 
   public drop(event: CdkDragDrop<Task[]>) {
-
-    console.log('event', event);
 
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -100,7 +96,6 @@ export class TaskListComponent implements OnInit {
 
       // Ajout de la tache dans la liste des tâches modifiées
       let taskFound = this.modifiedTasks.find(task => selectedTask.id === task.id);
-      console.log(taskFound);
 
       if (!taskFound) {
         this.modifiedTasks.push(selectedTask);
@@ -118,7 +113,6 @@ export class TaskListComponent implements OnInit {
   }
 
   public updateTask(task: Task): void {
-    console.log('updateTask', task);
     this.isEditMode = true;
     const dialogRef = this.dialog.open(EditTaskComponent, {
       data: {
@@ -129,8 +123,6 @@ export class TaskListComponent implements OnInit {
   }
 
   public deleteTask(task: Task): void {
-
-    console.log('deleteTask', task.status);
 
     let updatedTasks$;
 
@@ -161,12 +153,8 @@ export class TaskListComponent implements OnInit {
         break;
     }
 
-    console.log('updatedTasks$', updatedTasks$);
-
     if (updatedTasks$) {
-      this.taskService.deleteTask(task.id).subscribe(() => {
-        console.log("La tâche a bien été supprimée : ", task.id);
-      })
+      this.taskService.deleteTask(task.id).subscribe();
     }
   }
 

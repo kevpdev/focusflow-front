@@ -80,7 +80,6 @@ export class AuthStoreService {
     return this.authApiService.logout()
       .pipe(
         tap(() => {
-          console.log('logout');
 
           this.userInfoSubject.next(null);
           this.isAuthenticatedSubject.next(false);

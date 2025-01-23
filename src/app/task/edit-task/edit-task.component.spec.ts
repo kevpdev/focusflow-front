@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { Task } from '../../../core/models/task.model';
-import { User } from '../../../core/models/user.model';
 import { TaskStoreService } from '../../../core/services';
 import { testProviders } from '../../app.test.config';
 import { EditTaskComponent } from './edit-task.component';
@@ -20,7 +19,7 @@ describe('EditTaskComponent', () => {
         id: 1,
         title: "Laver le linge",
         description: "",
-        user: new User({ email: 'toto@gmail.com' })
+        userId: 2
       })
     };
 

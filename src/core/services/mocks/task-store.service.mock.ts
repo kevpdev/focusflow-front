@@ -14,6 +14,18 @@ export class TaskStoreServiceMock implements ITaskStoreService {
     // public observables for components
     readonly tasks$ = this.tasksSubject.asObservable();
 
+    public pendingTasks$: Observable<Task[]> = this.tasks$.pipe(
+        map(tasks => tasks.filter(task => task.status === ETaskStatus.PENDING))
+    );
+
+    public inProgressTasks$: Observable<Task[]> = this.tasks$.pipe(
+        map(tasks => tasks.filter(task => task.status === ETaskStatus.IN_PROGRESS))
+    );
+
+    public doneTasks$: Observable<Task[]> = this.tasks$.pipe(
+        map(tasks => tasks.filter(task => task.status === ETaskStatus.DONE))
+    );
+
     private mockTasks: Task[] = [
         new Task({
             id: 1,
@@ -89,7 +101,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * @returns An observable emitting the list of all tasks.
      */
     public fetchAllTasks(): Observable<Task[]> {
-        console.log('Mock: Fetching all tasks');
+        //console.log('Mock: Fetching all tasks');
         this.tasksSubject.next(this.mockTasks);
         return this.tasks$;
     }
@@ -100,7 +112,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * @returns An observable emitting the filtered tasks.
      */
     public fetchTasksByStatus(status: ETaskStatus): Observable<Task[]> {
-        console.log(`Mock: Fetching tasks with status ${status}`);
+        //console.log(`Mock: Fetching tasks with status ${status}`);
         return this.fetchAllTasks().pipe(
             map(tasks => tasks.filter(task => task.status === status))
         );
@@ -136,7 +148,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * @returns An observable emitting the list of updated tasks.
      */
     public updateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
-        console.log('Mock: Updating task statuses');
+        //console.log('Mock: Updating task statuses');
         const updatedTasks = this.currentTasks().map(currentTask => {
             const modifiedTask = modifiedTasks.find(task => task.id === currentTask.id);
             if (modifiedTask) {
@@ -155,7 +167,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * @returns An observable emitting the updated task.
      */
     public updateTask(updatedTask: Task): Observable<Task> {
-        console.log("Mock: Updating a task");
+        //console.log("Mock: Updating a task");
         const currentTasks = this.currentTasks();
         const taskIndex = currentTasks.findIndex(task => task.id === updatedTask.id);
 

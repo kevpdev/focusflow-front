@@ -36,7 +36,6 @@ export class UtilityService {
    * @returns The key of the enum corresponding to the value, or the default key if no match is found.
    */
   public getEnumKeyFromValue<T extends Object>(enumType: T, value: string, defaultKeyResponse: keyof T): keyof T {
-    console.log('enumType', enumType);
 
     const key = Object.keys(enumType).find(key => enumType[key as keyof T] === value);
     if (!key) {

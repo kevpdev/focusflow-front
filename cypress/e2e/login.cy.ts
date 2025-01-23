@@ -3,20 +3,26 @@ describe('Login Page Tests', () => {
     const language = ['fr', 'en']
 
     beforeEach(() => {
-        cy.fixture(`i18n/${language[0]}.json`).then((data) => {
-            translate = data;
+        cy.request(`http://localhost:4200/assets/i18n/${language[0]}.json`).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.wrap(response.body).as('translations');
         });
 
         cy.visit('http://localhost:4200');
     });
 
     it('should display the page title', () => {
-        cy.get('.title').contains(translate.APP.TITLE);
+        cy.get('@translations').then((translate: any) => {
+            cy.get('.title').contains(translate.APP.TITLE);
+        });
     });
 
     it('should display the login card and form', () => {
-        cy.get('.mat-mdc-card-title').contains(translate.LOGIN.FORM.TITLE);
-        cy.get('[data-cy=login-form]').should('be.visible');
+        cy.get('@translations').then((translate: any) => {
+            cy.get('.mat-mdc-card-title').contains(translate.LOGIN.FORM.TITLE);
+            cy.get('[data-cy=login-form]').should('be.visible');
+        });
+
     });
 
     it('should display all form elements', () => {

@@ -23,7 +23,7 @@ describe('TaskApiService', () => {
 
         httpTesting = TestBed.inject(HttpTestingController);
         service = TestBed.inject(TaskApiService);
-        apiUrl = environment.apiURL + 'tasks/';
+        apiUrl = environment.apiURL + 'tasks';
 
         mockTasks = [
             new Task({
@@ -35,6 +35,7 @@ describe('TaskApiService', () => {
                 dueDate: new Date('2024-06-01'),
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                userId: 2
             }),
             new Task({
                 id: 2,
@@ -45,6 +46,7 @@ describe('TaskApiService', () => {
                 dueDate: new Date('2024-06-05'),
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                userId: 2
             })
         ];
     });
@@ -103,7 +105,7 @@ describe('TaskApiService', () => {
             });
 
         // Test url and request
-        const req = httpTesting.expectOne(`${apiUrl}search?status=${status}`);
+        const req = httpTesting.expectOne(`${apiUrl}/search?status=${status}`);
         expect(req.request.method).toBe('GET');
         req.flush(result);
 
@@ -119,7 +121,7 @@ describe('TaskApiService', () => {
             });
 
         // Test url and request
-        const req = httpTesting.expectOne(`${apiUrl}${taskId}`);
+        const req = httpTesting.expectOne(`${apiUrl}/${taskId}`);
         expect(req.request.method).toBe('DELETE');
         req.flush(result)
 
@@ -144,8 +146,8 @@ describe('TaskApiService', () => {
             });
 
         // Test URL and request
-        const req = httpTesting.expectOne(`${apiUrl}status`);
-        expect(req.request.method).toBe('POST');
+        const req = httpTesting.expectOne(`${apiUrl}/status`);
+        expect(req.request.method).toBe('PUT');
         expect(req.request.body).toEqual(modifiedTasks);
         req.flush(modifiedTasks);
     });
@@ -159,6 +161,7 @@ describe('TaskApiService', () => {
             dueDate: new Date('2024-06-05'),
             createdAt: new Date(),
             updatedAt: new Date(),
+            userId: 1
         });
 
         service.fetchUpdateTask(modifiedTask)
@@ -167,8 +170,8 @@ describe('TaskApiService', () => {
             });
 
         // Test URL and request
-        const req = httpTesting.expectOne(apiUrl);
-        expect(req.request.method).toBe('POST');
+        const req = httpTesting.expectOne(apiUrl + `/${modifiedTask.id}`);
+        expect(req.request.method).toBe('PUT');
         expect(req.request.body).toEqual(modifiedTask);
         req.flush(modifiedTask);
     });

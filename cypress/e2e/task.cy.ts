@@ -1,18 +1,20 @@
-describe('task management dashboard test', () => {
-    let translate: any;
-    const language = ['fr', 'en']
+const language = ['fr', 'en'];
 
+describe('Task Management Dashboard - General Tests', () => {
     beforeEach(() => {
-        cy.fixture(`i18n/${language[0]}.json`).then((data) => {
-            translate = data;
+        cy.request(`http://localhost:4200/assets/i18n/${language[0]}.json`).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.wrap(response.body).as('translations');
         });
 
         cy.visit('http://localhost:4200/dashboard');
     });
 
     it('should display the task management title', () => {
-        cy.get("[data-cy='task-management-title']")
-            .contains(translate.TASK_MANAGEMENT.TITLE);
+        cy.get('@translations').then((translate: any) => {
+            cy.get("[data-cy='task-management-title']")
+                .contains(translate.TASK_MANAGEMENT.TITLE);
+        });
     });
 
     it('should display task management buttons with correct states', () => {
@@ -24,14 +26,16 @@ describe('task management dashboard test', () => {
     });
 
     it('should display all task columns with correct titles', () => {
-        cy.get('[data-cy="column-pending"]').should('be.visible')
-            .contains(translate.TASK_MANAGEMENT.CARD.LIST.TITLES.PENDING);
+        cy.get('@translations').then((translate: any) => {
+            cy.get('[data-cy="column-pending"]').should('be.visible')
+                .contains(translate.TASK_MANAGEMENT.CARD.LIST.TITLES.PENDING);
 
-        cy.get('[data-cy="column-in-progress"]').should('be.visible')
-            .contains(translate.TASK_MANAGEMENT.CARD.LIST.TITLES.IN_PROGRESS);
+            cy.get('[data-cy="column-in-progress"]').should('be.visible')
+                .contains(translate.TASK_MANAGEMENT.CARD.LIST.TITLES.IN_PROGRESS);
 
-        cy.get('[data-cy="column-done"]').should('be.visible')
-            .contains(translate.TASK_MANAGEMENT.CARD.LIST.TITLES.DONE);
+            cy.get('[data-cy="column-done"]').should('be.visible')
+                .contains(translate.TASK_MANAGEMENT.CARD.LIST.TITLES.DONE);
+        });
     });
 
     it('should display task cards in each column', () => {
@@ -48,9 +52,18 @@ describe('task management dashboard test', () => {
         cy.get('[data-cy="column-done"]').within(() => {
             cy.get('[data-cy="task-card"]').should('exist');
         });
-
     });
+});
 
+describe('Task Card - Elements and Actions', () => {
+    beforeEach(() => {
+        cy.request(`http://localhost:4200/assets/i18n/${language[0]}.json`).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.wrap(response.body).as('translations');
+        });
+
+        cy.visit('http://localhost:4200/dashboard');
+    });
 
     it('should display all elements in card task', () => {
         cy.get('[data-cy="task-title"]').should('be.visible');
@@ -58,28 +71,41 @@ describe('task management dashboard test', () => {
         cy.get('[data-cy="task-status"]').should('be.visible');
         cy.get('[data-cy="update-task-button"]').should('be.visible');
         cy.get('[data-cy="delete-task-button"]').should('be.visible');
-
     });
 
     it('should display all elements of the edit form', () => {
-        cy.get('[data-cy="update-task-button"]').first().click();
-        cy.wait(2000);
-        cy.get('[data-cy="edit-container"]').should('be.visible');
-        cy.get('[data-cy="edit-dialog-title"]').should('be.visible')
-            .contains(translate.TASK_MANAGEMENT.CARD.EDIT.EDIT_MODE_TITLE);
-        cy.get('[data-cy="edit-title-field"]').should('be.visible');
+        cy.get('@translations').then((translate: any) => {
+            cy.get('[data-cy="update-task-button"]').first().click();
+            cy.wait(2000);
+            cy.get('[data-cy="edit-container"]').should('be.visible');
+            cy.get('[data-cy="edit-dialog-title"]').should('be.visible')
+                .contains(translate.TASK_MANAGEMENT.CARD.EDIT.EDIT_MODE_TITLE);
+            cy.get('[data-cy="edit-title-field"]').should('be.visible');
+        });
     });
 
     it('should display all elements of the add form', () => {
-        cy.get('[data-cy="add-task-button"]').first().click();
-        cy.wait(2000);
-        cy.get('[data-cy="edit-container"]').should('be.visible');
-        cy.get('[data-cy="edit-dialog-title"]').should('be.visible')
-            .contains(translate.TASK_MANAGEMENT.CARD.EDIT.ADD_MODE_TITLE);
-        cy.get('[data-cy="edit-title-field"]').should('be.visible');
-        cy.get('[data-cy="edit-submit-button"]').should('be.disabled');
+        cy.get('@translations').then((translate: any) => {
+            cy.get('[data-cy="add-task-button"]').first().click();
+            cy.wait(2000);
+            cy.get('[data-cy="edit-container"]').should('be.visible');
+            cy.get('[data-cy="edit-dialog-title"]').should('be.visible')
+                .contains(translate.TASK_MANAGEMENT.CARD.EDIT.ADD_MODE_TITLE);
+            cy.get('[data-cy="edit-title-field"]').should('be.visible');
+            cy.get('[data-cy="edit-submit-button"]').should('be.disabled');
+        });
     });
+});
 
+describe('Task Card - Confirmation Dialogs', () => {
+    beforeEach(() => {
+        cy.request(`http://localhost:4200/assets/i18n/${language[0]}.json`).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.wrap(response.body).as('translations');
+        });
+
+        cy.visit('http://localhost:4200/dashboard');
+    });
 
     it('should display the confirmation dialog when delete card button is clicked', () => {
         cy.get('[data-cy="delete-task-button"]').first().click();
@@ -102,5 +128,4 @@ describe('task management dashboard test', () => {
         cy.get('[data-cy="dialog-confirm-button"]').click();
         cy.get('[data-cy="dialog-container"]').should('not.exist');
     });
-
 });
