@@ -3,7 +3,7 @@ describe('Login Page Tests', () => {
     const language = ['fr', 'en']
 
     beforeEach(() => {
-        cy.request(`http://localhost:4200/assets/i18n/${language[0]}.json`).then((response) => {
+        cy.request(`http://localhost:4200/i18n/${language[0]}.json`).then((response) => {
             expect(response.status).to.eq(200);
             cy.wrap(response.body).as('translations');
         });

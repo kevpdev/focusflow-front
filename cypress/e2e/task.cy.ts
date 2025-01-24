@@ -2,7 +2,7 @@ const language = ['fr', 'en'];
 
 describe('Task Management Dashboard - General Tests', () => {
     beforeEach(() => {
-        cy.request(`http://localhost:4200/assets/i18n/${language[0]}.json`).then((response) => {
+        cy.request(`http://localhost:4200/i18n/${language[0]}.json`).then((response) => {
             expect(response.status).to.eq(200);
             cy.wrap(response.body).as('translations');
         });
@@ -57,7 +57,7 @@ describe('Task Management Dashboard - General Tests', () => {
 
 describe('Task Card - Elements and Actions', () => {
     beforeEach(() => {
-        cy.request(`http://localhost:4200/assets/i18n/${language[0]}.json`).then((response) => {
+        cy.request(`http://localhost:4200/i18n/${language[0]}.json`).then((response) => {
             expect(response.status).to.eq(200);
             cy.wrap(response.body).as('translations');
         });
@@ -99,7 +99,7 @@ describe('Task Card - Elements and Actions', () => {
 
 describe('Task Card - Confirmation Dialogs', () => {
     beforeEach(() => {
-        cy.request(`http://localhost:4200/assets/i18n/${language[0]}.json`).then((response) => {
+        cy.request(`http://localhost:4200/i18n/${language[0]}.json`).then((response) => {
             expect(response.status).to.eq(200);
             cy.wrap(response.body).as('translations');
         });

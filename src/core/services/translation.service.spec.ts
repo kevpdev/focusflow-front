@@ -8,7 +8,7 @@ import { TranslationService } from './translation.service';
 
 // Factory pour charger les traductions
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, '/i18n/', '.json');
 }
 
 describe('TranslationService', () => {
