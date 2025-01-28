@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
     useMocks: false,
-    apiURL: ''
+    apiURL: 'https://focusflow-back.onrender.com/api/v1/'
 };
