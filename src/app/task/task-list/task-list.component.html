@@ -1,0 +1,39 @@
+<div class="task-container" data-cy="task-container">
+        <h1 data-cy="task-management-title">{{'TASK_MANAGEMENT.TITLE' | translate }}</h1>
+        <div class="action" data-cy="task-actions">
+                <button mat-mini-fab (click)="addNewTask()" class="add-task-button" data-cy="add-task-button">
+                        <mat-icon>add</mat-icon>
+                </button>
+                <button mat-mini-fab (click)="saveChanges()"
+                        [ngClass]="{'save-button-enabled': modifiedTasks.length > 0}"
+                        [disabled]="modifiedTasks.length === 0" data-cy="save-changes-button">
+                        <mat-icon>save</mat-icon>
+                </button>
+        </div>
+        <div class="task-board" data-cy="task-board">
+                <div class="column-status" data-cy="column-pending">
+                        <app-task-list-card [tasks$]="pendingTasks$" [title]="pendingTasksTitleCard"
+                                [tasksColumnId]="tasksColumnId.PENDING"
+                                [connectTo]="[tasksColumnId.IN_PROGRESS, tasksColumnId.DONE]" (dropEvent)="drop($event)"
+                                (deleteTaskEvent)="deleteTask($event)" (updateTaskEvent)="updateTask($event)"
+                                data-cy="task-list-card-pending">
+                        </app-task-list-card>
+                </div>
+                <div class="column-status" data-cy="column-in-progress">
+                        <app-task-list-card [tasks$]="inProgressTasks$" [title]="inProgessTasksTitleCard"
+                                [tasksColumnId]="tasksColumnId.IN_PROGRESS"
+                                [connectTo]="[tasksColumnId.PENDING, tasksColumnId.DONE]" (dropEvent)="drop($event)"
+                                (deleteTaskEvent)="deleteTask($event)" (updateTaskEvent)="updateTask($event)"
+                                data-cy="task-list-card-in-progress">
+                        </app-task-list-card>
+                </div>
+                <div class="column-status" data-cy="column-done">
+                        <app-task-list-card [tasks$]="finishedTasks$" [title]="finishedTasksTitleCard"
+                                [tasksColumnId]="tasksColumnId.DONE"
+                                [connectTo]="[tasksColumnId.PENDING, tasksColumnId.IN_PROGRESS]"
+                                (dropEvent)="drop($event)" (deleteTaskEvent)="deleteTask($event)"
+                                (updateTaskEvent)="updateTask($event)" data-cy="task-list-card-done">
+                        </app-task-list-card>
+                </div>
+        </div>
+</div>

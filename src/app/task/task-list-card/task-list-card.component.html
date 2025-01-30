@@ -1,0 +1,50 @@
+<div class="header" data-cy="task-list-header">
+    <h4 mat-card-title>{{title}}</h4>
+</div>
+
+@if(tasks$ | async; as tasks) {
+<div class="task-list-card-content" data-cy="task-list-content">
+    <div cdkDropList [id]="tasksColumnId" [cdkDropListData]="tasks" [cdkDropListConnectedTo]="connectTo"
+        class="task-list" (cdkDropListDropped)="onDrop($event)" data-cy="task-list">
+
+        @if (tasks.length === 0) {
+        <div class="placeholder" data-cy="task-list-placeholder">
+            {{'TASK_MANAGEMENT.CARD.LIST.PLACEHOLDER' | translate }}
+        </div>
+        }
+
+        @for (task of tasks; track task.id) {
+        <mat-card class="task-card" cdkDrag data-cy="task-card">
+            <span class="title-option" data-cy="task-title">{{task.title}}</span>
+            <br>
+            <div class="info-option">
+                <div class="date-option" data-cy="task-due-date">
+                    <span>{{'TASK_MANAGEMENT.CARD.LIST.DUE_DATE' | translate }}{{task.dueDate | customDate }}</span>
+                    @if(isExpired(task.dueDate.getTime())){
+                    <div class="expired-message-container">
+                        <mat-icon>warning</mat-icon>
+                        <span class="duedate-expired-message">La date de fin est expirée</span>
+                    </div>
+                    }
+                </div>
+                <div class="priority-option" data-cy="task-priority">
+                    <span>{{'TASK_MANAGEMENT.CARD.LIST.PRIORITY' | translate }}{{task.priority}}</span>
+                </div>
+                <div class="priority-option" data-cy="task-status">
+                    <span>{{'TASK_MANAGEMENT.CARD.LIST.STATUS' | translate }} {{task.status |
+                        translateTaskStatus}}</span>
+                </div>
+            </div>
+            <mat-action-list>
+                <button mat-mini-fab (click)="update(task)" class="update-button" data-cy="update-task-button">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab (click)="delete(task)" class="delete-button" data-cy="delete-task-button">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-action-list>
+        </mat-card>
+        }
+    </div>
+</div>
+}

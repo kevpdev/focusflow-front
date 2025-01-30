@@ -1,0 +1,60 @@
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+.task-card {
+    margin-top: 32px;
+    padding: clamp(4px, 2vw, 8px)
+}
+
+mat-list-option {
+    border-bottom: 1px solid gainsboro;
+}
+
+
+.info-option {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    font-size: 12px;
+    color: blue;
+}
+
+// .info-option span {
+//     display: grid;
+//     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+//     white-space: nowrap; /* Empêche le texte du span de se casser*/
+//     overflow: hidden;
+//     //text-overflow: ellipsis; /* Ajoute ... si texte trop grand */
+// }
+
+.info-option > div {
+    display: flex;
+    flex-direction: column; /* Pour gérer les sous-éléments */
+  }
+
+.expired-message-container {
+    display: flex;
+    gap: 4px;
+}
+.expired-message-container mat-icon {
+    color: red !important;
+}
+
+mat-action-list button {
+    margin-right: 8px;
+}
+
+.delete-button {
+    background-color: var(--background-button-delete);
+}
+
+.update-button {
+    background-color: var(--background-button-update);
+}
+
+.duedate-expired-message {
+    color: red;
+}
+
