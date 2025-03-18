@@ -90,5 +90,17 @@
                 }
             }
         }
+    },
+    "HYPER_FOCUS": {
+        "TITLE": "Start a hyperfocus session",
+        "CHECKLIST": {
+            "PHONE_MODE": "Enable airplane mode or 'Do not disturb' on the phone",
+            "PC_MODE": "Enable 'Do not disturb' on the PC",
+            "CLOSE_MESSAGING": "Close messaging apps",
+            "CLEAN_WORKSPACE": "Tidy up my workspace",
+            "PREPARE_MATERIAL": "Prepare my materials (notebook, water, etc.)",
+            "SET_GOAL": "Define my goal for this session"
+        },
+        "START_BUTTON": "Start"
     }
 }

@@ -90,5 +90,17 @@
                 }
             }
         }
+    },
+    "HYPER_FOCUS": {
+        "TITLE": "Démarrer une session hyperfocus",
+        "CHECKLIST": {
+            "PHONE_MODE": "Activer le mode avion ou \"Ne pas déranger\" sur le téléphone",
+            "PC_MODE": "Activer \"Ne pas déranger\" sur le PC",
+            "CLOSE_MESSAGING": "Fermer les applications de messagerie",
+            "CLEAN_WORKSPACE": "Ranger mon espace de travail",
+            "PREPARE_MATERIAL": "Préparer mon matériel (carnet, eau, etc.)",
+            "SET_GOAL": "Définir mon objectif pour cette session"
+        },
+        "START_BUTTON": "Démarrer"
     }
 }

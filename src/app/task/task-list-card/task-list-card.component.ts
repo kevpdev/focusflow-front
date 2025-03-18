@@ -54,7 +54,7 @@ export class TaskListCardComponent implements OnDestroy {
 
   constructor(private dialog: MatDialog, private translationService: TranslationService) { }
 
-  public delete(task: Task): void {
+  delete(task: Task): void {
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { message: `${this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.DELETE')} \n ${task.title} ?` }
@@ -70,16 +70,20 @@ export class TaskListCardComponent implements OnDestroy {
 
   }
 
-  public isExpired(dueDateMillisValue: number) {
+  startOnResumeHyperfocus() {
+
+  }
+
+  isExpired(dueDateMillisValue: number) {
     return dueDateMillisValue < Date.now();
   }
 
-  public update(task: Task) {
+  update(task: Task) {
 
     this.updateTaskEvent.emit(task);
   }
 
-  public onDrop(event: CdkDragDrop<Task[]>) {
+  onDrop(event: CdkDragDrop<Task[]>) {
     this.dropEvent.emit(event);
   }
 
