@@ -2,7 +2,7 @@ import { provideHttpClient } from "@angular/common/http";
 import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { environment } from "../../../environments/environment.development";
-import { ETaskStatus, Task } from "../../models/task.model";
+import { EStatus, Task } from "../../models/task.model";
 import { TaskApiService } from "./task-api.service";
 
 
@@ -30,7 +30,7 @@ describe('TaskApiService', () => {
                 id: 1,
                 title: 'Configurer Angular',
                 description: 'Mettre en place l\'architecture du projet',
-                status: ETaskStatus.PENDING,
+                status: EStatus.PENDING,
                 priority: 1,
                 dueDate: new Date('2024-06-01'),
                 createdAt: new Date(),
@@ -41,7 +41,7 @@ describe('TaskApiService', () => {
                 id: 2,
                 title: 'Créer des composants',
                 description: 'Créer les composants principaux pour le tableau de bord',
-                status: ETaskStatus.IN_PROGRESS,
+                status: EStatus.IN_PROGRESS,
                 priority: 2,
                 dueDate: new Date('2024-06-05'),
                 createdAt: new Date(),
@@ -64,7 +64,7 @@ describe('TaskApiService', () => {
                 id: 1,
                 title: 'Configurer Angular',
                 description: 'Mettre en place l\'architecture du projet',
-                status: ETaskStatus.PENDING,
+                status: EStatus.PENDING,
                 priority: 1,
                 dueDate: new Date('2024-06-01'),
                 createdAt: new Date(),
@@ -74,7 +74,7 @@ describe('TaskApiService', () => {
                 id: 2,
                 title: 'Créer des composants',
                 description: 'Créer les composants principaux pour le tableau de bord',
-                status: ETaskStatus.IN_PROGRESS,
+                status: EStatus.IN_PROGRESS,
                 priority: 2,
                 dueDate: new Date('2024-06-05'),
                 createdAt: new Date(),
@@ -97,7 +97,7 @@ describe('TaskApiService', () => {
 
     it('should fetch all tasks by status', () => {
 
-        const status = ETaskStatus.PENDING;
+        const status = EStatus.PENDING;
         const result = mockTasks.filter(task => task.status === status);
         service.fetchAllTasksByStatus(status)
             .subscribe(tasks => {
@@ -132,7 +132,7 @@ describe('TaskApiService', () => {
             new Task({
                 id: 1,
                 title: 'Configurer Angular',
-                status: ETaskStatus.DONE,
+                status: EStatus.DONE,
                 priority: 1,
                 dueDate: new Date('2024-06-01'),
                 createdAt: new Date(),
@@ -156,7 +156,7 @@ describe('TaskApiService', () => {
         const modifiedTask = new Task({
             id: 2,
             title: 'Créer des composants',
-            status: ETaskStatus.DONE,
+            status: EStatus.DONE,
             priority: 2,
             dueDate: new Date('2024-06-05'),
             createdAt: new Date(),
@@ -180,7 +180,7 @@ describe('TaskApiService', () => {
         const newTask = new Task({
             id: 3,
             title: 'Créer un formulaire',
-            status: ETaskStatus.PENDING,
+            status: EStatus.PENDING,
             priority: 3,
             dueDate: new Date('2024-06-10'),
             createdAt: new Date(),

@@ -8,9 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
-import { ETaskStatus, Task } from '../../../core/models/task.model';
+import { EStatus } from 'src/core/models';
+import { Task } from '../../../core/models/task.model';
 import { TaskStoreService } from '../../../core/services';
-import { TranslationService } from '../../../core/services/translation.service';
+import { TranslationService } from '../../../core/services/ui/translation/translation.service';
 
 @Component({
   selector: 'app-edit-task',
@@ -100,7 +101,7 @@ export class EditTaskComponent implements OnInit, OnDestroy {
         id: this.isEditMode ? this.task.id : undefined,
         title: formData.title as string,
         description: formData.description as string,
-        status: this.isEditMode ? formData.status as ETaskStatus : ETaskStatus.PENDING,
+        status: this.isEditMode ? formData.status as EStatus : EStatus.PENDING,
         priority: Number(formData.priority),
         dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
         userId: this.isEditMode ? this.task.userId : undefined

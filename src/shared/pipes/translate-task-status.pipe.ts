@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ETaskStatus } from '../../core/models/task.model';
+import { EStatus } from '../../core/models';
 
 @Pipe({
   name: 'translateTaskStatus',
@@ -7,15 +7,15 @@ import { ETaskStatus } from '../../core/models/task.model';
 })
 export class TranslateTaskStatusPipe implements PipeTransform {
 
-  private statusLabels: Record<ETaskStatus, string> = {
-    [ETaskStatus.PENDING]: "A faire",
-    [ETaskStatus.IN_PROGRESS]: "En cours",
-    [ETaskStatus.DONE]: "Terminée",
-    [ETaskStatus.CANCELLED]: "Annulée",
-    [ETaskStatus.NO_STATUS]: "Sans statut",
+  private statusLabels: Record<EStatus, string> = {
+    [EStatus.PENDING]: "A faire",
+    [EStatus.IN_PROGRESS]: "En cours",
+    [EStatus.DONE]: "Terminée",
+    [EStatus.CANCELLED]: "Annulée",
+    [EStatus.NO_STATUS]: "Sans statut",
   }
 
-  transform(value: ETaskStatus): string {
+  transform(value: EStatus): string {
     return this.statusLabels[value] || "Statut inconnu";
   }
 

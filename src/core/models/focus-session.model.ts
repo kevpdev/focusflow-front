@@ -1,4 +1,4 @@
-import { EStatus } from "./status.enum";
+import { EStatus } from "./enums/status.enum";
 
 export class FocusSession {
     public id: number;

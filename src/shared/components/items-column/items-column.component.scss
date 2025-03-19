@@ -1,0 +1,15 @@
+.column-item {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px;
+    overflow: auto;
+    background-color: var(--background-board-column);
+    height: 100%;
+    
+}
+
+.item-container {
+    border: 1px solid black;
+    border-radius: 12px;
+    min-height: 15%;
+}

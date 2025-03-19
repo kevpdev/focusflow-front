@@ -32,6 +32,13 @@
             "ERROR_MESSAGE": "An error occurred"
         }
     },
+    "KANBAN": {
+        "COLUMN": {
+            "PENDING": "Pending",
+            "IN_PROGRESS": "In Progress",
+            "DONE": "Done"
+        }
+    },
     "TASK_MANAGEMENT": {
         "TITLE": "Task Management",
         "CARD": {

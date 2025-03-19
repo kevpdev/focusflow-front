@@ -8,6 +8,7 @@
 @use './variables';
 @use './components';
 @use './typographies';
+@use './layout';
 
 
 @include mat.core();

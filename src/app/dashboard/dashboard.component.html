@@ -1,3 +1,10 @@
 <div class="dashboard-container">
-    <app-task-list></app-task-list>
+    <mat-tab-group class="mat-tab-dashboard">
+        <mat-tab label="task-container">
+            <app-task-container></app-task-container>
+        </mat-tab>
+        <mat-tab label="task-list">
+            <app-task-list></app-task-list>
+        </mat-tab>
+    </mat-tab-group>
 </div>

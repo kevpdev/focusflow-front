@@ -11,7 +11,7 @@ import { AuthStoreService } from '../core/services/auth/auth-store.service';
 import { AuthStoreServiceMock } from '../core/services/mocks/auth-store.service.mock';
 import { TaskStoreServiceMock } from '../core/services/mocks/task-store.service.mock';
 import { TaskStoreService } from '../core/services/task/task-store.service';
-import { TranslationService } from '../core/services/translation.service';
+import { TranslationService } from '../core/services/ui/translation/translation.service';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 

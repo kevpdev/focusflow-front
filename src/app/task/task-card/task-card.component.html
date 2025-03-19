@@ -1,0 +1,33 @@
+@if(task){
+<mat-card class="task-card" data-cy="task-card">
+    <span class="title-option" data-cy="task-title">{{task.title}}</span>
+    <div class="info-option">
+        <div class="date-option" data-cy="task-due-date">
+            <span>{{'TASK_MANAGEMENT.CARD.LIST.DUE_DATE' | translate }}{{task.dueDate | customDate }}</span>
+            @if(isExpired(task.dueDate.getTime())){
+            <div class="expired-message-container">
+                <mat-icon>warning</mat-icon>
+                <span class="duedate-expired-message">La date de fin est expirée</span>
+            </div>
+            }
+        </div>
+        <div class="priority-option" data-cy="task-priority">
+            <span>{{'TASK_MANAGEMENT.CARD.LIST.PRIORITY' | translate }}{{task.priority}}</span>
+        </div>
+        <div class="priority-option" data-cy="task-status">
+            <span>{{'TASK_MANAGEMENT.CARD.LIST.STATUS' | translate }} {{task.status |
+                translateTaskStatus}}</span>
+        </div>
+    </div>
+    <mat-action-list>
+        <button mat-mini-fab (click)="update(task)" class="update-button" data-cy="update-task-button">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab (click)="delete(task)" class="delete-button" data-cy="delete-task-button">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </mat-action-list>
+</mat-card>
+}@else {
+<span>Aucun élément à afficher</span>
+}

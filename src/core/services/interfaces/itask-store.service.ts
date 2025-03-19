@@ -1,11 +1,12 @@
 import { Observable } from "rxjs/internal/Observable";
-import { ETaskStatus, Task } from "../../models/task.model";
+import { EStatus } from "src/core/models";
+import { Task } from "../../models/task.model";
 
 export interface ITaskStoreService {
 
     getTaskById(id: number): Task;
     fetchAllTasks(): void;
-    fetchTasksByStatus(status: ETaskStatus): Observable<Task[]>;
+    fetchTasksByStatus(status: EStatus): Observable<Task[]>;
     fetchAllPendingTasks(): Observable<Task[]>;
     fetchAllInProgressTasks(): Observable<Task[]>;
     fetchFinishedTasks(): Observable<Task[]>;

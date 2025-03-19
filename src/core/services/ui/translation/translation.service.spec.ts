@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { testProviders } from '../../app/app.test.config';
+import { testProviders } from '../../../../app/app.test.config';
 import { TranslationService } from './translation.service';
 
 // Factory pour charger les traductions

@@ -32,6 +32,13 @@
             "ERROR_MESSAGE": "Une erreur est survenue"
         }
     },
+    "KANBAN": {
+        "COLUMN": {
+            "PENDING": "A faire",
+            "IN_PROGRESS": "En cours",
+            "DONE": "Terminée"
+        }
+    },
     "TASK_MANAGEMENT": {
         "TITLE": "Gestion des tâches",
         "CARD": {

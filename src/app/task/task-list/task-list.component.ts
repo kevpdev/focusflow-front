@@ -6,10 +6,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { map, Observable } from 'rxjs';
-import { ETaskStatus, Task } from '../../../core/models/task.model';
+import { EStatus } from 'src/core/models';
+import { Task } from '../../../core/models/task.model';
 import { TaskStoreService } from '../../../core/services/task/task-store.service';
-import { TranslationService } from '../../../core/services/translation.service';
-import { UtilityService } from '../../../core/services/utility.service';
+import { TranslationService } from '../../../core/services/ui/translation/translation.service';
+import { UtilityService } from '../../../core/services/ui/utility/utility.service';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { TaskListCardComponent } from '../task-list-card/task-list-card.component';
 
@@ -32,7 +33,7 @@ export class TaskListComponent implements OnInit {
   public inProgessTasksTitleCard: string | undefined;
   public pendingTasksTitleCard: string | undefined;
   public finishedTasksTitleCard: string | undefined;
-  public tasksColumnId = ETaskStatus;
+  public tasksColumnId = EStatus;
   public modifiedTasks: Task[] = [];
   public isEditMode = false;
 
@@ -83,13 +84,13 @@ export class TaskListComponent implements OnInit {
   }
 
   private updateTaskStatus(eventContainer: CdkDropList<Task[]>, currentIndex: number) {
-    let newTaskStatus = this.utilityService.getEnumKeyFromValue(ETaskStatus, eventContainer.id, ETaskStatus.NO_STATUS);
+    let newTaskStatus = this.utilityService.getEnumKeyFromValue(EStatus, eventContainer.id, EStatus.NO_STATUS);
     let selectedTask = eventContainer.data[currentIndex];
 
     // Pour eliminer les taches qui se déplacent dans la même colonne
     if (selectedTask.status !== newTaskStatus) {
 
-      selectedTask.status = newTaskStatus as ETaskStatus;
+      selectedTask.status = newTaskStatus as EStatus;
 
       // Mise à jour du tableau drag & drop avec le nouveau status
       eventContainer.data.splice(currentIndex, 1, selectedTask);
@@ -127,7 +128,7 @@ export class TaskListComponent implements OnInit {
     let updatedTasks$;
 
     switch (task.status) {
-      case ETaskStatus.PENDING:
+      case EStatus.PENDING:
         updatedTasks$ = this.pendingTasks$.pipe(
           map(tasks => {
             return tasks.filter(pendingTask => pendingTask.id != task.id)
@@ -135,7 +136,7 @@ export class TaskListComponent implements OnInit {
         );
         this.pendingTasks$ = updatedTasks$;
         break;
-      case ETaskStatus.IN_PROGRESS:
+      case EStatus.IN_PROGRESS:
         updatedTasks$ = this.inProgressTasks$.pipe(
           map(tasks => {
             return tasks.filter(inProgressTasks => inProgressTasks.id != task.id)
@@ -143,7 +144,7 @@ export class TaskListComponent implements OnInit {
         );
         this.inProgressTasks$ = updatedTasks$;
         break;
-      case ETaskStatus.DONE:
+      case EStatus.DONE:
         updatedTasks$ = this.finishedTasks$.pipe(
           map(tasks => {
             return tasks.filter(finishedTasks => finishedTasks.id != task.id)

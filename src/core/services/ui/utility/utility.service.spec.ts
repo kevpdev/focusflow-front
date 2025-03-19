@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ETaskStatus } from '../models/task.model';
+import { EStatus } from '../../../models/task.model';
 import { UtilityService } from './utility.service';
 
 describe('UtilityService', () => {
@@ -16,13 +16,13 @@ describe('UtilityService', () => {
   });
 
   it('should return an enum key from value', () => {
-    expect(service.getEnumKeyFromValue(ETaskStatus, 'PENDING', ETaskStatus.NO_STATUS))
-      .toBe(ETaskStatus.PENDING);
+    expect(service.getEnumKeyFromValue(EStatus, 'PENDING', EStatus.NO_STATUS))
+      .toBe(EStatus.PENDING);
   });
 
   it('should return default value when key not found', () => {
-    expect(service.getEnumKeyFromValue(ETaskStatus, 'NOTFOUND', ETaskStatus.NO_STATUS))
-      .toBe(ETaskStatus.NO_STATUS);
+    expect(service.getEnumKeyFromValue(EStatus, 'NOTFOUND', EStatus.NO_STATUS))
+      .toBe(EStatus.NO_STATUS);
   });
 
 });

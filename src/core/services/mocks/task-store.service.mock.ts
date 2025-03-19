@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, map, Observable, of, throwError } from "rxjs";
-import { ETaskStatus, Task } from "../../models/task.model";
+import { EStatus } from "src/core/models";
+import { Task } from "../../models/task.model";
 import { ITaskStoreService } from "../interfaces/itask-store.service";
-import { UtilityService } from "../utility.service";
+import { UtilityService } from "../ui/utility/utility.service";
 
 @Injectable({
     providedIn: 'root'
@@ -15,15 +16,15 @@ export class TaskStoreServiceMock implements ITaskStoreService {
     readonly tasks$ = this.tasksSubject.asObservable();
 
     public pendingTasks$: Observable<Task[]> = this.tasks$.pipe(
-        map(tasks => tasks.filter(task => task.status === ETaskStatus.PENDING))
+        map(tasks => tasks.filter(task => task.status === EStatus.PENDING))
     );
 
     public inProgressTasks$: Observable<Task[]> = this.tasks$.pipe(
-        map(tasks => tasks.filter(task => task.status === ETaskStatus.IN_PROGRESS))
+        map(tasks => tasks.filter(task => task.status === EStatus.IN_PROGRESS))
     );
 
     public doneTasks$: Observable<Task[]> = this.tasks$.pipe(
-        map(tasks => tasks.filter(task => task.status === ETaskStatus.DONE))
+        map(tasks => tasks.filter(task => task.status === EStatus.DONE))
     );
 
     private mockTasks: Task[] = [
@@ -31,7 +32,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
             id: 1,
             title: 'Configurer Angular',
             description: 'Mettre en place l\'architecture du projet',
-            status: ETaskStatus.PENDING,
+            status: EStatus.PENDING,
             priority: 1,
             dueDate: new Date('2024-06-01'),
             createdAt: new Date(),
@@ -41,7 +42,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
             id: 2,
             title: 'Créer des composants',
             description: 'Créer les composants principaux pour le tableau de bord',
-            status: ETaskStatus.IN_PROGRESS,
+            status: EStatus.IN_PROGRESS,
             priority: 2,
             dueDate: new Date('2024-06-05'),
             createdAt: new Date(),
@@ -51,7 +52,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
             id: 3,
             title: 'Tester les endpoints',
             description: 'Tester les appels aux endpoints mockés',
-            status: ETaskStatus.DONE,
+            status: EStatus.DONE,
             priority: 3,
             dueDate: new Date('2024-05-28'),
             createdAt: new Date(),
@@ -61,7 +62,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
             id: 4,
             title: 'Corriger les bugs',
             description: 'Résoudre les problèmes d\'affichage des tâches',
-            status: ETaskStatus.PENDING,
+            status: EStatus.PENDING,
             priority: 1,
             dueDate: new Date('2024-06-10'),
             createdAt: new Date(),
@@ -111,7 +112,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * @param status The status to filter tasks by.
      * @returns An observable emitting the filtered tasks.
      */
-    public fetchTasksByStatus(status: ETaskStatus): Observable<Task[]> {
+    public fetchTasksByStatus(status: EStatus): Observable<Task[]> {
         //console.log(`Mock: Fetching tasks with status ${status}`);
         return this.fetchAllTasks().pipe(
             map(tasks => tasks.filter(task => task.status === status))
@@ -123,7 +124,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * @returns An observable emitting tasks with the `PENDING` status.
      */
     public fetchAllPendingTasks(): Observable<Task[]> {
-        return this.fetchTasksByStatus(ETaskStatus.PENDING);
+        return this.fetchTasksByStatus(EStatus.PENDING);
     }
 
     /**
@@ -131,7 +132,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * @returns An observable emitting tasks with the `IN_PROGRESS` status.
      */
     public fetchAllInProgressTasks(): Observable<Task[]> {
-        return this.fetchTasksByStatus(ETaskStatus.IN_PROGRESS);
+        return this.fetchTasksByStatus(EStatus.IN_PROGRESS);
     }
 
     /**
@@ -139,7 +140,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * @returns An observable emitting tasks with the `DONE` status.
      */
     public fetchFinishedTasks(): Observable<Task[]> {
-        return this.fetchTasksByStatus(ETaskStatus.DONE);
+        return this.fetchTasksByStatus(EStatus.DONE);
     }
 
     /**

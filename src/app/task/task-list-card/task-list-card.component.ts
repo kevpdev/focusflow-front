@@ -9,8 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { ETaskStatus, Task } from '../../../core/models/task.model';
-import { TranslationService } from '../../../core/services/translation.service';
+import { EStatus } from 'src/core/models';
+import { Task } from '../../../core/models/task.model';
+import { TranslationService } from '../../../core/services/ui/translation/translation.service';
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { CustomDatePipe } from '../../../shared/pipes/custom-date.pipe';
 import { TranslateTaskStatusPipe } from '../../../shared/pipes/translate-task-status.pipe';
@@ -40,9 +41,9 @@ export class TaskListCardComponent implements OnDestroy {
   @Input()
   public title: string | undefined;
   @Input()
-  public connectTo: ETaskStatus[] = [];
+  public connectTo: EStatus[] = [];
   @Input()
-  public tasksColumnId = ETaskStatus.PENDING;
+  public tasksColumnId = EStatus.PENDING;
   @Output()
   public dropEvent = new EventEmitter<CdkDragDrop<Task[]>>();
   @Output()

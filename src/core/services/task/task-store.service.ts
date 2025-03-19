@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
-import { ETaskStatus, Task } from '../../models/task.model';
+import { EStatus } from 'src/core/models';
+import { Task } from '../../models/task.model';
 import { ITaskStoreService } from '../interfaces/itask-store.service';
-import { UtilityService } from '../utility.service';
+import { UtilityService } from '../ui/utility/utility.service';
 import { TaskApiService } from './task-api.service';
 
 @Injectable({
@@ -18,15 +19,15 @@ export class TaskStoreService implements ITaskStoreService {
 
   // Observables pour les composants
   public pendingTasks$: Observable<Task[]> = this.tasks$.pipe(
-    map(tasks => tasks.filter(task => task.status === ETaskStatus.PENDING))
+    map(tasks => tasks.filter(task => task.status === EStatus.PENDING))
   );
 
   public inProgressTasks$: Observable<Task[]> = this.tasks$.pipe(
-    map(tasks => tasks.filter(task => task.status === ETaskStatus.IN_PROGRESS))
+    map(tasks => tasks.filter(task => task.status === EStatus.IN_PROGRESS))
   );
 
   public doneTasks$: Observable<Task[]> = this.tasks$.pipe(
-    map(tasks => tasks.filter(task => task.status === ETaskStatus.DONE))
+    map(tasks => tasks.filter(task => task.status === EStatus.DONE))
   );
 
   constructor(private taskApiService: TaskApiService,
@@ -93,7 +94,7 @@ export class TaskStoreService implements ITaskStoreService {
    * Retrieves all tasks filtered by their status
    * @param status Status to filter by
    */
-  public fetchTasksByStatus(status: ETaskStatus): Observable<Task[]> {
+  public fetchTasksByStatus(status: EStatus): Observable<Task[]> {
     return this.tasks$
       .pipe(
         map(tasks => tasks.filter(task => task.status === status)),
@@ -104,21 +105,21 @@ export class TaskStoreService implements ITaskStoreService {
    * Retrieves pending tasks
    */
   public fetchAllPendingTasks(): Observable<Task[]> {
-    return this.fetchTasksByStatus(ETaskStatus.PENDING);
+    return this.fetchTasksByStatus(EStatus.PENDING);
   }
 
   /**
    * Retrieves tasks in progress
    */
   public fetchAllInProgressTasks(): Observable<Task[]> {
-    return this.fetchTasksByStatus(ETaskStatus.IN_PROGRESS);
+    return this.fetchTasksByStatus(EStatus.IN_PROGRESS);
   }
 
   /**
    * Retrieves finished tasks
    */
   public fetchFinishedTasks(): Observable<Task[]> {
-    return this.fetchTasksByStatus(ETaskStatus.DONE);
+    return this.fetchTasksByStatus(EStatus.DONE);
   }
 
   /**
