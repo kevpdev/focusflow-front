@@ -1,0 +1,25 @@
+<div class="column-item" #colum>
+    <h2>{{columnMetaData.title}}</h2>
+    @if(columnMetaData.tasks$ | async; as tasks) {
+    <div cdkDropList [id]="columnMetaData.id" [cdkDropListConnectedTo]="columnMetaData.connectTo"
+        [cdkDropListData]="tasks" (cdkDropListDropped)="drop($event)" class="item-container" data-cy="item-container">
+        <div *ngFor="let task of tasks; trackBy: trackByTaskId" class="item" data-cy="item" cdkDrag>
+            @if(mapTemplate){
+            <ng-container [ngTemplateOutlet]="mapTemplate[task.type]"
+                [ngTemplateOutletContext]="{ $implicit: task }"></ng-container>
+            }
+        </div>
+    </div>
+    }@else {
+    <span>Aucun élément à afficher</span>
+    }
+</div>
+
+<ng-template #taskCardTemplate let-task>
+    <app-task-card [task]="task"></app-task-card>
+</ng-template>
+
+<ng-template #bugCardTemplate let-task>
+    <app-task-card [task]="task"></app-task-card>
+    <!-- <app-bug-card [task]="task"></app-bug-card> -->
+</ng-template>

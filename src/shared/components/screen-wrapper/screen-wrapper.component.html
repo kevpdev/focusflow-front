@@ -1,5 +1,0 @@
-@if(isSmallScreen$ | async){
-<app-card-list-mobile [recordTData]="recordItems"></app-card-list-mobile>
-} @else {
-<app-kanban [recordItems]="recordItems" [templateRef]="templateRef"></app-kanban>
-}

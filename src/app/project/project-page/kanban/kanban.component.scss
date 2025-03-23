@@ -1,0 +1,24 @@
+.column-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.action-container {
+    display: flex;
+    padding: 16px;
+}
+
+.action-container button {
+    margin-right: 8px;
+}
+
+.add-item-button {
+    background-color: var(--background-button-add) !important;
+}
+
+.save-button-enabled {
+    background-color: var(--background-button-save) !important;
+    color: var(--background-main) !important;
+    transition: background-color 2s !important; 
+}

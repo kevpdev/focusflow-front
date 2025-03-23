@@ -1,0 +1,15 @@
+<div class="kanban-container app-container">
+    <div class="action-container">
+        <button mat-mini-fab (click)="addItem()" class="add-item-button" data-cy="add-item-button">
+            <mat-icon>add</mat-icon>
+        </button>
+        <button mat-mini-fab (click)="saveChanges()" [disabled]="true" data-cy="save-changes-button">
+            <mat-icon>save</mat-icon>
+        </button>
+    </div>
+    <div class="column-container">
+        @for(colData of columnsMetaData; track colData.id){
+        <app-kanban-column [columnMetaData]="colData" (dropEvent)="onDrop($event)"></app-kanban-column>
+        }
+    </div>
+</div>

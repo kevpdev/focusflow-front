@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, map, Observable, of, throwError } from "rxjs";
+import { BehaviorSubject, map, Observable, of, tap, throwError } from "rxjs";
 import { EStatus } from "src/core/models";
+import { BugTask } from "src/core/models/bug-task.model";
+import { ITaskStoreService } from "../../models/interfaces/itask-store-service.interface";
 import { Task } from "../../models/task.model";
-import { ITaskStoreService } from "../interfaces/itask-store.service";
 import { UtilityService } from "../ui/utility/utility.service";
 
 @Injectable({
@@ -13,7 +14,8 @@ export class TaskStoreServiceMock implements ITaskStoreService {
     private tasksSubject = new BehaviorSubject<Task[]>([]);
 
     // public observables for components
-    readonly tasks$ = this.tasksSubject.asObservable();
+    readonly tasks$ = this.tasksSubject.asObservable()
+        .pipe(tap(tasks => console.log('tasks', tasks)));
 
     public pendingTasks$: Observable<Task[]> = this.tasks$.pipe(
         map(tasks => tasks.filter(task => task.status === EStatus.PENDING))
@@ -35,8 +37,6 @@ export class TaskStoreServiceMock implements ITaskStoreService {
             status: EStatus.PENDING,
             priority: 1,
             dueDate: new Date('2024-06-01'),
-            createdAt: new Date(),
-            updatedAt: new Date(),
         }),
         new Task({
             id: 2,
@@ -45,8 +45,6 @@ export class TaskStoreServiceMock implements ITaskStoreService {
             status: EStatus.IN_PROGRESS,
             priority: 2,
             dueDate: new Date('2024-06-05'),
-            createdAt: new Date(),
-            updatedAt: new Date(),
         }),
         new Task({
             id: 3,
@@ -58,15 +56,13 @@ export class TaskStoreServiceMock implements ITaskStoreService {
             createdAt: new Date(),
             updatedAt: new Date(),
         }),
-        new Task({
+        new BugTask({
             id: 4,
             title: 'Corriger les bugs',
             description: 'Résoudre les problèmes d\'affichage des tâches',
             status: EStatus.PENDING,
             priority: 1,
             dueDate: new Date('2024-06-10'),
-            createdAt: new Date(),
-            updatedAt: new Date(),
         }),
     ];
 

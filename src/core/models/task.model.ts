@@ -1,4 +1,6 @@
 import { EStatus } from "./enums/status.enum";
+import { ETaskType } from "./enums/task-type.enum";
+
 export class Task {
     public id: number;
     public tempId: string;
@@ -10,6 +12,7 @@ export class Task {
     public dueDate: Date;
     public createdAt: Date;
     public updatedAt: Date;
+    public type: ETaskType;
 
     constructor({
         id = 0,
@@ -17,11 +20,12 @@ export class Task {
         userId = 0,
         title = '',
         description = '',
-        status = EStatus.PENDING, // Remplacez par une valeur par défaut appropriée
+        status = EStatus.PENDING,
         priority = 0,
         dueDate = new Date(),
         createdAt = new Date(),
         updatedAt = new Date(),
+        type = ETaskType.TASK
     }: Partial<Task> = {}) {
         this.id = id;
         this.tempId = tempId;
@@ -33,6 +37,7 @@ export class Task {
         this.dueDate = dueDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.type = type;
     }
 }
 

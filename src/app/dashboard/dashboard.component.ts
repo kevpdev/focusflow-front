@@ -5,8 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TaskContainerComponent } from "../task/task-container/task-container.component";
-import { TaskListComponent } from '../task/task-list/task-list.component';
+import { ProjectPageComponent } from "../project/project-page/project-page.component";
+import { TaskListComponent } from '../task-management/task-list/task-list.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +17,7 @@ import { TaskListComponent } from '../task/task-list/task-list.component';
     MatMenuModule,
     MatGridListModule,
     MatTabsModule,
-    TaskListComponent, TaskContainerComponent],
+    TaskListComponent, ProjectPageComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
