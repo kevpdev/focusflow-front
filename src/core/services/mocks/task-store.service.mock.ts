@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, map, Observable, of, tap, throwError } from "rxjs";
 import { EStatus } from "src/core/models";
-import { BugTask } from "src/core/models/bug-task.model";
 import { ITaskStoreService } from "../../models/interfaces/itask-store-service.interface";
 import { Task } from "../../models/task.model";
 import { UtilityService } from "../ui/utility/utility.service";
+import { mockTasksProject } from "./mock-data.mock";
 
 @Injectable({
     providedIn: 'root'
@@ -29,44 +29,10 @@ export class TaskStoreServiceMock implements ITaskStoreService {
         map(tasks => tasks.filter(task => task.status === EStatus.DONE))
     );
 
-    private mockTasks: Task[] = [
-        new Task({
-            id: 1,
-            title: 'Configurer Angular',
-            description: 'Mettre en place l\'architecture du projet',
-            status: EStatus.PENDING,
-            priority: 1,
-            dueDate: new Date('2024-06-01'),
-        }),
-        new Task({
-            id: 2,
-            title: 'Créer des composants',
-            description: 'Créer les composants principaux pour le tableau de bord',
-            status: EStatus.IN_PROGRESS,
-            priority: 2,
-            dueDate: new Date('2024-06-05'),
-        }),
-        new Task({
-            id: 3,
-            title: 'Tester les endpoints',
-            description: 'Tester les appels aux endpoints mockés',
-            status: EStatus.DONE,
-            priority: 3,
-            dueDate: new Date('2024-05-28'),
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        }),
-        new BugTask({
-            id: 4,
-            title: 'Corriger les bugs',
-            description: 'Résoudre les problèmes d\'affichage des tâches',
-            status: EStatus.PENDING,
-            priority: 1,
-            dueDate: new Date('2024-06-10'),
-        }),
-    ];
+    private readonly mockTasks: Task[] = mockTasksProject;
 
     constructor(private utilityService: UtilityService) { }
+
 
     /**
      * Retrieves the current state of the task list in the subject.
@@ -97,9 +63,11 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      * Retrieves all tasks.
      * @returns An observable emitting the list of all tasks.
      */
-    public fetchAllTasks(): Observable<Task[]> {
+    public fetchAllTasksByProjectId(id: number): Observable<Task[]> {
         //console.log('Mock: Fetching all tasks');
-        this.tasksSubject.next(this.mockTasks);
+        console.log('mockTasks', this.mockTasks);
+
+        this.tasksSubject.next(this.mockTasks.filter(task => task.projectId === id));
         return this.tasks$;
     }
 
@@ -110,7 +78,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
      */
     public fetchTasksByStatus(status: EStatus): Observable<Task[]> {
         //console.log(`Mock: Fetching tasks with status ${status}`);
-        return this.fetchAllTasks().pipe(
+        return this.tasks$.pipe(
             map(tasks => tasks.filter(task => task.status === status))
         );
     }
@@ -140,25 +108,6 @@ export class TaskStoreServiceMock implements ITaskStoreService {
     }
 
     /**
-     * Updates the status of tasks.
-     * @param modifiedTasks A list of tasks with updated statuses.
-     * @returns An observable emitting the list of updated tasks.
-     */
-    public updateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
-        //console.log('Mock: Updating task statuses');
-        const updatedTasks = this.currentTasks().map(currentTask => {
-            const modifiedTask = modifiedTasks.find(task => task.id === currentTask.id);
-            if (modifiedTask) {
-                currentTask.status = modifiedTask.status;
-            }
-            return currentTask;
-        });
-
-        this.tasksSubject.next(updatedTasks);
-        return of(updatedTasks);
-    }
-
-    /**
      * Updates an existing task.
      * @param updatedTask The task with updated details.
      * @returns An observable emitting the updated task.
@@ -176,6 +125,23 @@ export class TaskStoreServiceMock implements ITaskStoreService {
             console.error('Task not found in taskSubject');
             return this.handleError(null, 'Task not found');
         }
+    }
+
+    updateTaskStatus(task: Task, newStatus: EStatus): Observable<Task> {
+        const currentTask = this.currentTasks().find(currentTask => currentTask.id === task.id);
+        if (!currentTask) {
+            console.error('Task not found in taskSubject');
+            throw new Error('Task not found');
+        }
+        const updatedTask = { ...currentTask, status: newStatus };
+
+        //maj store
+        this.tasksSubject.next(
+            this.currentTasks()
+                .map(task => task.id === updatedTask.id ? updatedTask : task)
+        );
+
+        return of(updatedTask);
     }
 
     /**

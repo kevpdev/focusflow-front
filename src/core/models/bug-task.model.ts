@@ -10,7 +10,7 @@ export class BugTask extends Task {
     constructor({
         id = 0,
         tempId = '',
-        userId = 0,
+        projectId = 0,
         title = '',
         description = '',
         status = EStatus.PENDING,
@@ -24,7 +24,7 @@ export class BugTask extends Task {
         super({
             id,
             tempId,
-            userId,
+            projectId,
             title,
             description,
             status,

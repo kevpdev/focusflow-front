@@ -5,12 +5,12 @@ import { Task } from "../task.model";
 export interface ITaskStoreService {
 
     getTaskById(id: number): Task;
-    fetchAllTasks(): void;
+    fetchAllTasksByProjectId(id: number): Observable<Task[]>;
     fetchTasksByStatus(status: EStatus): Observable<Task[]>;
     fetchAllPendingTasks(): Observable<Task[]>;
     fetchAllInProgressTasks(): Observable<Task[]>;
     fetchFinishedTasks(): Observable<Task[]>;
-    updateTaskStatus(modifiedTasks: Task[]): Observable<Task[]>;
+    updateTaskStatus(task: Task, newStatus: EStatus): Observable<Task>;
     updateTask(updatedTask: Task): Observable<Task>;
     deleteTask(id: number): Observable<void>;
     addNewTask(newTask: Task): Observable<Task>;

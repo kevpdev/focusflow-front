@@ -6,6 +6,8 @@ import { provideRouter } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { dateConversionInterceptor } from 'src/core/interceptors/date-conversion.interceptor';
+import { ProjectStoreServiceMock } from 'src/core/services/mocks/project-store.service.mock';
+import { ProjectStoreService } from 'src/core/services/project/project-store.service';
 import { JwtInterceptor } from '../core/interceptors/jwt.interceptor';
 import { AuthStoreService } from '../core/services/auth/auth-store.service';
 import { AuthStoreServiceMock } from '../core/services/mocks/auth-store.service.mock';
@@ -40,6 +42,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: TaskStoreService,
       useClass: environment.useMocks ? TaskStoreServiceMock : TaskStoreService
+    },
+    {
+      provide: ProjectStoreService,
+      useClass: environment.useMocks ? ProjectStoreServiceMock : ProjectStoreService
     },
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     importProvidersFrom(

@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { EStatus } from "src/core/models";
 import { environment } from "../../../environments/environment";
 import { Task } from "../../models/task.model";
 
@@ -13,13 +12,9 @@ export class TaskApiService {
     public http = inject(HttpClient);
     public apiUrl = environment.apiURL + 'tasks';
 
-    public fetchAllTasks(): Observable<Task[]> {
-        return this.http.get<Task[]>(this.apiUrl);
-    }
-
-    public fetchAllTasksByStatus(status: EStatus): Observable<Task[]> {
-        const options = { params: new HttpParams().set('status', status) };
-        return this.http.get<Task[]>(this.apiUrl + '/search', options);
+    public fetchAllTasksByProjectId(id: number): Observable<Task[]> {
+        const options = { params: new HttpParams().set('projectId', id) };
+        return this.http.get<Task[]>(this.apiUrl + '/tasks', options);
     }
 
     public fetchDeleteTask(id: number): Observable<void> {

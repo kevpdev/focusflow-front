@@ -4,7 +4,7 @@ import { ETaskType } from "./enums/task-type.enum";
 export class Task {
     public id: number;
     public tempId: string;
-    public userId: number;
+    public projectId: number;
     public title: string;
     public description: string;
     public status: EStatus;
@@ -17,7 +17,7 @@ export class Task {
     constructor({
         id = 0,
         tempId = '',
-        userId = 0,
+        projectId = 0,
         title = '',
         description = '',
         status = EStatus.PENDING,
@@ -29,7 +29,7 @@ export class Task {
     }: Partial<Task> = {}) {
         this.id = id;
         this.tempId = tempId;
-        this.userId = userId;
+        this.projectId = projectId;
         this.title = title;
         this.description = description;
         this.status = status;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
-import { catchError, map, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { EStatus, ITaskStoreService } from 'src/core/models';
 import { Task } from '../../models/task.model';
 import { UtilityService } from '../ui/utility/utility.service';
@@ -13,8 +13,6 @@ export class TaskStoreService implements ITaskStoreService {
   readonly ERROR_MESSAGE = 'Une erreur est survenue coté serveur : ';
   // BehaviorSubjects to store  tasks
   private tasksSubject = new BehaviorSubject<Task[]>([]);
-
-  private destroy$: Subject<void> = new Subject();
 
   // Observables pour les composants
   public pendingTasks$: Observable<Task[]> = this.tasks$.pipe(
@@ -77,11 +75,9 @@ export class TaskStoreService implements ITaskStoreService {
   /**
    * Retrieves all tasks
    */
-  public fetchAllTasks(): Observable<Task[]> {
-    return this.taskApiService.fetchAllTasks()
+  public fetchAllTasksByProjectId(id: number): Observable<Task[]> {
+    return this.taskApiService.fetchAllTasksByProjectId(id)
       .pipe(
-        takeUntil(this.destroy$),
-        //tap(tasks => console.log('Task list : ', tasks)),
         map(tasks => {
           this.tasksSubject.next(tasks);
           return tasks;
@@ -136,21 +132,25 @@ export class TaskStoreService implements ITaskStoreService {
    * @param modifiedTasks List of tasks modified by the user
    * @returns List of modified tasks
    */
-  public updateTaskStatus(modifiedTasks: Task[]): Observable<Task[]> {
-    return this.taskApiService.fetchUpdateTaskStatus(modifiedTasks)
-      .pipe(
-        map(successfullyModifiedTasks => {
-          // Update only in case of success
-          successfullyModifiedTasks.map(sfModifiedTask => {
-            this.updateTaskSubject(sfModifiedTask);
-          })
-          return successfullyModifiedTasks;
-        }),
-        catchError(err => {
-          const errorMessage = 'Une erreur est survenue lors de la modification du statut des tâches.';
-          return this.handleError(err, errorMessage);
-        })
-      );
+  updateTaskStatus(task: Task, newStatus: EStatus): Observable<Task> {
+    const currentTask = this.getTaskById(task.id);
+    if (!currentTask) {
+      return this.handleError(new Error(), 'La tâche à modifier est introuvable');
+    }
+    const updatedTask = { ...currentTask, status: newStatus };
+
+    //maj store
+    this.tasksSubject.next(
+      this.getTasks()
+        .map(task => task.id === updatedTask.id ? updatedTask : task)
+    );
+
+    return this.taskApiService.fetchUpdateTask(updatedTask)
+      .pipe(catchError(error => {
+        // Rollback
+        this.updateTaskSubject(currentTask);
+        return this.handleError(error, 'Une erreur est survenue lors de la modification de la tâche.');
+      }));
   }
 
   /**

@@ -40,6 +40,7 @@ export class EditTaskCardComponent implements OnInit, OnDestroy, EditItemFormCom
     priority: new FormControl('', [Validators.required]),
     status: new FormControl('', [Validators.required]),
     dueDate: new FormControl(new Date(), [Validators.required]),
+    type: new FormControl('', [Validators.required]),
 
   });
 
@@ -70,7 +71,8 @@ export class EditTaskCardComponent implements OnInit, OnDestroy, EditItemFormCom
       description: this.task.description || '',
       priority: this.task.priority ? String(this.task.priority) : '',
       status: this.task.status ? String(this.task.status) : '',
-      dueDate: this.task.dueDate || ''
+      dueDate: this.task.dueDate || '',
+      type: this.task.type ? String(this.task.type) : '',
     });
   }
 
@@ -104,7 +106,8 @@ export class EditTaskCardComponent implements OnInit, OnDestroy, EditItemFormCom
         status: this.isEditMode ? formData.status as EStatus : EStatus.PENDING,
         priority: Number(formData.priority),
         dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
-        userId: this.isEditMode ? this.task.userId : undefined
+        projectId: this.isEditMode ? this.task.projectId : undefined,
+        type: this.isEditMode ? this.task.type : undefined
       });
 
       if (this.isEditMode) {

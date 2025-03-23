@@ -41,6 +41,11 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
+  goToHome() {
+    this.router.navigate(['/dashboard']);
+  }
+
+
   public logout(): void {
     this.authService.logout()
       .pipe(takeUntil(this.unsubscribe$))

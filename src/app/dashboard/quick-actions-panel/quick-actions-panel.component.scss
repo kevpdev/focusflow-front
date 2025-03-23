@@ -1,0 +1,18 @@
+:host {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.quick-actions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    min-height: 10vh;
+}
+
+.add-project-button {
+    background-color: var(--background-button-add) !important;
+}

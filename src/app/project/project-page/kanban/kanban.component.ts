@@ -1,11 +1,11 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable, of } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
 import { Task } from 'src/core/models';
-import { EStatusActive } from 'src/core/models/enums/status.enum';
+import { EStatus, EStatusActive } from 'src/core/models/enums/status.enum';
 import { TaskStoreService, TranslationService } from 'src/core/services';
 import { KanbanColumnComponent } from './kanban-column/kanban-column.component';
 import { EditTaskCardComponent } from './kanban-column/task/edit-task-card/edit-task-card.component';
@@ -38,8 +38,7 @@ export class KanbanComponent implements OnInit {
   };
   columnsMetaData: ColumnMetaData[] = [];
   isEditMode = false;
-  @Input() templateRef: TemplateRef<{ $implicit: Task }> | null = null;
-  @Input() projectId: number | null = null;
+  @Input() projectId!: number;
 
 
 
@@ -49,6 +48,10 @@ export class KanbanComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.taskStoreService.fetchAllTasksByProjectId(this.projectId)
+      .pipe(take(1))
+      .subscribe();
 
     this.recordTasks = {
       PENDING: this.taskStoreService.pendingTasks$,
@@ -89,10 +92,6 @@ export class KanbanComponent implements OnInit {
 
   }
 
-  saveChanges(): void {
-    console.log('save changes');
-  }
-
   onDrop(event: CdkDragDrop<Task[]>) {
     console.log('drop', event);
     if (event.previousContainer === event.container) {
@@ -110,8 +109,15 @@ export class KanbanComponent implements OnInit {
       );
 
       // Mise à jour du statut
+      const selectedTask = event.container.data[event.currentIndex];
+      const newTaskStatus = EStatus[event.container.id as keyof typeof EStatusActive];
+
+      this.taskStoreService.updateTaskStatus(selectedTask, newTaskStatus)
+        .pipe(take(1))
+        .subscribe();
 
     }
   }
+
 
 }
