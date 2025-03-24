@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './start-hyperfocus.component.html',
-  styleUrl: './start-hyperfocus.component.scss'
+  styleUrl: './start-hyperfocus.component.scss',
 })
-export class StartHyperfocusComponent {
-
-}
+export class StartHyperfocusComponent {}

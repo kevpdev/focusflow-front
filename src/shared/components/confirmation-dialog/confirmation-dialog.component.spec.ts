@@ -8,7 +8,6 @@ describe('ConfirmationDialogComponent', () => {
   let fixture: ComponentFixture<ConfirmationDialogComponent>;
 
   beforeEach(async () => {
-
     const data = { message: '' };
 
     await TestBed.configureTestingModule({
@@ -16,10 +15,10 @@ describe('ConfirmationDialogComponent', () => {
       providers: [
         {
           provide: MAT_DIALOG_DATA,
-          useValue: { data }
-        }]
-    })
-      .compileComponents();
+          useValue: { data },
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfirmationDialogComponent);
     component = fixture.componentInstance;

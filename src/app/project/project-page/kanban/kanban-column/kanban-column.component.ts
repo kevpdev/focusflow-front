@@ -1,6 +1,15 @@
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, TrackByFunction, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+  TrackByFunction,
+  ViewChild,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { of } from 'rxjs';
 import { ETaskType, Task } from 'src/core/models';
@@ -12,32 +21,29 @@ import { TaskCardComponent } from './task/task-card/task-card.component';
 @Component({
   selector: 'app-kanban-column',
   standalone: true,
-  imports: [AsyncPipe,
-    CommonModule,
-    CdkDropList,
-    MatCardModule,
-    CdkDrag,
-    TaskCardComponent],
+  imports: [AsyncPipe, CommonModule, CdkDropList, MatCardModule, CdkDrag, TaskCardComponent],
   templateUrl: './kanban-column.component.html',
-  styleUrl: './kanban-column.component.scss'
+  styleUrl: './kanban-column.component.scss',
 })
 export class KanbanColumnComponent implements OnInit {
-
   @Input() columnMetaData: ColumnMetaData = {
     id: EStatusActive.PENDING,
     title: '',
     connectTo: [],
-    tasks$: of([])
+    tasks$: of([]),
   };
 
   @Output() dropEvent = new EventEmitter<CdkDragDrop<Task[]>>();
-  @ViewChild('taskCardTemplate', { static: true }) taskTemplate: TemplateRef<{ $implicit: Task }> | null = null;
-  @ViewChild('bugCardTemplate', { static: true }) bugTemplate: TemplateRef<{ $implicit: BugTask }> | null = null;
+  @ViewChild('taskCardTemplate', { static: true }) taskTemplate: TemplateRef<{
+    $implicit: Task;
+  }> | null = null;
+  @ViewChild('bugCardTemplate', { static: true }) bugTemplate: TemplateRef<{
+    $implicit: BugTask;
+  }> | null = null;
   mapTemplate: Record<ETaskType, TemplateRef<{ $implicit: Task }>> | null = null;
 
   ngOnInit(): void {
     this.initMapTemplate();
-
   }
 
   drop(event: CdkDragDrop<Task[]>) {
@@ -53,18 +59,14 @@ export class KanbanColumnComponent implements OnInit {
     if (this.taskTemplate && this.bugTemplate) {
       this.mapTemplate = {
         [ETaskType.TASK]: this.taskTemplate,
-        [ETaskType.BUG]: this.bugTemplate
+        [ETaskType.BUG]: this.bugTemplate,
       };
     } else {
       throw new Error('The taskTemplate and bugTemplate are required');
     }
-
   }
 
   getTaskTemplate(taskType: ETaskType): TemplateRef<{ $implicit: Task }> {
-
     return this.mapTemplate![taskType] ?? this.taskTemplate;
   }
-
-
 }

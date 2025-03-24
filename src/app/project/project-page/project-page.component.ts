@@ -9,28 +9,28 @@ import { KanbanComponent } from './kanban/kanban.component';
   standalone: true,
   imports: [KanbanComponent],
   templateUrl: './project-page.component.html',
-  styleUrl: './project-page.component.scss'
+  styleUrl: './project-page.component.scss',
 })
 export class ProjectPageComponent implements OnInit {
-
-  projectTitle: string = '';
+  projectTitle: string | null = null;
   projectId: number | null = null;
 
-  constructor(private route: ActivatedRoute,
-    private projectStoreService: ProjectStoreService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private projectStoreService: ProjectStoreService
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap
       .pipe(
         map(params => Number(params.get('projectId'))),
         filter(projectId => !!projectId),
-        switchMap(projectId =>
-          this.projectStoreService.fetchProjectById(projectId)),
-        take(1))
+        switchMap(projectId => this.projectStoreService.fetchProjectById(projectId)),
+        take(1)
+      )
       .subscribe(project => {
         this.projectTitle = project.name;
         this.projectId = project.id;
       });
   }
-
-}  
+}

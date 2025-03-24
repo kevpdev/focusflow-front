@@ -13,24 +13,21 @@ import { CardListComponent } from '../card-list/card-list.component';
   standalone: true,
   imports: [KanbanComponent, CardListComponent, AsyncPipe],
   templateUrl: './screen-wrapper-management.component.html',
-  styleUrl: './screen-wrapper-management.component.scss'
+  styleUrl: './screen-wrapper-management.component.scss',
 })
 export class ScreenWrapperManagementComponent<T extends Identifiable> {
-
   @Input() recordItems: Record<EStatusActive, Observable<T[]>> = {
     [EStatusActive.PENDING]: of([]),
     [EStatusActive.IN_PROGRESS]: of([]),
-    [EStatusActive.DONE]: of([])
+    [EStatusActive.DONE]: of([]),
   };
   @Input() templateRef: TemplateRef<{ $implicit: T }> | null = null;
   @Input() editFormComponent: Type<EditItemFormComponent> | null = null;
   isSmallScreen$: Observable<boolean> = of(false);
 
-
-  constructor(private responsiveService: ResponsiveService) { }
+  constructor(private responsiveService: ResponsiveService) {}
 
   ngOnInit(): void {
     this.isSmallScreen$ = this.responsiveService.isSmallScreen();
   }
-
 }

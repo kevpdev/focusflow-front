@@ -10,24 +10,11 @@
 @use './typographies';
 @use './layout';
 
-
 @include mat.core();
 
-
-body { 
-    margin: 0; 
-    height: 100vh;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: var(--background-main);
-    
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: var(--background-main);
 }
-
-
-
-
-
-
-
-
-
-

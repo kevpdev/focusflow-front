@@ -1,18 +1,25 @@
 :host {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 }
 
 .quick-actions-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    min-height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(8px, 2vw, 16px);
+  gap: 8px;
 }
 
-.add-project-button {
-    background-color: var(--background-button-add) !important;
+@media (max-width: 600px) {
+  .quick-actions-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+button.add-project-button {
+  background-color: var(--background-button-add);
 }

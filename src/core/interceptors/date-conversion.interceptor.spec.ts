@@ -4,7 +4,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { dateConversionInterceptor } from './date-conversion.interceptor';
 
 describe('dateConversionInterceptor', () => {
-  const interceptor: HttpInterceptorFn = (req, next) => 
+  const interceptor: HttpInterceptorFn = (req, next) =>
     TestBed.runInInjectionContext(() => dateConversionInterceptor(req, next));
 
   beforeEach(() => {

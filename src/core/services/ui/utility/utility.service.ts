@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UtilityService {
-
-  constructor() { }
+  constructor() {}
 
   /**
- * Generates a unique identifier (UUID).
- * @returns A string representing a UUID.
- */
+   * Generates a unique identifier (UUID).
+   * @returns A string representing a UUID.
+   */
   private generateUuId(): string {
     return crypto.randomUUID();
   }
@@ -35,13 +33,15 @@ export class UtilityService {
    * @param defaultKeyResponse The default key to return if no match is found.
    * @returns The key of the enum corresponding to the value, or the default key if no match is found.
    */
-  public getEnumKeyFromValue<T extends Object>(enumType: T, value: string, defaultKeyResponse: keyof T): keyof T {
-
+  public getEnumKeyFromValue<T extends Object>(
+    enumType: T,
+    value: string,
+    defaultKeyResponse: keyof T
+  ): keyof T {
     const key = Object.keys(enumType).find(key => enumType[key as keyof T] === value);
     if (!key) {
       return defaultKeyResponse;
     }
     return key as keyof T;
   }
-
 }

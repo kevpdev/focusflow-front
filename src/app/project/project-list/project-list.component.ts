@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { Observable, take } from 'rxjs';
@@ -9,24 +9,20 @@ import { ProjectStoreService } from 'src/core/services';
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [AsyncPipe,
-    MatCardModule,
-  ],
+  imports: [AsyncPipe, MatCardModule],
   templateUrl: './project-list.component.html',
-  styleUrl: './project-list.component.scss'
+  styleUrl: './project-list.component.scss',
 })
-export class ProjectListComponent {
-
+export class ProjectListComponent implements OnInit {
   projects$: Observable<Project[]> = this.projectStoreService.projects$;
 
-  constructor(private projectStoreService: ProjectStoreService,
+  constructor(
+    private projectStoreService: ProjectStoreService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.projectStoreService.fetchAllProjects()
-      .pipe(take(1))
-      .subscribe();
+    this.projectStoreService.fetchAllProjects().pipe(take(1)).subscribe();
   }
 
   openProject(projectId: number): void {

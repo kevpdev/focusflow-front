@@ -1,32 +1,27 @@
 :host {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 }
 
 .project-list-container {
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
-    border: 1px solid black;
-    border-radius: 12px;
-    max-height: 50vh;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 50vh;
+  gap: clamp(8px, 2vh, 16px);
+  padding: clamp(8px, 2vw, 16px);
 }
 
-.project-card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-height: clamp(64px, 10vh, 128px);
-    background-color: var(--background-card);
-    cursor: pointer;
+mat-card.project-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: clamp(96px, 10vh, 128px);
+  cursor: pointer;
 
-    &:hover {
-        background-color: var(--background-card-hover);
-    }
-    
-
+  &:hover {
+    background-color: var(--background-card-hover);
+  }
 }
-

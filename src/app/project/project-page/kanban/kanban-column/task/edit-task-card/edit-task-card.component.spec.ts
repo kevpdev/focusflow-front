@@ -12,15 +12,14 @@ describe('EditTaskComponent', () => {
   let fixture: ComponentFixture<EditTaskComponent>;
 
   beforeEach(async () => {
-
     const data = {
       isEditMode: false,
       task: new Task({
         id: 1,
-        title: "Laver le linge",
-        description: "",
-        userId: 2
-      })
+        title: 'Laver le linge',
+        description: '',
+        userId: 2,
+      }),
     };
 
     await TestBed.configureTestingModule({
@@ -29,11 +28,11 @@ describe('EditTaskComponent', () => {
         ...testProviders,
         {
           provide: MAT_DIALOG_DATA,
-          useValue: { data }
+          useValue: { data },
         },
-        TaskStoreService]
-    })
-      .compileComponents();
+        TaskStoreService,
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EditTaskComponent);
     component = fixture.componentInstance;

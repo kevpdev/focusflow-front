@@ -8,9 +8,8 @@ describe('ScreenWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ScreenWrapperManagementComponent]
-    })
-      .compileComponents();
+      imports: [ScreenWrapperManagementComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ScreenWrapperManagementComponent);
     component = fixture.componentInstance;

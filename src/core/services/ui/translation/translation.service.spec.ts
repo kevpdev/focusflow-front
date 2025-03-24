@@ -21,11 +21,11 @@ describe('TranslationService', () => {
           loader: {
             provide: TranslateLoader,
             useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+            deps: [HttpClient],
+          },
+        }),
       ],
-      providers: [TranslationService, ...testProviders]
+      providers: [TranslationService, ...testProviders],
     });
 
     service = TestBed.inject(TranslationService);

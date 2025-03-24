@@ -7,11 +7,9 @@ import { Identifiable } from 'src/core/models';
   standalone: true,
   imports: [],
   templateUrl: './card-list.component.html',
-  styleUrl: './card-list.component.scss'
+  styleUrl: './card-list.component.scss',
 })
 export class CardListComponent<T extends Identifiable> {
-
   @Input()
   public recordTData!: Record<string, Observable<T[]> | T[]>;
-
 }

@@ -1,15 +1,25 @@
 .column-item {
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 10px;
-    overflow: auto;
-    background-color: var(--background-board-column);
-    height: 100%;
-    
+  border: 1px solid var(--border-color-div);
+  border-radius: 12px;
+  padding: 10px;
+  overflow: auto;
+  background-color: var(--background-board-column);
+  height: 100%;
 }
 
 .item-container {
-    border: 1px solid black;
-    border-radius: 12px;
-    min-height: 15%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color-div);
+  border-radius: 12px;
+  min-height: 15%;
+  gap: clamp(8px, 2vh, 16px);
+}
+
+.item-container.empty {
+  padding: clamp(8px, 2vh, 16px);
+  font-size: 14px;
+  font-style: italic;
+  align-items: center;
+  justify-content: center;
 }

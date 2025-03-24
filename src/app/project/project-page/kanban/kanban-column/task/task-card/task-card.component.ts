@@ -12,11 +12,13 @@ import { TaskStoreService, TranslationService } from 'src/core/services';
 import { ConfirmationDialogComponent } from 'src/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { CustomDatePipe } from 'src/shared/pipes/custom-date.pipe';
 import { TranslateTaskStatusPipe } from 'src/shared/pipes/translate-task-status.pipe';
+import { EditTaskCardComponent } from '../edit-task-card/edit-task-card.component';
 
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [MatButtonModule,
+  imports: [
+    MatButtonModule,
     MatIconModule,
     MatCardModule,
     MatActionList,
@@ -25,34 +27,36 @@ import { TranslateTaskStatusPipe } from 'src/shared/pipes/translate-task-status.
     TranslateTaskStatusPipe,
   ],
   templateUrl: './task-card.component.html',
-  styleUrl: './task-card.component.scss'
+  styleUrl: './task-card.component.scss',
 })
 export class TaskCardComponent {
-
   @Input() task: Task | null = null;
   @Output() dropEvent = new EventEmitter<CdkDragDrop<Task[]>>();
 
   modifiedTasks: Task[] = [];
   unSubscribe$ = new Subject<void>();
 
-  constructor(private dialog: MatDialog,
+  constructor(
+    private dialog: MatDialog,
     private translationService: TranslationService,
-    private taskStoreService: TaskStoreService) { }
+    private taskStoreService: TaskStoreService
+  ) {}
 
   delete(task: Task): void {
-
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { message: `${this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.DELETE')} \n ${task.title} ?` }
+      data: {
+        message: `${this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.DELETE')} \n ${task.title} ?`,
+      },
     });
 
-    dialogRef.afterClosed()
+    dialogRef
+      .afterClosed()
       .pipe(takeUntil(this.unSubscribe$))
       .subscribe(result => {
         if (result) {
           this.taskStoreService.deleteTask(task.id).subscribe();
         }
-      })
-
+      });
   }
 
   isExpired(dueDateMillisValue: number) {
@@ -60,15 +64,11 @@ export class TaskCardComponent {
   }
 
   update(task: Task): void {
-    this.taskStoreService.updateTask(task).subscribe();
+    this.dialog.open(EditTaskCardComponent, {
+      data: {
+        isEditMode: true,
+        task,
+      },
+    });
   }
-
-
-  ngOnDestroy() {
-    this.unSubscribe$.next();
-    this.unSubscribe$.complete();
-  }
-
-
-
 }

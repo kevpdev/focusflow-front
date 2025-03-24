@@ -1,113 +1,121 @@
 {
-    "APP": {
-        "TITLE": "FocusFlow",
-        "PROFILE": "Profil",
-        "LOGOUT": "Se déconnecter",
-        "SETTINGS": "Paramètres",
-        "FOOTER": {
-            "COPYRIGHT": "Tout droits réservés"
-        }
-    },
-    "LOGIN": {
-        "FORM": {
-            "TITLE": "Connectez-vous :",
-            "EMAIL": {
-                "LABEL": "Email",
-                "PLACEHOLDER": "Email",
-                "ERRORS": {
-                    "REQUIRED": "L'email est manquant",
-                    "PATTERN": "Veuillez entrer une adresse email valide"
-                }
-            },
-            "PASSWORD": {
-                "LABEL": "Mot de passe",
-                "PLACEHOLDER": "Mot de passe",
-                "ERRORS": {
-                    "REQUIRED": "Le mot de passe est manquant",
-                    "MIN_LENGTH": "Votre mot de passe doit faire au minimum 8 caractères",
-                    "PATTERN": "Votre mot de passe doit comporter au minimum une majuscule, une minuscule et un chiffre"
-                }
-            },
-            "SUBMIT": "Se connecter",
-            "ERROR_MESSAGE": "Une erreur est survenue"
-        }
-    },
-    "KANBAN": {
-        "COLUMN": {
-            "PENDING": "A faire",
-            "IN_PROGRESS": "En cours",
-            "DONE": "Terminée"
-        }
-    },
-    "TASK_MANAGEMENT": {
-        "TITLE": "Gestion des tâches",
-        "CARD": {
-            "LIST": {
-                "TITLES": {
-                    "PENDING": "Tâches à faire",
-                    "IN_PROGRESS": "Tâches en cours",
-                    "DONE": "Tâches terminées"
-                },
-                "DELETE": "Voulez-vous vraiment supprimer la tâche : ",
-                "PLACEHOLDER": "Glissez une tâche ici",
-                "TITLE": "Titre",
-                "DUE_DATE": "Date de fin : ",
-                "PRIORITY": "Priorité : ",
-                "STATUS": "Statut : "
-            },
-            "EDIT": {
-                "EDIT_MODE_TITLE": "Modifier une tâche",
-                "ADD_MODE_TITLE": "Créer une tâche",
-                "FORM": {
-                    "TITLE": {
-                        "LABEL": "Titre",
-                        "PLACEHOLDER": "Titre",
-                        "ERROR_REQUIRED": "Le titre est manquant"
-                    },
-                    "DESCRIPTION": {
-                        "LABEL": "Description",
-                        "PLACEHOLDER": "Description",
-                        "ERROR_REQUIRED": "La description est manquante"
-                    },
-                    "PRIORITY": {
-                        "LABEL": "Priorité",
-                        "OPTIONS": {
-                            "CHOOSE": "Choisissez une priorité",
-                            "1": "1 : Basse priorité (non urgente)",
-                            "2": "2 : Moyenne priorité (à traiter prochainement)",
-                            "3": "3 : Haute priorité (critique ou urgente)"
-                        }
-                    },
-                    "STATUS": {
-                        "LABEL": "Statut",
-                        "OPTIONS": {
-                            "CHOOSE": "Choisissez un Statut",
-                            "PENDING": "A Faire",
-                            "IN_PROGRESS": "En cours",
-                            "DONE": "Terminée"
-                        }
-                    },
-                    "DUE_DATE": {
-                        "LABEL": "Choisissez une date d'échéance"
-                    },
-                    "ACTIONS": {
-                        "CANCEL": "Annuler",
-                        "SUBMIT": "Valider"
-                    }
-                }
-            }
-        }
-    },
-    "HYPER_FOCUS": {
-        "TITLE": "Démarrer une session hyperfocus",
-        "CHECKLIST": {
-            "PHONE_MODE": "Activer le mode avion ou \"Ne pas déranger\" sur le téléphone",
-            "PC_MODE": "Activer \"Ne pas déranger\" sur le PC",
-            "CLOSE_MESSAGING": "Fermer les applications de messagerie",
-            "CLEAN_WORKSPACE": "Ranger mon espace de travail",
-            "PREPARE_MATERIAL": "Préparer mon matériel (carnet, eau, etc.)",
-            "SET_GOAL": "Définir mon objectif pour cette session"
-        },
-        "START_BUTTON": "Démarrer"
+  "APP": {
+    "TITLE": "FocusFlow",
+    "PROFILE": "Profil",
+    "LOGOUT": "Se déconnecter",
+    "SETTINGS": "Paramètres",
+    "FOOTER": {
+      "COPYRIGHT": "Tout droits réservés"
     }
+  },
+  "LOGIN": {
+    "FORM": {
+      "TITLE": "Connectez-vous :",
+      "EMAIL": {
+        "LABEL": "Email",
+        "PLACEHOLDER": "Email",
+        "ERRORS": {
+          "REQUIRED": "L'email est manquant",
+          "PATTERN": "Veuillez entrer une adresse email valide"
+        }
+      },
+      "PASSWORD": {
+        "LABEL": "Mot de passe",
+        "PLACEHOLDER": "Mot de passe",
+        "ERRORS": {
+          "REQUIRED": "Le mot de passe est manquant",
+          "MIN_LENGTH": "Votre mot de passe doit faire au minimum 8 caractères",
+          "PATTERN": "Votre mot de passe doit comporter au minimum une majuscule, une minuscule et un chiffre"
+        }
+      },
+      "SUBMIT": "Se connecter",
+      "ERROR_MESSAGE": "Une erreur est survenue"
+    }
+  },
+  "KANBAN": {
+    "COLUMN": {
+      "PENDING": "A faire",
+      "IN_PROGRESS": "En cours",
+      "DONE": "Terminée"
+    }
+  },
+  "TASK_MANAGEMENT": {
+    "TITLE": "Gestion des tâches",
+    "CARD": {
+      "LIST": {
+        "TITLES": {
+          "PENDING": "Tâches à faire",
+          "IN_PROGRESS": "Tâches en cours",
+          "DONE": "Tâches terminées"
+        },
+        "DELETE": "Voulez-vous vraiment supprimer la tâche : ",
+        "PLACEHOLDER": "Glissez une tâche ici",
+        "TITLE": "Titre",
+        "DUE_DATE": "Date de fin : ",
+        "PRIORITY": "Priorité : ",
+        "STATUS": "Statut : "
+      },
+      "EDIT": {
+        "EDIT_MODE_TITLE": "Modifier une tâche",
+        "ADD_MODE_TITLE": "Créer une tâche",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Titre",
+            "PLACEHOLDER": "Titre",
+            "ERROR_REQUIRED": "Le titre est manquant"
+          },
+          "DESCRIPTION": {
+            "LABEL": "Description",
+            "PLACEHOLDER": "Description",
+            "ERROR_REQUIRED": "La description est manquante"
+          },
+          "PRIORITY": {
+            "LABEL": "Priorité",
+            "OPTIONS": {
+              "CHOOSE": "Choisissez une priorité",
+              "1": "1 : Basse priorité (non urgente)",
+              "2": "2 : Moyenne priorité (à traiter prochainement)",
+              "3": "3 : Haute priorité (critique ou urgente)"
+            }
+          },
+          "STATUS": {
+            "LABEL": "Statut",
+            "OPTIONS": {
+              "CHOOSE": "Choisissez un Statut",
+              "PENDING": "A Faire",
+              "IN_PROGRESS": "En cours",
+              "DONE": "Terminée"
+            }
+          },
+          "TYPE": {
+            "LABEL": "Type de tâche",
+            "OPTIONS": {
+              "CHOOSE": "Choisissez un type de tâche",
+              "TASK": "Tâche",
+              "BUG": "Bug"
+            }
+          },
+          "DUE_DATE": {
+            "LABEL": "Choisissez une date d'échéance"
+          },
+          "ACTIONS": {
+            "CANCEL": "Annuler",
+            "SUBMIT": "Valider"
+          }
+        }
+      }
+    }
+  },
+  "HYPER_FOCUS": {
+    "TITLE": "Démarrer une session hyperfocus",
+    "CHECKLIST": {
+      "PHONE_MODE": "Activer le mode avion ou \"Ne pas déranger\" sur le téléphone",
+      "PC_MODE": "Activer \"Ne pas déranger\" sur le PC",
+      "CLOSE_MESSAGING": "Fermer les applications de messagerie",
+      "CLEAN_WORKSPACE": "Ranger mon espace de travail",
+      "PREPARE_MATERIAL": "Préparer mon matériel (carnet, eau, etc.)",
+      "SET_GOAL": "Définir mon objectif pour cette session"
+    },
+    "START_BUTTON": "Démarrer"
+  }
 }

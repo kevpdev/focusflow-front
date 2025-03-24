@@ -1,85 +1,82 @@
-<!DOCTYPE html>
-
-<head>
-    <meta charset="utf-8">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
     <title>Test CSS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
 
-<body>
+  <body>
     <main>
-        <div class="main-square">
-            <div class="square-1">Carré 1</div>
-            <div class="square-2">Carré 2</div>
-            <div class="square-3">Carré 3</div>
-            <div class="square-4">Carré 4</div>
-        </div>
+      <div class="main-square">
+        <div class="square-1">Carré 1</div>
+        <div class="square-2">Carré 2</div>
+        <div class="square-3">Carré 3</div>
+        <div class="square-4">Carré 4</div>
+      </div>
     </main>
     <style>
-        :root {
-            --primary-bg-color: #0000ff;
-            --secondary-bg-color: #ffff00;
-            --primary-ft-color: #ffffff;
-            --secondary-ft-color: #000000;
-        }
+      :root {
+        --primary-bg-color: #0000ff;
+        --secondary-bg-color: #ffff00;
+        --primary-ft-color: #ffffff;
+        --secondary-ft-color: #000000;
+      }
 
+      body {
+        height: 100vh;
+        font-size: 16px;
+      }
+
+      main {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .main-square {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        border: 1px solid #000000;
+        width: min(800px, 80vw);
+        height: min(800px, 80vw);
+        /* gap: 10px; */
+      }
+
+      .square-1,
+      .square-2,
+      .square-3,
+      .square-4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .square-1,
+      .square-4 {
+        background-color: var(--primary-bg-color);
+        color: var(--primary-ft-color);
+      }
+
+      .square-2,
+      .square-3 {
+        background-color: var(--secondary-bg-color);
+        color: var(--secondary-ft-color);
+      }
+
+      @media (max-width: 768px) {
         body {
-            height: 100vh;
-            font-size: 16px;
+          font-size: 14px;
         }
+      }
 
-        main {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+      @media (max-width: 480px) {
+        body {
+          font-size: 12px;
         }
-
-        .main-square {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            border: 1px solid #000000;
-            width: min(800px, 80vw);
-            height: min(800px, 80vw);
-            /* gap: 10px; */
-        }
-
-        .square-1,
-        .square-2,
-        .square-3,
-        .square-4 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-
-        .square-1,
-        .square-4 {
-            background-color: var(--primary-bg-color);
-            color: var(--primary-ft-color);
-        }
-
-        .square-2,
-        .square-3 {
-            background-color: var(--secondary-bg-color);
-            color: var(--secondary-ft-color);
-        }
-
-
-        @media (max-width: 768px) {
-            body {
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                font-size: 12px;
-            }
-        }
+      }
     </style>
-</body>
-
+  </body>
 </html>

@@ -1,8 +1,7 @@
 .title {
-    flex-grow: 1; /* Pousse le titre au centre */
-    text-align: center;
-  }
-
+  flex-grow: 1; /* Pousse le titre au centre */
+  text-align: center;
+}
 
 header {
   top: 0;
@@ -15,16 +14,12 @@ header {
 mat-toolbar {
   height: 100%;
   width: 100%;
-  background-color:var(--background-app-bar) !important;
+  background-color: var(--background-app-bar) !important;
   border-bottom: solid 1px var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
-
-
-
 
 footer {
   flex-shrink: 0;
@@ -33,13 +28,9 @@ footer {
   font-size: 0.7em;
   width: 100%;
   height: var(--footer-height);
-  background-color:var(--background-footer);
+  background-color: var(--background-footer);
   color: var(--foreground-secondary-text);
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-
-
-

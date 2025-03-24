@@ -1,31 +1,31 @@
 :host {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 mat-card {
-    padding:16px;
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    align-items: center;
-    border-radius: 1%;
+  padding: 16px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  border-radius: 1%;
 }
 
 form {
-    width: 100%;
-    flex-direction: column;
-    display: flex;
-    padding-top: 16px;  
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  padding-top: 16px;
 }
 
 mat-form-field {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 button {
-    margin-top: 48px;
+  margin-top: 48px;
 }

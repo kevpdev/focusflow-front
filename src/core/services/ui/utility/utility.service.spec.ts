@@ -16,13 +16,14 @@ describe('UtilityService', () => {
   });
 
   it('should return an enum key from value', () => {
-    expect(service.getEnumKeyFromValue(EStatus, 'PENDING', EStatus.NO_STATUS))
-      .toBe(EStatus.PENDING);
+    expect(service.getEnumKeyFromValue(EStatus, 'PENDING', EStatus.NO_STATUS)).toBe(
+      EStatus.PENDING
+    );
   });
 
   it('should return default value when key not found', () => {
-    expect(service.getEnumKeyFromValue(EStatus, 'NOTFOUND', EStatus.NO_STATUS))
-      .toBe(EStatus.NO_STATUS);
+    expect(service.getEnumKeyFromValue(EStatus, 'NOTFOUND', EStatus.NO_STATUS)).toBe(
+      EStatus.NO_STATUS
+    );
   });
-
 });

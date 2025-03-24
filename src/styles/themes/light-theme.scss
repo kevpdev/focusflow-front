@@ -2,18 +2,26 @@
 @use './m3-theme.scss' as theme;
 
 :root.light-theme {
-   // @include mat.all-component-themes(theme.$light-theme);
-    --background-main: #{mat.get-theme-color(theme.$light-theme, primary, 100)};
-    --background-app-bar: #{mat.get-theme-color(theme.$light-theme, primary, 100)};
-    --background-footer: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
-    --background-button: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
-    --foreground-primary-text: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
-    --foreground-secondary-text: #{mat.get-theme-color(theme.$light-theme, tertiary, 90)};
-    --border-color: #{mat.get-theme-color(theme.$light-theme, primary, 95)};
-    --box-shadow-color: #{mat.get-theme-color(theme.$light-theme, primary, 80)};
-    --background-board-column: #{mat.get-theme-color(theme.$light-theme, primary, 95)};
-    --background-button-delete: rgba(200, 37, 37, 0.518);
-    --background-button-update: #{mat.get-theme-color(theme.$light-theme, tertiary, 80)};
-    --background-button-add: rgba(107, 180, 104, 0.518);
-    --background-button-save: #{mat.get-theme-color(theme.$light-theme, primary, 60)};
-  }
+  // @include mat.all-component-themes(theme.$light-theme);
+  --primary-color: #{mat.get-theme-color(theme.$light-theme, primary, 100)};
+  --secondary-color: #{mat.get-theme-color(theme.$light-theme, primary, 98)};
+  --tertiary-color: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
+
+  --background-main: var(--primary-color);
+  --background-app-bar: var(--primary-color);
+  --background-footer: var(--tertiary-color);
+  --background-button: var(--tertiary-color);
+
+  --foreground-primary-text: var(--tertiary-color);
+  --foreground-secondary-text: #{mat.get-theme-color(theme.$light-theme, tertiary, 90)};
+
+  --border-color: var(--secondary-color);
+  --border-color-div: #{mat.get-theme-color(theme.$light-theme, primary, 90)};
+  --box-shadow-color: #{mat.get-theme-color(theme.$light-theme, primary, 80)};
+
+  --background-board-column: var(--secondary-color);
+  --background-button-delete: rgba(200, 37, 37, 0.518);
+  --background-button-update: #{mat.get-theme-color(theme.$light-theme, tertiary, 80)};
+  --background-button-add: rgba(107, 180, 104, 0.518);
+  --background-button-save: #{mat.get-theme-color(theme.$light-theme, primary, 60)};
+}

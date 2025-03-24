@@ -5,7 +5,6 @@ import { UtilityService } from '../utility.service';
 import { TaskApiService } from './task-api.service';
 import { TaskStoreService } from './task-store.service';
 
-
 describe('TaskStoreService', () => {
   let service: TaskStoreService;
   let taskApiMock: jest.Mocked<TaskApiService>;
@@ -21,7 +20,6 @@ describe('TaskStoreService', () => {
       fetchAddNewTask: jest.fn(),
       fetchUpdateTask: jest.fn(),
     } as Partial<TaskApiService> as jest.Mocked<TaskApiService>;
-
 
     // Mock pour UtilityService
     utilityMock = {
@@ -49,10 +47,10 @@ describe('TaskStoreService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should fetch all tasks and update state', (done) => {
+  it('should fetch all tasks and update state', done => {
     taskApiMock.fetchAllTasks.mockReturnValue(of(mockTasks));
 
-    service.fetchAllTasks().subscribe((tasks) => {
+    service.fetchAllTasks().subscribe(tasks => {
       expect(tasks).toEqual(mockTasks);
       expect(service.getTasks()).toEqual(mockTasks);
       expect(taskApiMock.fetchAllTasks).toHaveBeenCalled();
@@ -60,46 +58,50 @@ describe('TaskStoreService', () => {
     });
   });
 
-  it('should handle error while fetching all tasks', (done) => {
+  it('should handle error while fetching all tasks', done => {
     const error = new Error('API error');
     taskApiMock.fetchAllTasks.mockReturnValue(throwError(() => error));
 
     service.fetchAllTasks().subscribe({
       next: () => fail('Expected an error, but got a response'),
-      error: (err) => {
-        expect(err.message).toContain('Une erreur est survenue lors de la récupération de toutes les tâches.');
+      error: err => {
+        expect(err.message).toContain(
+          'Une erreur est survenue lors de la récupération de toutes les tâches.'
+        );
         done();
       },
     });
   });
 
-  it('should fetch tasks by status', (done) => {
+  it('should fetch tasks by status', done => {
     service.setTasksForTest(mockTasks);
-    service.fetchTasksByStatus(EStatus.PENDING).subscribe((tasks) => {
+    service.fetchTasksByStatus(EStatus.PENDING).subscribe(tasks => {
       expect(tasks).toEqual([mockTasks[0]]);
       done();
     });
   });
 
-  it('should handle error while fetch tasks by status', (done) => {
+  it('should handle error while fetch tasks by status', done => {
     jest.spyOn(service, 'tasks$', 'get').mockReturnValue(throwError(() => new Error()));
 
     service.fetchTasksByStatus(EStatus.PENDING).subscribe({
       next: () => fail('Expected an error, but got a response'),
       error: err => {
-        expect(err.message).toBe('Une erreur est survenue lors de la récupération des tâches ' + EStatus.PENDING);
+        expect(err.message).toBe(
+          'Une erreur est survenue lors de la récupération des tâches ' + EStatus.PENDING
+        );
         done();
-      }
+      },
     });
   });
 
-  it('should add a new task and update state', (done) => {
+  it('should add a new task and update state', done => {
     const newTask = new Task({ title: 'New Task', tempId: 'temp-id' });
     const savedTask = new Task({ id: 3, title: 'New Task' });
 
     taskApiMock.fetchAddNewTask.mockReturnValue(of(savedTask));
 
-    service.addNewTask(newTask).subscribe((task) => {
+    service.addNewTask(newTask).subscribe(task => {
       expect(task).toEqual(savedTask);
       expect(service.getTaskById(3)).toEqual(savedTask);
       expect(newTask.tempId).toContain('temp-');
@@ -109,7 +111,7 @@ describe('TaskStoreService', () => {
     });
   });
 
-  it('should handle error while adding a new task', (done) => {
+  it('should handle error while adding a new task', done => {
     const newTask = new Task({ title: 'New Task', tempId: 'temp-id' });
     const error = new Error('API error');
 
@@ -117,7 +119,7 @@ describe('TaskStoreService', () => {
 
     service.addNewTask(newTask).subscribe({
       next: () => fail('Expected an error, but got a response'),
-      error: (err) => {
+      error: err => {
         expect(err.message).toContain("Une erreur est survenue lors de l'ajout de la tâches.");
         expect(service.getTasks()).not.toContainEqual(newTask);
         expect(taskApiMock.fetchAddNewTask).toHaveBeenCalledWith(newTask);
@@ -126,7 +128,7 @@ describe('TaskStoreService', () => {
     });
   });
 
-  it('should delete a task and update state', (done) => {
+  it('should delete a task and update state', done => {
     taskApiMock.fetchDeleteTask.mockReturnValue(of(void 0));
     service.setTasksForTest(mockTasks);
 
@@ -137,29 +139,30 @@ describe('TaskStoreService', () => {
     });
   });
 
-  it('should handle error while deleting a task', (done) => {
+  it('should handle error while deleting a task', done => {
     const error = new Error('API error');
     taskApiMock.fetchDeleteTask.mockReturnValue(throwError(() => error));
     service.setTasksForTest(mockTasks);
 
     service.deleteTask(1).subscribe({
       next: () => fail('Expected an error, but got a response'),
-      error: (err) => {
-        expect(err.message).toContain('Une erreur est survenue lors de la suppression de la tâche.');
+      error: err => {
+        expect(err.message).toContain(
+          'Une erreur est survenue lors de la suppression de la tâche.'
+        );
         expect(service.getTasks()).toEqual(mockTasks); // Liste restaurée
         done();
       },
     });
   });
 
-  it('should update task and update state', (done) => {
-
+  it('should update task and update state', done => {
     service.setTasksForTest([new Task({ id: 1, status: EStatus.IN_PROGRESS })]);
     const modifiedTask = new Task({ id: 1, status: EStatus.DONE });
 
     taskApiMock.fetchUpdateTask.mockReturnValue(of(modifiedTask));
 
-    service.updateTask(modifiedTask).subscribe((task) => {
+    service.updateTask(modifiedTask).subscribe(task => {
       expect(task).toEqual(modifiedTask);
       expect(service.getTasks()[0].status).toBe(EStatus.DONE);
       expect(taskApiMock.fetchUpdateTask).toHaveBeenCalledWith(modifiedTask);
@@ -167,7 +170,7 @@ describe('TaskStoreService', () => {
     });
   });
 
-  it('should handle error while updating task', (done) => {
+  it('should handle error while updating task', done => {
     service.setTasksForTest([new Task({ id: 1, status: EStatus.IN_PROGRESS })]);
     const modifiedTask = new Task({ id: 1, status: EStatus.DONE });
 
@@ -175,7 +178,7 @@ describe('TaskStoreService', () => {
 
     service.updateTask(modifiedTask).subscribe({
       next: () => fail('Expected an error, but got a response'),
-      error: (err) => {
+      error: err => {
         expect(err.message).toBe('Une erreur est survenue lors de la modification de la tâche.');
         //Rollback test
         expect(service.getTaskById(1).status).toBe(EStatus.IN_PROGRESS);
@@ -185,28 +188,25 @@ describe('TaskStoreService', () => {
     });
   });
 
-
-  it('should handle error while updating task with empty store tasks array', (done) => {
-
+  it('should handle error while updating task with empty store tasks array', done => {
     const modifiedTask = new Task({ id: 1, status: EStatus.DONE });
     taskApiMock.fetchUpdateTask.mockReturnValue(throwError(() => new Error()));
 
     service.updateTask(modifiedTask).subscribe({
       next: () => fail('Expected an error, but got a response'),
-      error: (err) => {
-        expect(err.message).toBe("La tâche est introuvable dans le store.");
+      error: err => {
+        expect(err.message).toBe('La tâche est introuvable dans le store.');
         done();
       },
     });
   });
 
-  it('should update task status and update state', (done) => {
-
+  it('should update task status and update state', done => {
     service.setTasksForTest([new Task({ id: 1, status: EStatus.IN_PROGRESS })]);
     const modifiedTasks = [new Task({ id: 1, status: EStatus.DONE })];
     taskApiMock.fetchUpdateTaskStatus.mockReturnValue(of(modifiedTasks));
 
-    service.updateTaskStatus(modifiedTasks).subscribe((tasks) => {
+    service.updateTaskStatus(modifiedTasks).subscribe(tasks => {
       expect(tasks).toEqual(modifiedTasks);
       expect(service.getTasks()[0].status).toBe(EStatus.DONE);
       expect(taskApiMock.fetchUpdateTaskStatus).toHaveBeenCalledWith(modifiedTasks);
@@ -214,30 +214,28 @@ describe('TaskStoreService', () => {
     });
   });
 
-  it('should handle error while updating task status', (done) => {
+  it('should handle error while updating task status', done => {
     const modifiedTasks = [new Task({ id: 1, status: EStatus.DONE })];
     taskApiMock.fetchUpdateTaskStatus.mockReturnValue(throwError(() => new Error()));
 
     service.updateTaskStatus(modifiedTasks).subscribe({
       next: () => fail('Expected an error, but got a response'),
-      error: (err) => {
-
-        expect(err.message).toBe('Une erreur est survenue lors de la modification du statut des tâches.');
+      error: err => {
+        expect(err.message).toBe(
+          'Une erreur est survenue lors de la modification du statut des tâches.'
+        );
         done();
       },
     });
   });
 
   it('should get task by id', () => {
-
     service.setTasksForTest([new Task({ id: 1, status: EStatus.IN_PROGRESS })]);
     const task = service.getTaskById(1);
     expect(task.id).toBe(1);
-
   });
 
   it('should handle error while get task by id', () => {
     expect(() => service.getTaskById(1)).toThrow('La tâche est introuvable.');
   });
-
 });

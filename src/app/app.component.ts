@@ -12,14 +12,17 @@ import { AuthStoreService } from '../core/services';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule,
+  imports: [
+    RouterOutlet,
+    MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
     MatSidenavModule,
-    TranslateModule],
+    TranslateModule,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'focusflow';
@@ -28,26 +31,24 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthStoreService,
     private router: Router,
-    private renderer: Renderer2) { }
+    private renderer: Renderer2
+  ) {}
 
   public ngOnInit(): void {
-
     this.renderer.addClass(document.documentElement, 'light-theme');
 
-    this.authService.isAuthenticated$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((value) => {
-        this.isLoggedIn = value;
-      });
+    this.authService.isAuthenticated$.pipe(takeUntil(this.unsubscribe$)).subscribe(value => {
+      this.isLoggedIn = value;
+    });
   }
 
   goToHome() {
     this.router.navigate(['/dashboard']);
   }
 
-
   public logout(): void {
-    this.authService.logout()
+    this.authService
+      .logout()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.router.navigate(['/login']));
   }
@@ -56,6 +57,4 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
     this.unsubscribe$.next();
   }
-
-
 }

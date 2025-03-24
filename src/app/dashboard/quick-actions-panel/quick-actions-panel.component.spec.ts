@@ -8,9 +8,8 @@ describe('QuickActionsPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QuickActionsPanelComponent]
-    })
-    .compileComponents();
+      imports: [QuickActionsPanelComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QuickActionsPanelComponent);
     component = fixture.componentInstance;

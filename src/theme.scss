@@ -11,14 +11,15 @@ $app-warn: mat.define-palette(mat.$red-palette, 300);
 
 // Palette personnalisée pour les couleurs de fond
 $background-palette: (
-  background: #1D3557, // Couleur de fond de la page
-  card: #A8DADC,       // Couleur de fond des cartes ou composants secondaires
-  dialog: #3A4A5F,
-  app-bar: #2E3B4E,
-  hover: #A8DADC,
-  status-bar: #1E2836,
+  background: #1d3557,
+  // Couleur de fond de la page
+  card: #a8dadc,
+  // Couleur de fond des cartes ou composants secondaires
+  dialog: #3a4a5f,
+  app-bar: #2e3b4e,
+  hover: #a8dadc,
+  status-bar: #1e2836,
 );
-
 
 // // Définition du thème clair
 // $app-theme: mat.m2-define-light-theme((
@@ -58,4 +59,3 @@ $elements: (
 
 // Application des thèmes à tous les composants Material
 @include mat.all-component-themes($light-theme);
-

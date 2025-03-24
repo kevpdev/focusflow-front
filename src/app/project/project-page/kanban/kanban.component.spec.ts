@@ -8,9 +8,8 @@ describe('KanbanComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KanbanComponent]
-    })
-      .compileComponents();
+      imports: [KanbanComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(KanbanComponent);
     component = fixture.componentInstance;
