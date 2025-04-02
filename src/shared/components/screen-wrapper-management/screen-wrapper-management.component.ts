@@ -5,7 +5,7 @@ import { KanbanComponent } from 'src/app/project/project-page/kanban/kanban.comp
 import { Identifiable } from 'src/core/models';
 import { EStatusActive } from 'src/core/models/enums/status.enum';
 import { EditItemFormComponent } from 'src/core/models/interfaces/edit-form-component.interface';
-import { ResponsiveService } from 'src/core/services';
+import { LayoutService } from 'src/core/services';
 import { CardListComponent } from '../card-list/card-list.component';
 
 @Component({
@@ -25,7 +25,7 @@ export class ScreenWrapperManagementComponent<T extends Identifiable> {
   @Input() editFormComponent: Type<EditItemFormComponent> | null = null;
   isSmallScreen$: Observable<boolean> = of(false);
 
-  constructor(private responsiveService: ResponsiveService) {}
+  constructor(private responsiveService: LayoutService) {}
 
   ngOnInit(): void {
     this.isSmallScreen$ = this.responsiveService.isSmallScreen();

@@ -4,12 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { SidebarMenuComponent } from 'src/shared/components/ui/sidebar-menu/sidebar-menu.component';
-import { AuthStoreService, ResponsiveService } from '../core/services';
+import { AuthStoreService, LayoutService } from '../core/services';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ import { AuthStoreService, ResponsiveService } from '../core/services';
     TranslateModule,
     CommonModule,
     SidebarMenuComponent,
+    MatSlideToggleModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -31,25 +33,30 @@ import { AuthStoreService, ResponsiveService } from '../core/services';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'focusflow';
   isLoggedIn = false;
-  isDesktop = this.responsiveService.isDesktop;
+  isDesktop = this.layoutService.isDesktop;
   unsubscribe$ = new Subject<void>();
+  isDarkMode = this.layoutService.isDarkMode;
 
   constructor(
     private authService: AuthStoreService,
     private router: Router,
     private renderer: Renderer2,
-    private responsiveService: ResponsiveService
+    private layoutService: LayoutService
   ) {}
 
   public ngOnInit(): void {
-    this.renderer.addClass(document.documentElement, 'light-theme');
+    this.layoutService.initTheme(this.renderer);
 
     this.authService.isAuthenticated$.pipe(takeUntil(this.unsubscribe$)).subscribe(value => {
       this.isLoggedIn = value;
     });
   }
 
-  goToHome() {
+  enableDarkMode(event: MatSlideToggleChange): void {
+    this.layoutService.enableDarkMode(event.checked, this.renderer);
+  }
+
+  goToHome(): void {
     if (this.isLoggedIn) {
       this.router.navigate(['/dashboard']);
     } else {

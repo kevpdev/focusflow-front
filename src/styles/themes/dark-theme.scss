@@ -1,19 +1,73 @@
 @use '@angular/material' as mat;
 @use './m3-theme.scss' as theme;
 
-:root.dark-theme {
-  @include mat.all-component-themes(theme.$dark-theme);
-  --background-main: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
-  --background-app-bar: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
-  --background-footer: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
-  --background-button: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
-  --foreground-primary-text: #{mat.get-theme-color(theme.$dark-theme, primary, 90)};
-  --foreground-secondary-text: #{mat.get-theme-color(theme.$dark-theme, tertiary, 80)};
-  --border-color: #{mat.get-theme-color(theme.$dark-theme, primary, 25)};
-  --box-shadow-color: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
-  --background-board-column: #{mat.get-theme-color(theme.$dark-theme, primary, 95)};
-  --background-button-delete: rgba(200, 37, 37, 0.518);
-  --background-button-update: #{mat.get-theme-color(theme.$light-theme, tertiary, 80)};
-  --background-button-add: rgba(107, 180, 104, 0.518);
-  --background-button-save: #{mat.get-theme-color(theme.$light-theme, primary, 60)};
+// :root.dark-theme {
+//   @include mat.all-component-themes(theme.$dark-theme);
+//   --background-main: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
+//   --background-app-bar: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
+//   --background-footer: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
+//   --background-button: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
+//   --foreground-primary-text: #{mat.get-theme-color(theme.$dark-theme, primary, 90)};
+//   --foreground-secondary-text: #{mat.get-theme-color(theme.$dark-theme, tertiary, 80)};
+//   --border-color: #{mat.get-theme-color(theme.$dark-theme, primary, 25)};
+//   --box-shadow-color: #{mat.get-theme-color(theme.$dark-theme, primary, 20)};
+//   --background-board-column: #{mat.get-theme-color(theme.$dark-theme, primary, 95)};
+//   --background-button-delete: rgba(200, 37, 37, 0.518);
+//   --background-button-update: #{mat.get-theme-color(theme.$light-theme, tertiary, 80)};
+//   --background-button-add: rgba(107, 180, 104, 0.518);
+//   --background-button-save: #{mat.get-theme-color(theme.$light-theme, primary, 60)};
+// }
+
+  :root.dark-theme {
+
+    @include mat.all-component-colors(theme.$dark-theme);
+    @include mat.all-component-typographies(theme.$dark-theme);
+
+    --primary-color: #{mat.get-theme-color(theme.$dark-theme, primary, 10)};
+    --secondary-color: #{mat.get-theme-color(theme.$dark-theme, secondary, 50)};
+    --tertiary-color: #{mat.get-theme-color(theme.$dark-theme, tertiary, 90)};
+
+    --border-color-global: var(--secondary-color);
+
+
+  .mat-mdc-card,
+  // .mat-mdc-form-field,
+  // .mat-mdc-menu,
+  .mat-mdc-button,
+  // .mat-mdc-list,
+  // .mat-mdc-slide-toggle,
+  .mat-mdc-dialog-container{
+    border: 1px solid var(--border-color-global);
+
+  }
+
+
+  // // layout background color
+  // --background-main: var(--secondary-color);
+  // --background-app-bar: var(--primary-color);
+  // --background-footer: var(--primary-color);
+  // --background-button: var(--primary-color);
+
+  // // text
+  --foreground-primary-text: var(--tertiary-color);
+  // --foreground-secondary-text: #{mat.get-theme-color(theme.$dark-theme, tertiary, 90)};
+
+  // // border and shadow
+  // --border-color: var(--secondary-color);
+  // --border-color-div: #{mat.get-theme-color(theme.$dark-theme, primary, 80)};
+  // --box-shadow-color: #{mat.get-theme-color(theme.$dark-theme, primary, 70)};
+
+  // // kanban
+  // --background-board-column: var(--secondary-color);
+
+  // // card
+  // --background-card-hover: var(--secondary-color);
+  // --background-card: var(--secondary-color);
+
+  // // button
+  // --background-button-delete: rgba(255, 82, 82, 0.3);
+  // --background-button-update: #{mat.get-theme-color(theme.$dark-theme, tertiary, 80)};
+  // --background-button-add: rgba(76, 175, 80, 0.3);
+  // --background-button-save: #{mat.get-theme-color(theme.$dark-theme, primary, 60)};
 }
+

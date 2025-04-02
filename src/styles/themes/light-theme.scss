@@ -2,35 +2,40 @@
 @use './m3-theme.scss' as theme;
 
 :root.light-theme {
-  // @include mat.all-component-themes(theme.$light-theme);
+ // @include mat.all-component-themes(theme.$light-theme);
+ @include mat.all-component-colors(theme.$light-theme);
+ @include mat.all-component-typographies(theme.$light-theme);
+
   --primary-color: #{mat.get-theme-color(theme.$light-theme, primary, 100)};
-  --secondary-color: #{mat.get-theme-color(theme.$light-theme, primary, 98)};
+  --secondary-color: #{mat.get-theme-color(theme.$light-theme, primary, 90)};
   --tertiary-color: #{mat.get-theme-color(theme.$light-theme, primary, 20)};
 
-  // layout background color 
-  --background-main: var(--primary-color);
-  --background-app-bar: var(--primary-color);
-  --background-footer: var(--tertiary-color);
-  --background-button: var(--tertiary-color);
+  --border-color-global: var(--secondary-color); 
 
-  // text
-  --foreground-primary-text: var(--tertiary-color);
-  --foreground-secondary-text: #{mat.get-theme-color(theme.$light-theme, tertiary, 90)};
+  // // layout background color
+  // --background-main: var(--primary-color);
+  // --background-app-bar: var(--primary-color);
+  // --background-footer: var(--tertiary-color);
+  // --background-button: var(--tertiary-color);
 
-  // border and shadow
-  --border-color: var(--secondary-color);
-  --border-color-div: #{mat.get-theme-color(theme.$light-theme, primary, 90)};
-  --box-shadow-color: #{mat.get-theme-color(theme.$light-theme, primary, 95)};
+  // // text
+   --foreground-primary-text: var(--tertiary-color);
+  // --foreground-secondary-text: #{mat.get-theme-color(theme.$light-theme, tertiary, 90)};
 
-  // kanban
-  --background-board-column: var(--secondary-color);
+  // // border and shadow
+  // --border-color: var(--secondary-color);
+  // --border-color-div: #{mat.get-theme-color(theme.$light-theme, primary, 90)};
+  // --box-shadow-color: #{mat.get-theme-color(theme.$light-theme, primary, 95)};
 
-  // card
-  --background-card-hover: var(--secondary-color);
+  // // kanban
+  // --background-board-column: var(--secondary-color);
 
-  // button
-  --background-button-delete: rgba(200, 37, 37, 0.518);
-  --background-button-update: #{mat.get-theme-color(theme.$light-theme, tertiary, 80)};
-  --background-button-add: rgba(107, 180, 104, 0.518);
-  --background-button-save: #{mat.get-theme-color(theme.$light-theme, primary, 60)};
+  // // card
+  // --background-card-hover: var(--secondary-color);
+
+  // // button
+  // --background-button-delete: rgba(200, 37, 37, 0.518);
+  // --background-button-update: #{mat.get-theme-color(theme.$light-theme, tertiary, 80)};
+  // --background-button-add: rgba(107, 180, 104, 0.518);
+  // --background-button-save: #{mat.get-theme-color(theme.$light-theme, primary, 60)};
 }

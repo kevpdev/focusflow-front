@@ -29,6 +29,9 @@
           <mat-icon>logout</mat-icon>
           <span>{{ 'APP.LOGOUT' | translate }}</span>
         </button>
+        <mat-slide-toggle [checked]="isDarkMode()" (change)="enableDarkMode($event)"
+          ><span class="theme-toggle-text">Thème sombre</span></mat-slide-toggle
+        >
         <button mat-menu-item>
           <mat-icon>settings</mat-icon>
           <span>{{ 'APP.SETTINGS' | translate }}</span>

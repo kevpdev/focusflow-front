@@ -2,12 +2,12 @@
 
 .div-container {
   border-radius: 12px;
-  border: 1px solid var(--border-color-div);
-  background-color: var(--primary-color);
+  border: 1px solid var(--border-color-global);
+  //background-color: var(--primary-color);
 }
 
 .separator {
-  border-bottom: 1px solid var(--border-color-div);
+  border-bottom: 1px solid var(--border-color-global);
   margin: 12px 0;
 }
 

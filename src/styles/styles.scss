@@ -4,6 +4,7 @@
 @use '@angular/material' as mat;
 @use './themes/m3-theme.scss';
 @use './themes/light-theme.scss';
+@use './themes/dark-theme.scss';
 @use './messages';
 @use './variables';
 @use './components';
@@ -22,4 +23,6 @@ body {
 body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   background-color: var(--background-main);
+  color: var(--mdc-theme-text-color);
 }
+

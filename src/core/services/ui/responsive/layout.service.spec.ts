@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ResponsiveService } from './responsive.service';
+import { LayoutService } from './layout.service';
 
 describe('ResponsiveService', () => {
-  let service: ResponsiveService;
+  let service: LayoutService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ResponsiveService);
+    service = TestBed.inject(LayoutService);
   });
 
   it('should be created', () => {

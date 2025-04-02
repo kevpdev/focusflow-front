@@ -8,13 +8,13 @@
 
 .toolbar-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: auto auto 1fr;
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: var(--background-app-bar);
-  border-bottom: solid 1px var(--border-color);
-  box-shadow: 1px 1px 1px var(--box-shadow-color);
+  // background-color: var(--background-app-bar);
+  border-bottom: solid 1px var(--border-color-global);
+  // box-shadow: 1px 1px 1px var(--box-shadow-color);
 }
 
 .menu-toolbar-button {
@@ -25,6 +25,7 @@
   grid-column: 2;
   justify-self: center;
   white-space: nowrap;
+  font-size: large;
 }
 
 .profile-toolbar-button {
@@ -35,9 +36,12 @@
 .sidenav-container {
   display: flex;
   height: calc(100% - var(--toolbar-height));
-  background-color: var(--secondary-color);  
-  border-bottom: solid 1px var(--border-color);
-  box-shadow: 1px 1px 1px var(--box-shadow-color);
+  // background-color: var(--secondary-color);  
+  // box-shadow: 1px 1px 1px var(--box-shadow-color);
+}
+
+span.theme-toggle-text {
+  color: var(--foreground-primary-text);
 }
 
 .mat-drawer {
@@ -48,8 +52,12 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: var(--primary-color);
+  // background-color: var(--primary-color);
 
+}
+
+.sidenav {
+  border-right: solid 1px var(--border-color-global);
 }
 
 
@@ -75,6 +83,7 @@
   justify-content: center;
   align-items: center;
   font-size: 0.7em;
-  background-color: var(--background-footer);
-  color: var(--foreground-secondary-text);
+  border-top: 1px solid var(--border-color-global);
+  // background-color: var(--background-footer);
+  // color: var(--foreground-secondary-text);
 }
