@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+}
+
+.nav-list {
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  gap: 8px;
+
+  &:hover {
+    background-color: var(--secondary-color);
+    text-decoration: underline;
+  }
+}
+
+.sidebar-projects {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebar-projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 50%;
+}
+
+.project-icon, .nav-list-icon {
+ color: var(--tertiary-color);
+}

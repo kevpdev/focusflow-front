@@ -1,15 +1,27 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
 .kanban-container {
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .column-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  max-height: 80%;
+  overflow-y: auto;
 }
 
 .action-container {
   display: flex;
+  justify-content: space-between;
   padding: 16px;
 }
 
@@ -17,12 +29,19 @@
   margin-right: 8px;
 }
 
-.add-item-button {
-  background-color: var(--background-button-add) !important;
+.add-task-button {
+  background-color: var(--background-button-add);
+}
+
+.settings-button {
+  background-color: var(--tertiary-color);
+}
+.settings-button mat-icon {
+  color: var(--primary-color);
 }
 
 .save-button-enabled {
-  background-color: var(--background-button-save) !important;
-  color: var(--background-main) !important;
-  transition: background-color 2s !important;
+  background-color: var(--background-button-save);
+  color: var(--background-main);
+  transition: background-color 2s;
 }

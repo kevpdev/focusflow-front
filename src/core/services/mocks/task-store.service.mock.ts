@@ -64,8 +64,6 @@ export class TaskStoreServiceMock implements ITaskStoreService {
    */
   public fetchAllTasksByProjectId(id: number): Observable<Task[]> {
     //console.log('Mock: Fetching all tasks');
-    console.log('mockTasks', this.mockTasks);
-
     this.tasksSubject.next(this.mockTasks.filter(task => task.projectId === id));
     return this.tasks$;
   }
@@ -180,7 +178,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
    * @returns An observable emitting an error.
    */
   private handleError(
-    error: any,
+    error: unknown,
     errorMessage = 'An error occurred on the server'
   ): Observable<never> {
     console.error(errorMessage, error);

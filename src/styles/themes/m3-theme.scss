@@ -35,3 +35,8 @@ $dark-theme: mat.define-theme(
     ),
   )
 );
+
+.mat-menu-panel {
+  background-color: var(--background-main);
+  border-radius: var(--border-radius);
+}

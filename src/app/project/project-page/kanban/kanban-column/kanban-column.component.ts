@@ -2,19 +2,18 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
+  effect,
+  Injector,
+  input,
   OnInit,
-  Output,
+  output,
   TemplateRef,
   TrackByFunction,
   ViewChild,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { of } from 'rxjs';
 import { ETaskType, Task } from 'src/core/models';
 import { BugTask } from 'src/core/models/bug-task.model';
-import { EStatusActive } from 'src/core/models/enums/status.enum';
 import { ColumnMetaData } from '../kanban.component';
 import { TaskCardComponent } from './task/task-card/task-card.component';
 
@@ -26,27 +25,33 @@ import { TaskCardComponent } from './task/task-card/task-card.component';
   styleUrl: './kanban-column.component.scss',
 })
 export class KanbanColumnComponent implements OnInit {
-  @Input() columnMetaData: ColumnMetaData = {
-    id: EStatusActive.PENDING,
-    title: '',
-    connectTo: [],
-    tasks$: of([]),
-  };
+  columnMetaData = input.required<ColumnMetaData>();
+  dropEvent = output<CdkDragDrop<Task[]>>();
 
-  @Output() dropEvent = new EventEmitter<CdkDragDrop<Task[]>>();
   @ViewChild('taskCardTemplate', { static: true }) taskTemplate: TemplateRef<{
     $implicit: Task;
   }> | null = null;
   @ViewChild('bugCardTemplate', { static: true }) bugTemplate: TemplateRef<{
     $implicit: BugTask;
   }> | null = null;
+
   mapTemplate: Record<ETaskType, TemplateRef<{ $implicit: Task }>> | null = null;
+
+  constructor(private injector: Injector) {}
 
   ngOnInit(): void {
     this.initMapTemplate();
+    effect(
+      () => {
+        console.log('columnMetaData', this.columnMetaData());
+      },
+      { injector: this.injector }
+    );
   }
 
   drop(event: CdkDragDrop<Task[]>) {
+    console.log('columnMetaData', this.columnMetaData());
+
     this.dropEvent.emit(event);
   }
 

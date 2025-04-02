@@ -1,22 +1,21 @@
 .column-item {
-  border: 1px solid var(--border-color-div);
   border-radius: 12px;
   padding: 10px;
   overflow: auto;
-  background-color: var(--background-board-column);
   height: 100%;
 }
 
 .item-container {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-color-div);
-  border-radius: 12px;
   min-height: 15%;
   gap: clamp(8px, 2vh, 16px);
+  border: 1px solid var(--border-color-div);
+  border-radius: 12px;
 }
 
-.item-container.empty {
+.item-container-empty {
+  display: flex;
   padding: clamp(8px, 2vh, 16px);
   font-size: 14px;
   font-style: italic;

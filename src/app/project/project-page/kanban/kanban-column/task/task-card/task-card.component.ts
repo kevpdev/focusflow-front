@@ -1,5 +1,5 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,9 +30,10 @@ import { EditTaskCardComponent } from '../edit-task-card/edit-task-card.componen
   styleUrl: './task-card.component.scss',
 })
 export class TaskCardComponent {
-  @Input() task: Task | null = null;
-  @Output() dropEvent = new EventEmitter<CdkDragDrop<Task[]>>();
+  taskInput = input<Task>();
+  readonly task = computed(() => this.taskInput() ?? new Task());
 
+  dropEvent = output<CdkDragDrop<Task[]>>();
   modifiedTasks: Task[] = [];
   unSubscribe$ = new Subject<void>();
 

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,7 +8,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
-import { AuthStoreService } from '../core/services';
+import { SidebarMenuComponent } from 'src/shared/components/ui/sidebar-menu/sidebar-menu.component';
+import { AuthStoreService, ResponsiveService } from '../core/services';
 
 @Component({
   selector: 'app-root',
@@ -20,18 +22,23 @@ import { AuthStoreService } from '../core/services';
     MatMenuModule,
     MatSidenavModule,
     TranslateModule,
+    CommonModule,
+    SidebarMenuComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'focusflow';
-  public isLoggedIn = false;
-  public unsubscribe$ = new Subject<void>();
+  isLoggedIn = false;
+  isDesktop = this.responsiveService.isDesktop;
+  unsubscribe$ = new Subject<void>();
+
   constructor(
     private authService: AuthStoreService,
     private router: Router,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private responsiveService: ResponsiveService
   ) {}
 
   public ngOnInit(): void {
@@ -43,7 +50,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   goToHome() {
-    this.router.navigate(['/dashboard']);
+    if (this.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   public logout(): void {

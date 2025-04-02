@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { KanbanComponent } from './kanban.component';
 
 describe('KanbanComponent', () => {
-  let component: KanbanComponent<any>;
-  let fixture: ComponentFixture<KanbanComponent<any>>;
+  let component: KanbanComponent;
+  let fixture: ComponentFixture<KanbanComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

@@ -34,13 +34,46 @@ export class ProjectStoreService implements IProjectStoreService {
   fetchProjectById(id: number): Observable<Project> {
     return this.projectApiService.fetchProjectById(id).pipe(
       map(project => {
-        this.projectsSubject.next([project]);
+        this.updateStoreProject(project);
         return project;
       }),
       catchError(err =>
         this.handleError(err, 'Une erreur est survenue lors de la récupération du projet.')
       )
     );
+  }
+
+  deleteProject(id: number): Observable<void> {
+    const currentStoreProjects = [...this.getProjects()];
+    this.deleteProjectFromStore(id);
+
+    return this.projectApiService.fetchDeleteProject(id).pipe(
+      catchError(err => {
+        this.projectsSubject.next(currentStoreProjects);
+        return this.handleError(err, 'Une erreur est survenue lors de la suppression du projet.');
+      })
+    );
+  }
+
+  updateStoreProject(project: Project): void {
+    const index = this.getProjects().findIndex(currentProject => currentProject.id === project.id);
+    let newProjectsStorList;
+
+    if (index !== -1) {
+      newProjectsStorList = this.getProjects().map(currentStoreProject =>
+        currentStoreProject.id === project.id ? project : currentStoreProject
+      );
+    } else {
+      newProjectsStorList = [...this.getProjects(), project];
+    }
+    this.projectsSubject.next(newProjectsStorList);
+  }
+
+  deleteProjectFromStore(id: number): void {
+    const updatedProjects = this.getProjects().filter(project => project.id !== id);
+    console.log('updatedProjects', updatedProjects);
+
+    this.projectsSubject.next(updatedProjects);
   }
 
   /**

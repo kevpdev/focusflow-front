@@ -14,8 +14,6 @@ export class ProjectStoreServiceMock implements IProjectStoreService {
 
   private readonly mockProjects: Project[] = mockProjects;
 
-  constructor() {}
-
   getProjects(): Project[] {
     return this.projectsSubject.getValue();
   }
@@ -34,15 +32,36 @@ export class ProjectStoreServiceMock implements IProjectStoreService {
     console.log('Mock: Fetching project by ID');
     const project = this.mockProjects.find(project => project.id === id);
     if (project) {
-      this.projectsSubject.next([project]);
+      this.updateStoreProject(project);
       return of(project);
     } else {
       return this.handleError(null, 'Project not found');
     }
   }
 
+  updateStoreProject(project: Project): void {
+    const index = this.getProjects().findIndex(currentProject => currentProject.id === project.id);
+    let newProjectsStorList;
+
+    if (index !== -1) {
+      newProjectsStorList = this.getProjects().map(currentStoreProject =>
+        currentStoreProject.id === project.id ? project : currentStoreProject
+      );
+    } else {
+      newProjectsStorList = [...this.getProjects(), project];
+    }
+    this.projectsSubject.next(newProjectsStorList);
+  }
+
+  deleteProject(id: number): Observable<void> {
+    const updatedProjects = this.getProjects().filter(project => project.id !== id);
+    this.projectsSubject.next(updatedProjects);
+
+    return of(void 0);
+  }
+
   private handleError(
-    error: any,
+    error: unknown,
     errorMessage = 'An error occurred on the server'
   ): Observable<never> {
     console.error(errorMessage, error);

@@ -1,5 +1,15 @@
 @use './variables';
 
-mat-card {
-  background-color: var(--background-main) !important;
+mat-card.theme-card {
+  background-color: var(--background-main);
+
+  &:hover {
+    background-color: var(--background-card-hover);
+  }
 }
+
+.mat-mdc-menu-panel.custom-mat-menu {
+  background-color: var(--background-main);
+
+}
+

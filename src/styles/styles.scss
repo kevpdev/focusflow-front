@@ -12,9 +12,14 @@
 
 @include mat.core();
 
+html,
 body {
+  height: 100%;
   margin: 0;
-  height: 100vh;
+  overflow: hidden;
+}
+
+body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   background-color: var(--background-main);
 }

@@ -20,8 +20,6 @@ mat-card.project-card {
   align-items: center;
   min-height: clamp(96px, 10vh, 128px);
   cursor: pointer;
-
-  &:hover {
-    background-color: var(--background-card-hover);
-  }
 }
+
+

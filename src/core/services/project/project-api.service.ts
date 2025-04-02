@@ -11,13 +11,15 @@ export class ProjectApiService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiURL + 'projects';
 
-  constructor() {}
-
   fetchAllProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(this.apiUrl);
   }
 
   fetchProjectById(id: number): Observable<Project> {
     return this.http.get<Project>(this.apiUrl + '/' + id);
+  }
+
+  fetchDeleteProject(id: number): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + '/' + id);
   }
 }

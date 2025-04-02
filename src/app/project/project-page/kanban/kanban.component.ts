@@ -1,26 +1,29 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { Router } from '@angular/router';
 import { Observable, of, take } from 'rxjs';
 import { Task } from 'src/core/models';
 import { EStatus, EStatusActive } from 'src/core/models/enums/status.enum';
-import { TaskStoreService, TranslationService } from 'src/core/services';
+import { ProjectStoreService, TaskStoreService, TranslationService } from 'src/core/services';
+import { ConfirmationDialogComponent } from 'src/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { KanbanColumnComponent } from './kanban-column/kanban-column.component';
 import { EditTaskCardComponent } from './kanban-column/task/edit-task-card/edit-task-card.component';
 
-export type ColumnMetaData = {
+export interface ColumnMetaData {
   id: EStatusActive;
   title: string;
   connectTo: EStatusActive[];
   tasks$: Observable<Task[]>;
-};
+}
 
 @Component({
   selector: 'app-kanban',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, KanbanColumnComponent],
+  imports: [MatIconModule, MatButtonModule, KanbanColumnComponent, MatMenuModule],
   templateUrl: './kanban.component.html',
   styleUrl: './kanban.component.scss',
 })
@@ -32,16 +35,18 @@ export class KanbanComponent implements OnInit {
   };
   columnsMetaData: ColumnMetaData[] = [];
   isEditMode = false;
-  @Input() projectId!: number;
+  projectId = input.required<number>();
 
   constructor(
     private taskStoreService: TaskStoreService,
+    private projectStoreService: ProjectStoreService,
     private translationService: TranslationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.taskStoreService.fetchAllTasksByProjectId(this.projectId).pipe(take(1)).subscribe();
+    this.taskStoreService.fetchAllTasksByProjectId(this.projectId()).pipe(take(1)).subscribe();
 
     this.recordTasks = {
       PENDING: this.taskStoreService.pendingTasks$,
@@ -78,7 +83,7 @@ export class KanbanComponent implements OnInit {
   }
 
   addItem(): void {
-    const dialogRef = this.dialog.open(EditTaskCardComponent, {
+    this.dialog.open(EditTaskCardComponent, {
       data: { isEditMode: this.isEditMode },
     });
   }
@@ -105,5 +110,29 @@ export class KanbanComponent implements OnInit {
 
       this.taskStoreService.updateTaskStatus(selectedTask, newTaskStatus).pipe(take(1)).subscribe();
     }
+  }
+
+  deleteProject(): void {
+    console.log('deleteProject', this.projectId);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Suppression du projet',
+        message: 'Êtes-vous sûr de vouloir supprimer ce projet ?',
+      },
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(result => {
+        if (result) {
+          this.projectStoreService
+            .deleteProject(this.projectId())
+            .pipe(take(1))
+            .subscribe(() => {
+              this.router.navigate(['/dashboard']);
+            });
+        }
+      });
   }
 }

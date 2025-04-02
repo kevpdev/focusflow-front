@@ -1,18 +1,22 @@
-<div class="column-item" #colum role="region" [attr.aria-label]="columnMetaData.title">
-  <h4 id="{{ columnMetaData.id }}-title">{{ columnMetaData.title }}</h4>
+<div
+  class="column-item div-container"
+  #colum
+  role="region"
+  [attr.aria-label]="columnMetaData().title">
+  <h4 id="{{ columnMetaData().id }}-title">{{ columnMetaData().title }}</h4>
 
-  @if (columnMetaData.tasks$ | async; as tasks) {
-    @if (tasks.length > 0) {
-      <div
-        cdkDropList
-        [id]="columnMetaData.id"
-        [cdkDropListConnectedTo]="columnMetaData.connectTo"
-        [cdkDropListData]="tasks"
-        (cdkDropListDropped)="drop($event)"
-        class="item-container"
-        role="list"
-        data-cy="item-container"
-        [attr.aria-labelledby]="columnMetaData.id + '-title'">
+  @if (columnMetaData().tasks$ | async; as tasks) {
+    <div
+      cdkDropList
+      [id]="columnMetaData().id"
+      [cdkDropListConnectedTo]="columnMetaData().connectTo"
+      [cdkDropListData]="tasks"
+      (cdkDropListDropped)="drop($event)"
+      class="item-container"
+      role="list"
+      data-cy="item-container"
+      [attr.aria-labelledby]="columnMetaData().id + '-title'">
+      @if (tasks.length > 0) {
         <div
           *ngFor="let task of tasks; trackBy: trackByTaskId"
           class="item"
@@ -26,17 +30,17 @@
               [ngTemplateOutletContext]="{ $implicit: task }"></ng-container>
           }
         </div>
-      </div>
-    } @else {
-      <ng-container
-        *ngTemplateOutlet="
-          emptyContainerTemplate;
-          context: {
-            message: 'Glisser-déposer des tâches dans cette colonne',
-            cy: 'empty-drop-target',
-          }
-        " />
-    }
+      } @else {
+        <ng-container
+          *ngTemplateOutlet="
+            emptyContainerTemplate;
+            context: {
+              message: 'Glisser-déposer des tâches dans cette colonne',
+              cy: 'empty-drop-target',
+            }
+          " />
+      }
+    </div>
   } @else {
     <ng-container
       *ngTemplateOutlet="
@@ -47,14 +51,14 @@
 </div>
 
 <ng-template #emptyContainerTemplate let-message="message" let-cy="cy">
-  <div class="item-container empty" role="note" [attr.aria-label]="message" [attr.data-cy]="cy">
+  <div class="item-container-empty" role="note" [attr.aria-label]="message" [attr.data-cy]="cy">
     <span>{{ message }}</span>
   </div>
 </ng-template>
 
 <ng-template #taskCardTemplate let-task>
   <app-task-card
-    [task]="task"
+    [taskInput]="task"
     role="listitem"
     tabindex="0"
     [attr.aria-label]="'Tâche : ' + task.title"
@@ -63,7 +67,7 @@
 
 <ng-template #bugCardTemplate let-task>
   <app-task-card
-    [task]="task"
+    [taskInput]="task"
     role="listitem"
     tabindex="0"
     [attr.aria-label]="'Bug : ' + task.title"

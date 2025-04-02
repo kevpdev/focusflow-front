@@ -1,7 +1,20 @@
 <div class="kanban-container">
   <div class="action-container">
-    <button mat-mini-fab (click)="addItem()" class="add-item-button" data-cy="add-item-button">
+    <button
+      mat-mini-fab
+      (click)="addItem()"
+      class="add-task-button"
+      data-cy="add-task-button"
+      aria-label="Ajouter une tâche">
       <mat-icon>add</mat-icon>
+    </button>
+    <button
+      mat-mini-fab
+      [matMenuTriggerFor]="menu"
+      class="settings-button"
+      data-cy="settings-button"
+      aria-label="Paramètres">
+      <mat-icon>settings</mat-icon>
     </button>
   </div>
   <div class="column-container">
@@ -11,4 +24,10 @@
         (dropEvent)="onDrop($event)"></app-kanban-column>
     }
   </div>
+  <mat-menu #menu="matMenu" class="custom-mat-menu">
+    <button mat-menu-item aria-label="logout" (click)="deleteProject()">
+      <mat-icon>delete</mat-icon>
+      <span>supprimer le projet</span>
+    </button>
+  </mat-menu>
 </div>
