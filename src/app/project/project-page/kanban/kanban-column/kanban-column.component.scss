@@ -4,12 +4,13 @@
   overflow: auto;
   height: 100%;
   border: 1px solid var(--border-color-global);
+  background-color: var(--secondary-color);
 }
 
 .item-container {
   display: flex;
   flex-direction: column;
-  min-height: 15%;
+  min-height: 0;
   gap: clamp(8px, 2vh, 16px);
   border: 1px solid var(--border-color-global);
   border-radius: 12px;

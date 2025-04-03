@@ -45,7 +45,6 @@
   <mat-sidenav
     #drawer
     [mode]="!isDesktop() ? 'over' : 'side'"
-    [fixedInViewport]="!isDesktop()"
     [opened]="isLoggedIn && isDesktop()"
     class="sidenav">
     @if (isLoggedIn) {

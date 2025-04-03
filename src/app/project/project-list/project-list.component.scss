@@ -2,16 +2,27 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
+  min-height: 0;
 }
 
 .project-list-container {
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  max-height: 50vh;
+  max-height: 70%;
+  min-height: 0;
   gap: clamp(8px, 2vh, 16px);
   padding: clamp(8px, 2vw, 16px);
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 2vh, 16px);
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+
 }
 
 mat-card.project-card {
@@ -20,6 +31,7 @@ mat-card.project-card {
   align-items: center;
   min-height: clamp(96px, 10vh, 128px);
   cursor: pointer;
+  background-color: var(--secondary-color);
 }
 
 

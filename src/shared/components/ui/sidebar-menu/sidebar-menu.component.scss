@@ -1,13 +1,15 @@
 :host {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 0;
   padding: 24px;
 }
 
 .nav-list {
     display: flex;
     flex-direction: column;
+    min-height: 0;
 }
 
 a {
@@ -23,16 +25,22 @@ a {
 }
 
 .sidebar-projects {
+  
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 0;
+  max-height: 50%;
 }
 
 .sidebar-projects-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  height: 50%;
+  min-height: 0;
+  max-height: 50%;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color-global);
+  border-radius: var(--border-radius);
 }
 
 .project-icon, .nav-list-icon {
