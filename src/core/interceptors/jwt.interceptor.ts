@@ -10,23 +10,22 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AuthStoreService } from '../services/auth/auth-store.service';
 
-
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthStoreService) { }
-
+  constructor(private authService: AuthStoreService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-
     let clonedReq = req.clone({ withCredentials: true });
     const cookieHeaderName = 'X-XSRF-TOKEN';
     const csrfToken = this.getCookie('XSRF-TOKEN');
 
-
-    if (csrfToken && !req.headers.has(cookieHeaderName) && ['POST', 'PUT', 'DELETE', 'PATCH'].includes(req.method)) {
+    if (
+      csrfToken &&
+      !req.headers.has(cookieHeaderName) &&
+      ['POST', 'PUT', 'DELETE', 'PATCH'].includes(req.method)
+    ) {
       clonedReq = clonedReq.clone({
-        headers: clonedReq.headers.set(cookieHeaderName, csrfToken)
+        headers: clonedReq.headers.set(cookieHeaderName, csrfToken),
       });
     }
 
@@ -50,14 +49,13 @@ export class JwtInterceptor implements HttpInterceptor {
 
       return this.authService.refreshToken().pipe(
         switchMap(() => {
-
           this.authService.isRefreshing = false;
 
           // Clone the original request to ensure withCredentials is enabled
           const clonedRequest = request.clone({ withCredentials: true });
           return next.handle(clonedRequest); // Retry the modified request
         }),
-        catchError((error) => {
+        catchError(error => {
           this.authService.isRefreshing = false;
           this.authService.logout(); // Handle token refresh errors by logging out
           return throwError(() => error);
@@ -70,9 +68,9 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   private getCookie(name: string): string | null {
-    const matches = document.cookie.match(new RegExp(
-      `(?:^|; )${name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1')}=([^;]*)`
-    ));
+    const matches = document.cookie.match(
+      new RegExp(`(?:^|; )${name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1')}=([^;]*)`)
+    );
     return matches ? decodeURIComponent(matches[1]) : null;
   }
 }

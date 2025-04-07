@@ -5,14 +5,13 @@ import { FocusSession } from 'src/core/models/focus-session.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FocusSessionApiService {
-
   private http = inject(HttpClient);
   private apiUrl = environment.apiURL + 'sessions';
 
-  constructor() { }
+  constructor() {}
 
   startOrResumeSession(focusSession: FocusSession): Observable<FocusSession> {
     return this.http.put<FocusSession>(this.apiUrl + '/status/start', focusSession);

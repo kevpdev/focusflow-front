@@ -1,4 +1,9 @@
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
@@ -17,7 +22,6 @@ describe('JWT Interceptor', () => {
       refreshToken: jest.fn().mockReturnValue(of(true)),
       logout: jest.fn(),
     };
-
 
     TestBed.configureTestingModule({
       providers: [
@@ -53,9 +57,6 @@ describe('JWT Interceptor', () => {
     req.flush({});
   });
 
-
-
-
   it('should handle 401 error and refresh token', () => {
     jest.spyOn(authServiceMock, 'refreshToken').mockReturnValue(of(true));
 
@@ -74,12 +75,13 @@ describe('JWT Interceptor', () => {
     retryReq.flush({});
   });
 
-
   it('should log out if token refresh fails', () => {
-    jest.spyOn(authServiceMock, 'refreshToken').mockReturnValue(throwError(() => new Error('Refresh token failed')));
+    jest
+      .spyOn(authServiceMock, 'refreshToken')
+      .mockReturnValue(throwError(() => new Error('Refresh token failed')));
 
     http.get('/test').subscribe({
-      error: (err) => {
+      error: err => {
         expect(err.message).toBe('Refresh token failed');
       },
     });

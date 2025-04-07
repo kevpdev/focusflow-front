@@ -11,9 +11,8 @@ describe('DashboardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DashboardComponent, TranslateModule.forRoot()],
-      providers: [...testProviders]
-    })
-      .compileComponents();
+      providers: [...testProviders],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;

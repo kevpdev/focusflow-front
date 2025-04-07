@@ -1,0 +1,26 @@
+.column-item {
+  border-radius: 12px;
+  padding: 10px;
+  overflow: auto;
+  height: 100%;
+  border: 1px solid var(--border-color-global);
+  background-color: var(--secondary-color);
+}
+
+.item-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: clamp(8px, 2vh, 16px);
+  border: 1px solid var(--border-color-global);
+  border-radius: 12px;
+}
+
+.item-container-empty {
+  display: flex;
+  padding: clamp(8px, 2vh, 16px);
+  font-size: 14px;
+  font-style: italic;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,16 +1,10 @@
 @use '@angular/material' as mat;
 @use './themes/m3-theme.scss' as theme;
 
-
 :root {
   /* Layout */
   --footer-height: 64px;
   --toolbar-height: 64px;
   --mobile-toolbar-height: 56px;
+  --border-radius: 12px;
 }
-
-
-
-
-
-

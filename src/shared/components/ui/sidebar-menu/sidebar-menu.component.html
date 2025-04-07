@@ -1,0 +1,29 @@
+<mat-nav-list class="nav-list">
+  <a mat-list-item routerLink="/dashboard">
+    <mat-icon class="nav-list-icon">home</mat-icon>
+    <span>{{ 'APP.DASHBOARD.TITLE' | translate }}</span>
+  </a>
+
+  <div class="separator"></div>
+
+  <div class="sidebar-projects">
+    <h4 mat-list-item>{{ 'PROJECT.LIST.TITLE' | translate }}</h4>
+    @if (projects$ | async; as projects) {
+      <span>{{ 'PROJECT.LIST.NB_PROJECTS' | translate }} {{ projects.length }}</span>
+      <div class="sidebar-projects-list">
+        <a *ngFor="let project of projects | slice: 0 : visibleCount">
+          <mat-icon class="project-icon">folder</mat-icon>
+          <span>{{ project.name }}</span>
+        </a>
+
+        <button
+          mat-button
+          *ngIf="projects.length > visibleCount"
+          (click)="visibleCount = projects.length"
+          aria-expanded="false">
+          {{ 'PROJECT.LIST.SEE_MORE' | translate }}
+        </button>
+      </div>
+    }
+  </div>
+</mat-nav-list>

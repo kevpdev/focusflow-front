@@ -1,39 +1,80 @@
-<div class="app-container">
-    <header>
-        <mat-toolbar>
-            <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-                <mat-icon>menu</mat-icon>
-            </button> -->
+<header class="header">
+  <mat-toolbar class="toolbar-container">
+    @if (isLoggedIn && !isDesktop()) {
+      <button
+        mat-icon-button
+        class="menu-toolbar-button"
+        aria-label="icon-button with menu icon"
+        (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    }
+    <span
+      class="toolbar-title"
+      tabindex="0"
+      role="button"
+      (click)="goToHome()"
+      (keydown.enter)="goToHome()"
+      aria-label="Aller à l'accueil">
+      {{ 'APP.TITLE' | translate }}
+    </span>
 
-            <span class="title">{{'APP.TITLE' | translate }}</span>
+    <div class="toolbar-options">
+      @if (isLoggedIn) {
+        <button mat-button [matMenuTriggerFor]="menu" class="profile-toolbar-button">
+          {{ 'APP.PROFILE' | translate }}
+        </button>
+      }
+      <button mat-icon-button [matMenuTriggerFor]="langMenu" aria-label="Choisir une langue">
+        <mat-icon>translate</mat-icon>
+      </button>
+    </div>
 
-            @if(isLoggedIn) {
-            <button mat-icon-button class="notification-icon" aria-label="Notification icon button">
-                <mat-icon>notifications</mat-icon>
-            </button>
+    <mat-menu #menu="matMenu" class="custom-mat-menu">
+      <button mat-menu-item aria-label="logout" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>{{ 'APP.LOGOUT' | translate }}</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>{{ 'APP.SETTINGS' | translate }}</span>
+      </button>
+      <mat-slide-toggle [checked]="isDarkMode()" (change)="enableDarkMode($event)"
+        ><span class="theme-toggle-text">Thème sombre</span></mat-slide-toggle
+      >
+    </mat-menu>
 
-            <!-- Profil button with menu trigger -->
-            <button mat-button [matMenuTriggerFor]="menu">{{'APP.PROFILE' | translate }}</button>
+    <mat-menu #langMenu="matMenu">
+      <button mat-menu-item (click)="switchLang('fr')">
+        <span>🇫🇷</span>
+      </button>
+      <button mat-menu-item (click)="switchLang('en')">
+        <span>🇬🇧</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+</header>
 
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item aria-label="logout" (click)="logout()">
-                    <mat-icon>logout</mat-icon>
-                    <span>{{'APP.LOGOUT' | translate }}</span>
-                </button>
-                <button mat-menu-item>
-                    <mat-icon>settings</mat-icon>
-                    <span>{{'APP.SETTINGS' | translate }}</span>
-                </button>
-            </mat-menu>
-            }
-        </mat-toolbar>
-    </header>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    [mode]="!isDesktop() ? 'over' : 'side'"
+    [opened]="isLoggedIn && isDesktop()"
+    class="sidenav">
+    @if (isLoggedIn) {
+      <nav aria-label="Menu principal" class="sidenav-menu">
+        <app-sidebar-menu />
+      </nav>
+    }
+  </mat-sidenav>
 
+  <mat-sidenav-content class="sidenav-content">
     <main class="main-container">
-        <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </main>
 
-    <footer>
-        <p>{{'APP.FOOTER.COPYRIGHT' | translate }}</p>
+    <footer class="footer">
+      <p>{{ 'APP.FOOTER.COPYRIGHT' | translate }}</p>
     </footer>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

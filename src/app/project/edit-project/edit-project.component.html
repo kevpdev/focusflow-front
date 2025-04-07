@@ -1,0 +1,50 @@
+<form class="project-form" [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+  <h2 mat-dialog-title data-cy="edit-dialog-title">
+    @if (isEditMode) {
+      {{ 'PROJECT.FORM.EDIT_MODE_TITLE' | translate }}
+    } @else {
+      {{ 'PROJECT.FORM.ADD_MODE_TITLE' | translate }}
+    }
+  </h2>
+  <mat-form-field appearance="outline" data-cy="edit-name-field">
+    <mat-label>{{ 'PROJECT.FORM.NAME.LABEL' | translate }}</mat-label>
+    <input
+      matInput
+      placeholder="{{ 'PROJECT.FORM.NAME.PLACEHOLDER' | translate }}"
+      formControlName="name"
+      data-cy="edit-name-input" />
+    @if (projectForm.get('name')?.hasError('required')) {
+      <mat-error data-cy="edit-name-error-required">
+        {{ 'PROJECT.FORM.NAME.ERROR_REQUIRED' | translate }}
+      </mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" data-cy="edit-description-field">
+    <mat-label>{{ 'PROJECT.FORM.DESCRIPTION.LABEL' | translate }}</mat-label>
+    <textarea
+      matInput
+      placeholder="{{ 'PROJECT.FORM.DESCRIPTION.PLACEHOLDER' | translate }}"
+      formControlName="description"
+      data-cy="edit-description-textarea"></textarea>
+    @if (projectForm.get('description')?.hasError('required')) {
+      <mat-error data-cy="edit-description-error-required">
+        {{ 'PROJECT.FORM.DESCRIPTION.ERROR_REQUIRED' | translate }}
+      </mat-error>
+    }
+  </mat-form-field>
+
+  <mat-dialog-actions data-cy="edit-actions">
+    <button mat-button mat-dialog-close data-cy="edit-cancel-button">
+      {{ 'PROJECT.FORM.ACTIONS.CANCEL' | translate }}
+    </button>
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      type="submit"
+      [disabled]="!projectForm.valid"
+      data-cy="edit-submit-button">
+      {{ 'PROJECT.FORM.ACTIONS.SUBMIT' | translate }}
+    </button>
+  </mat-dialog-actions>
+</form>

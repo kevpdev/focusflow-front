@@ -1,6 +1,19 @@
 @use './variables';
 
+mat-card.theme-card {
+  //background-color: var(--background-main);
 
-mat-card {
-    background-color: var(--background-main) !important;
+  &:hover {
+   // background-color: var(--background-card-hover);
+  }
+}
+
+.mat-mdc-menu-panel.custom-mat-menu {
+ // background-color: var(--background-main);
+
+}
+
+.my-custom-dialog {
+  padding: 1rem;
+  width: 100%;
 }

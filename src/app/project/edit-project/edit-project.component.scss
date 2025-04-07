@@ -1,0 +1,7 @@
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 2vw, 8px);
+  min-height: 0;
+  padding: 16px;
+}

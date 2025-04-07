@@ -4,28 +4,27 @@
 @use '@angular/material' as mat;
 @use './themes/m3-theme.scss';
 @use './themes/light-theme.scss';
+@use './themes/dark-theme.scss';
 @use './messages';
 @use './variables';
 @use './components';
 @use './typographies';
-
+@use './layout';
 
 @include mat.core();
 
-
-body { 
-    margin: 0; 
-    height: 100vh;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: var(--background-main);
-    
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
 }
 
-
-
-
-
-
+body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: var(--background-main);
+  color: var(--mdc-theme-text-color);
+}
 
 
 

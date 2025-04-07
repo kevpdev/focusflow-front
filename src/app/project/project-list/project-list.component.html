@@ -1,0 +1,17 @@
+<div class="project-list-container div-container">
+  <h2>{{ 'PROJECT.LIST.TITLE' | translate }}</h2>
+  <div class="project-list">
+    @if (projects$ | async; as projects) {
+      @for (project of projects; track project.id) {
+        <mat-card
+          role="button"
+          [attr.aria-label]="'Ouvrir le projet ' + project.name"
+          (click)="openProject(project.id)"
+          class="project-card theme-card"
+          data-cy="project-card">
+          <mat-card-title>{{ project.name }}</mat-card-title>
+        </mat-card>
+      }
+    }
+  </div>
+</div>

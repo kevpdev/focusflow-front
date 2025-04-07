@@ -8,9 +8,8 @@ describe('StartHyperfocusComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StartHyperfocusComponent]
-    })
-    .compileComponents();
+      imports: [StartHyperfocusComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(StartHyperfocusComponent);
     component = fixture.componentInstance;

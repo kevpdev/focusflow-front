@@ -1,0 +1,75 @@
+<div
+  class="column-item div-container"
+  #colum
+  role="region"
+  [attr.aria-label]="columnMetaData().title()">
+  <h4 id="{{ columnMetaData().id }}-title">{{ columnMetaData().title() }}</h4>
+
+  @if (columnMetaData().tasks$ | async; as tasks) {
+    <div
+      cdkDropList
+      [id]="columnMetaData().id"
+      [cdkDropListConnectedTo]="columnMetaData().connectTo"
+      [cdkDropListData]="tasks"
+      (cdkDropListDropped)="drop($event)"
+      class="item-container"
+      role="list"
+      data-cy="item-container"
+      [attr.aria-labelledby]="columnMetaData().id + '-title'">
+      @if (tasks.length > 0) {
+        <div
+          *ngFor="let task of tasks; trackBy: trackByTaskId"
+          class="item"
+          data-cy="item"
+          role="listitem"
+          cdkDrag
+          tabindex="0">
+          @if (mapTemplate) {
+            <ng-container
+              [ngTemplateOutlet]="mapTemplate[task.type]"
+              [ngTemplateOutletContext]="{ $implicit: task }"></ng-container>
+          }
+        </div>
+      } @else {
+        <ng-container
+          *ngTemplateOutlet="
+            emptyContainerTemplate;
+            context: {
+              message: 'Glisser-déposer des tâches dans cette colonne',
+              cy: 'empty-drop-target',
+            }
+          " />
+      }
+    </div>
+  } @else {
+    <ng-container
+      *ngTemplateOutlet="
+        emptyContainerTemplate;
+        context: { message: 'Aucune(s) tâche(s) à afficher', cy: 'empty-fallback' }
+      " />
+  }
+</div>
+
+<ng-template #emptyContainerTemplate let-message="message" let-cy="cy">
+  <div class="item-container-empty" role="note" [attr.aria-label]="message" [attr.data-cy]="cy">
+    <span>{{ message }}</span>
+  </div>
+</ng-template>
+
+<ng-template #taskCardTemplate let-task>
+  <app-task-card
+    [taskInput]="task"
+    role="listitem"
+    tabindex="0"
+    [attr.aria-label]="'Tâche : ' + task.title"
+    data-cy="task-card"></app-task-card>
+</ng-template>
+
+<ng-template #bugCardTemplate let-task>
+  <app-task-card
+    [taskInput]="task"
+    role="listitem"
+    tabindex="0"
+    [attr.aria-label]="'Bug : ' + task.title"
+    data-cy="bug-card"></app-task-card>
+</ng-template>
