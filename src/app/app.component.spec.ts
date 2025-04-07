@@ -9,15 +9,9 @@ let fixture: ComponentFixture<AppComponent>;
 
 describe('AppComponent', () => {
   beforeEach(async () => {
-
-
-
     await TestBed.configureTestingModule({
       imports: [AppComponent, TranslateModule.forRoot()],
-      providers: [
-        AuthStoreService,
-        ...testProviders,
-      ]
+      providers: [AuthStoreService, ...testProviders],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);

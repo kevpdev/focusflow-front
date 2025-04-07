@@ -22,7 +22,7 @@ $_palettes: (
     95: #ecf1ff,
     98: #f9f9ff,
     99: #fdfbff,
-    100: #ffffff
+    100: #ffffff,
   ),
   secondary: (
     0: #000000,
@@ -40,7 +40,7 @@ $_palettes: (
     95: #c7fafc,
     98: #e5feff,
     99: #f1ffff,
-    100: #ffffff
+    100: #ffffff,
   ),
   tertiary: (
     0: #000000,
@@ -58,7 +58,7 @@ $_palettes: (
     95: #ffedea,
     98: #fff8f7,
     99: #fffbff,
-    100: #ffffff
+    100: #ffffff,
   ),
   neutral: (
     0: #000000,
@@ -129,21 +129,22 @@ $_palettes: (
 $_rest: (
   secondary: map.get($_palettes, secondary),
   neutral: map.get($_palettes, neutral),
-  neutral-variant: map.get($_palettes,  neutral-variant),
+  neutral-variant: map.get($_palettes, neutral-variant),
   error: map.get($_palettes, error),
 );
 $_primary: map.merge(map.get($_palettes, primary), $_rest);
 $_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
 
-
-$light-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: $_primary,
-    tertiary: $_tertiary,
-    use-system-variables: true,
-  ),
-  typography: (
-    use-system-variables: true,
-  ),
-));
+$light-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: $_primary,
+      tertiary: $_tertiary,
+      use-system-variables: true,
+    ),
+    typography: (
+      use-system-variables: true,
+    ),
+  )
+);

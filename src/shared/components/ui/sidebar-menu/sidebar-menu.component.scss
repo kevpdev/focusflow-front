@@ -1,0 +1,48 @@
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 24px;
+}
+
+.nav-list {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  gap: 8px;
+
+  &:hover {
+    background-color: var(--secondary-color);
+    text-decoration: underline;
+  }
+}
+
+.sidebar-projects {
+  
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 50%;
+}
+
+.sidebar-projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  max-height: 50%;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color-global);
+  border-radius: var(--border-radius);
+}
+
+.project-icon, .nav-list-icon {
+ color: var(--tertiary-color);
+}

@@ -11,7 +11,6 @@ describe('LoginComponent', () => {
   let authEndpointMock: jest.Mocked<AuthApiService>;
 
   beforeEach(async () => {
-
     authEndpointMock = {
       login: jest.fn(),
       refreshToken: jest.fn(),
@@ -21,11 +20,8 @@ describe('LoginComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [LoginComponent, TranslateModule.forRoot()],
-      providers: [
-        ...testProviders,
-        AuthStoreService]
-    })
-      .compileComponents();
+      providers: [...testProviders, AuthStoreService],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;

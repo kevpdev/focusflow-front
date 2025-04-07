@@ -113,12 +113,27 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles/styles.scss",
               "src/styles/themes/m3-theme.scss",
-              "src/styles/themes/light-theme.scss"
+              "src/styles/themes/light-theme.scss",
+              "src/styles/themes/dark-theme.scss"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }

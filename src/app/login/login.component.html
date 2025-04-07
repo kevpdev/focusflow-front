@@ -1,54 +1,62 @@
 <mat-card>
-    <mat-card-title>{{ 'LOGIN.FORM.TITLE' | translate }}</mat-card-title>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" data-cy="login-form">
+  <mat-card-title>{{ 'LOGIN.FORM.TITLE' | translate }}</mat-card-title>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" data-cy="login-form">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'LOGIN.FORM.EMAIL.LABEL' | translate }}</mat-label>
+      <input
+        matInput
+        placeholder="{{ 'LOGIN.FORM.EMAIL.PLACEHOLDER' | translate }}"
+        formControlName="email"
+        autocomplete="username"
+        data-cy="login-email" />
 
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'LOGIN.FORM.EMAIL.LABEL' | translate }}</mat-label>
-            <input matInput placeholder="{{ 'LOGIN.FORM.EMAIL.PLACEHOLDER' | translate }}" formControlName="email"
-                autocomplete="username" data-cy="login-email">
-
-            @if(loginForm.get('email')?.hasError('required')) {
-            <mat-error data-cy="login-email-error-required">
-                {{ 'LOGIN.FORM.EMAIL.ERRORS.REQUIRED' | translate }}
-            </mat-error>
-            }
-            @if(loginForm.get('email')?.hasError('pattern')) {
-            <mat-error data-cy="login-email-error-pattern">
-                {{ 'LOGIN.FORM.EMAIL.ERRORS.PATTERN' | translate }}
-            </mat-error>
-            }
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'LOGIN.FORM.PASSWORD.LABEL' | translate }}</mat-label>
-            <input matInput placeholder="{{ 'LOGIN.FORM.PASSWORD.PLACEHOLDER' | translate }}" formControlName="password"
-                type="password" autocomplete="current-password" data-cy="login-password">
-
-            @if(loginForm.get('password')?.hasError('required')) {
-            <mat-error data-cy="login-password-error-required">
-                {{ 'LOGIN.FORM.PASSWORD.ERRORS.REQUIRED' | translate }}
-            </mat-error>
-            }
-            @if(loginForm.get('password')?.hasError('minlength')) {
-            <mat-error data-cy="login-password-error-minlength">
-                {{ 'LOGIN.FORM.PASSWORD.ERRORS.MIN_LENGTH' | translate }}
-            </mat-error>
-            }
-            @if(loginForm.get('password')?.hasError('pattern')) {
-            <mat-error data-cy="login-password-error-pattern">
-                {{ 'LOGIN.FORM.PASSWORD.ERRORS.PATTERN' | translate }}
-            </mat-error>
-            }
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" type="submit" data-cy="login-submit">
-            {{ 'LOGIN.FORM.SUBMIT' | translate }}
-        </button>
-
-        @if (errorMessage) {
-        <mat-error data-cy="login-error-message">
-            {{ 'LOGIN.FORM.ERROR_MESSAGE' | translate }}
+      @if (loginForm.get('email')?.hasError('required')) {
+        <mat-error data-cy="login-email-error-required">
+          {{ 'LOGIN.FORM.EMAIL.ERRORS.REQUIRED' | translate }}
         </mat-error>
-        }
-    </form>
+      }
+      @if (loginForm.get('email')?.hasError('pattern')) {
+        <mat-error data-cy="login-email-error-pattern">
+          {{ 'LOGIN.FORM.EMAIL.ERRORS.PATTERN' | translate }}
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'LOGIN.FORM.PASSWORD.LABEL' | translate }}</mat-label>
+      <input
+        matInput
+        placeholder="{{ 'LOGIN.FORM.PASSWORD.PLACEHOLDER' | translate }}"
+        formControlName="password"
+        type="password"
+        autocomplete="current-password"
+        data-cy="login-password" />
+
+      @if (loginForm.get('password')?.hasError('required')) {
+        <mat-error data-cy="login-password-error-required">
+          {{ 'LOGIN.FORM.PASSWORD.ERRORS.REQUIRED' | translate }}
+        </mat-error>
+      }
+      @if (loginForm.get('password')?.hasError('minlength')) {
+        <mat-error data-cy="login-password-error-minlength">
+          {{ 'LOGIN.FORM.PASSWORD.ERRORS.MIN_LENGTH' | translate }}
+        </mat-error>
+      }
+      @if (loginForm.get('password')?.hasError('pattern')) {
+        <mat-error data-cy="login-password-error-pattern">
+          {{ 'LOGIN.FORM.PASSWORD.ERRORS.PATTERN' | translate }}
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" data-cy="login-submit">
+      {{ 'LOGIN.FORM.SUBMIT' | translate }}
+    </button>
+
+    @if (errorMessage) {
+      <mat-error data-cy="login-error-message">
+        {{ 'LOGIN.FORM.ERROR_MESSAGE' | translate }}
+      </mat-error>
+    }
+  </form>
 </mat-card>

@@ -2,7 +2,6 @@ import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs';
 
 export const dateConversionInterceptor: HttpInterceptorFn = (req, next) => {
-
   return next(req).pipe(
     map(event => {
       if (event instanceof HttpResponse) {
@@ -12,7 +11,6 @@ export const dateConversionInterceptor: HttpInterceptorFn = (req, next) => {
     })
   );
 };
-
 
 /**
  * Convertit récursivement les dates au format ISO en objets Date
@@ -32,7 +30,6 @@ function convertDates(body: any): any {
     const value = body[key];
 
     if (isIsoDate(value)) {
-
       acc[key] = new Date(value); // Conversion des chaînes ISO en Date
     } else if (typeof value === 'object') {
       acc[key] = convertDates(value); // Conversion récursive pour les objets imbriqués
@@ -44,11 +41,10 @@ function convertDates(body: any): any {
   }, {} as any);
 }
 
-
 /**
  * Vérifie si une chaîne correspond au format ISO 8601
- * @param value 
- * @returns un bouleen 
+ * @param value
+ * @returns un bouleen
  */
 function isIsoDate(value: any): boolean {
   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?Z$/.test(value);

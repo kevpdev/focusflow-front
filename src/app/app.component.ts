@@ -1,48 +1,77 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
-import { AuthStoreService } from '../core/services';
+import { SidebarMenuComponent } from 'src/shared/components/ui/sidebar-menu/sidebar-menu.component';
+import { AuthStoreService, LayoutService, TranslationService } from '../core/services';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule,
+  imports: [
+    RouterOutlet,
+    MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
     MatSidenavModule,
-    TranslateModule],
+    TranslateModule,
+    CommonModule,
+    SidebarMenuComponent,
+    MatSlideToggleModule,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'focusflow';
-  public isLoggedIn = false;
-  public unsubscribe$ = new Subject<void>();
+  isLoggedIn = false;
+  isDesktop = this.layoutService.isDesktop;
+  unsubscribe$ = new Subject<void>();
+  isDarkMode = this.layoutService.isDarkMode;
+
   constructor(
     private authService: AuthStoreService,
     private router: Router,
-    private renderer: Renderer2) { }
+    private renderer: Renderer2,
+    private layoutService: LayoutService,
+    private translationService: TranslationService
+  ) {}
 
   public ngOnInit(): void {
+    this.layoutService.initTheme(this.renderer);
 
-    this.renderer.addClass(document.documentElement, 'light-theme');
+    this.authService.isAuthenticated$.pipe(takeUntil(this.unsubscribe$)).subscribe(value => {
+      this.isLoggedIn = value;
+    });
+  }
 
-    this.authService.isAuthenticated$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((value) => {
-        this.isLoggedIn = value;
-      });
+  enableDarkMode(event: MatSlideToggleChange): void {
+    this.layoutService.enableDarkMode(event.checked, this.renderer);
+  }
+
+  goToHome(): void {
+    if (this.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  switchLang(lang: string): void {
+    this.translationService.changeLang(lang);
   }
 
   public logout(): void {
-    this.authService.logout()
+    this.authService
+      .logout()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.router.navigate(['/login']));
   }
@@ -51,6 +80,4 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
     this.unsubscribe$.next();
   }
-
-
 }

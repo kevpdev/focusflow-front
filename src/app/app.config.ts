@@ -1,17 +1,31 @@
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, LOCALE_ID, provideZoneChangeDetection, } from '@angular/core';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  provideHttpClient,
+  withInterceptors,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  importProvidersFrom,
+  LOCALE_ID,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { dateConversionInterceptor } from 'src/core/interceptors/date-conversion.interceptor';
+import { ProjectStoreServiceMock } from 'src/core/services/mocks/project-store.service.mock';
+import { ProjectStoreService } from 'src/core/services/project/project-store.service';
 import { JwtInterceptor } from '../core/interceptors/jwt.interceptor';
 import { AuthStoreService } from '../core/services/auth/auth-store.service';
 import { AuthStoreServiceMock } from '../core/services/mocks/auth-store.service.mock';
 import { TaskStoreServiceMock } from '../core/services/mocks/task-store.service.mock';
 import { TaskStoreService } from '../core/services/task/task-store.service';
-import { TranslationService } from '../core/services/translation.service';
+import { TranslationService } from '../core/services/ui/translation/translation.service';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 
@@ -26,20 +40,22 @@ export function initializeTranslation(translationService: TranslationService) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes), provideHttpClient(
-      withInterceptorsFromDi(),
-      withInterceptors([dateConversionInterceptor])
-    ),
+    provideRouter(routes),
+    provideHttpClient(withInterceptorsFromDi(), withInterceptors([dateConversionInterceptor])),
     provideAnimationsAsync(),
     provideNativeDateAdapter(),
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
       provide: AuthStoreService,
-      useClass: environment.useMocks ? AuthStoreServiceMock : AuthStoreService
+      useClass: environment.useMocks ? AuthStoreServiceMock : AuthStoreService,
     },
     {
       provide: TaskStoreService,
-      useClass: environment.useMocks ? TaskStoreServiceMock : TaskStoreService
+      useClass: environment.useMocks ? TaskStoreServiceMock : TaskStoreService,
+    },
+    {
+      provide: ProjectStoreService,
+      useClass: environment.useMocks ? ProjectStoreServiceMock : ProjectStoreService,
     },
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     importProvidersFrom(
@@ -47,8 +63,8 @@ export const appConfig: ApplicationConfig = {
         loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-        }
+          deps: [HttpClient],
+        },
       })
     ),
     {
@@ -57,5 +73,5 @@ export const appConfig: ApplicationConfig = {
       deps: [TranslationService],
       multi: true,
     },
-  ]
+  ],
 };

@@ -1,0 +1,23 @@
+
+
+.div-container {
+  border-radius: 12px;
+  border: 1px solid var(--border-color-global);
+  //background-color: var(--primary-color);
+}
+
+.separator {
+  border-bottom: 1px solid var(--border-color-global);
+  margin: 12px 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.scrollable {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0; // indispensable dans un parent en flex
+}
+
