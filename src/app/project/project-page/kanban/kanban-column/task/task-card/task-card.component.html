@@ -2,10 +2,7 @@
   <span class="title-option" data-cy="task-title">{{ task().title }}</span>
   <div class="info-option">
     <div class="date-option" data-cy="task-due-date">
-      <span
-        >{{ 'TASK_MANAGEMENT.CARD.LIST.DUE_DATE' | translate
-        }}{{ task().dueDate | customDate }}</span
-      >
+      <span>{{ 'CARD.LIST.DUE_DATE' | translate }}{{ task().dueDate | customDate }}</span>
       @if (isExpired(task().dueDate.getTime())) {
         <div class="expired-message-container">
           <mat-icon>warning</mat-icon>
@@ -14,13 +11,10 @@
       }
     </div>
     <div class="priority-option" data-cy="task-priority">
-      <span>{{ 'TASK_MANAGEMENT.CARD.LIST.PRIORITY' | translate }}{{ task().priority }}</span>
+      <span>{{ 'CARD.LIST.PRIORITY' | translate }}{{ task().priority }}</span>
     </div>
     <div class="priority-option" data-cy="task-status">
-      <span
-        >{{ 'TASK_MANAGEMENT.CARD.LIST.STATUS' | translate }}
-        {{ task().status | translateTaskStatus }}</span
-      >
+      <span>{{ 'CARD.LIST.STATUS' | translate }} {{ task().status | translateTaskStatus }}</span>
     </div>
   </div>
   <mat-action-list>

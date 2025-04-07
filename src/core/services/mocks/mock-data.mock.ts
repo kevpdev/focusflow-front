@@ -97,6 +97,8 @@ export const mockProjects = [
     description: 'Description du projet 1',
     tasks: [],
     userId: 1,
+    createdAt: new Date('2025-03-01'),
+    updatedAt: new Date('2025-03-01'),
   }),
   new Project({
     id: 2,
@@ -104,6 +106,8 @@ export const mockProjects = [
     description: 'Description du projet 2',
     tasks: [],
     userId: 1,
+    createdAt: new Date('2025-03-02'),
+    updatedAt: new Date('2025-03-02'),
   }),
   new Project({
     id: 3,
@@ -111,6 +115,8 @@ export const mockProjects = [
     description: 'Description du projet 3',
     tasks: [],
     userId: 1,
+    createdAt: new Date('2025-03-03'),
+    updatedAt: new Date('2025-03-03'),
   }),
   new Project({
     id: 4,
@@ -118,6 +124,8 @@ export const mockProjects = [
     description: 'Description du projet 4',
     tasks: [],
     userId: 1,
+    createdAt: new Date('2025-03-04'),
+    updatedAt: new Date('2025-03-04'),
   }),
   new Project({
     id: 5,
@@ -125,6 +133,8 @@ export const mockProjects = [
     description: 'Description du projet 5',
     tasks: [],
     userId: 1,
+    createdAt: new Date('2025-03-05'),
+    updatedAt: new Date('2025-03-05'),
   }),
   new Project({
     id: 6,
@@ -132,6 +142,8 @@ export const mockProjects = [
     description: 'Description du projet 6',
     tasks: [],
     userId: 1,
+    createdAt: new Date('2025-03-06'),
+    updatedAt: new Date('2025-03-06'),
   }),
   new Project({
     id: 7,
@@ -139,6 +151,8 @@ export const mockProjects = [
     description: 'Description du projet 7',
     tasks: [],
     userId: 1,
+    createdAt: new Date('2025-03-07'),
+    updatedAt: new Date('2025-03-07'),
   }),
   new Project({
     id: 8,
@@ -146,5 +160,7 @@ export const mockProjects = [
     description: 'Description du projet 8',
     tasks: [],
     userId: 1,
+    createdAt: new Date('2025-03-08'),
+    updatedAt: new Date('2025-03-08'),
   }),
 ];

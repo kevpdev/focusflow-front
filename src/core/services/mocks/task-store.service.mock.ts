@@ -148,6 +148,7 @@ export class TaskStoreServiceMock implements ITaskStoreService {
     const taskWithGeneratedId = { ...newTask, tempId: generatedTempId };
     const updatedTasks = [...this.currentTasks(), taskWithGeneratedId];
     this.tasksSubject.next(updatedTasks);
+
     return of(taskWithGeneratedId);
   }
 

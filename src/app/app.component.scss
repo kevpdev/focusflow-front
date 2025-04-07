@@ -37,8 +37,10 @@
   font-size: xx-large;
 }
 
-.profile-toolbar-button {
+.toolbar-options {
   grid-column: 3;
+  display: flex;
+  align-items: center;
   justify-self: end;
 }
 

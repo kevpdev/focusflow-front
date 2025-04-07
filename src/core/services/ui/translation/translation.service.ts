@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
@@ -31,5 +32,17 @@ export class TranslationService {
 
   instant(key: string): string {
     return this.translateService.instant(key);
+  }
+
+  getTranslationsToSignal(keys: string[]): Signal<string[]> {
+    return toSignal(this.translateService.stream(keys), {
+      initialValue: this.translateService.instant(keys),
+    });
+  }
+
+  getTranslationToSignal(key: string): Signal<string> {
+    return toSignal(this.translateService.stream(key), {
+      initialValue: this.translateService.instant(key),
+    });
   }
 }

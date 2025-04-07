@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNavList } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable, take } from 'rxjs';
 import { Project } from 'src/core/models';
 import { ProjectStoreService } from 'src/core/services';
@@ -11,7 +12,15 @@ import { ProjectStoreService } from 'src/core/services';
 @Component({
   selector: 'app-sidebar-menu',
   standalone: true,
-  imports: [MatNavList, RouterLink, MatIconModule, AsyncPipe, CommonModule, MatButtonModule],
+  imports: [
+    MatNavList,
+    RouterLink,
+    MatIconModule,
+    AsyncPipe,
+    CommonModule,
+    MatButtonModule,
+    TranslateModule,
+  ],
   templateUrl: './sidebar-menu.component.html',
   styleUrl: './sidebar-menu.component.scss',
 })

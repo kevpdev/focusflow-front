@@ -2,7 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { inject, Injectable, Renderer2, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,10 +11,9 @@ export class LayoutService {
   private breakpointObserver = inject(BreakpointObserver);
 
   isDesktop = toSignal(
-    this.breakpointObserver.observe([Breakpoints.Large, Breakpoints.XLarge]).pipe(
-      tap(result => console.log(result)),
-      map(result => result.matches)
-    ),
+    this.breakpointObserver
+      .observe([Breakpoints.Large, Breakpoints.XLarge])
+      .pipe(map(result => result.matches)),
     { initialValue: false }
   );
 

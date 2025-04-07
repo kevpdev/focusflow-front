@@ -2,7 +2,6 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import {
   Component,
-  effect,
   Injector,
   input,
   OnInit,
@@ -41,17 +40,9 @@ export class KanbanColumnComponent implements OnInit {
 
   ngOnInit(): void {
     this.initMapTemplate();
-    effect(
-      () => {
-        console.log('columnMetaData', this.columnMetaData());
-      },
-      { injector: this.injector }
-    );
   }
 
   drop(event: CdkDragDrop<Task[]>) {
-    console.log('columnMetaData', this.columnMetaData());
-
     this.dropEvent.emit(event);
   }
 

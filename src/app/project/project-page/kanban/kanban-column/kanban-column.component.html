@@ -2,8 +2,8 @@
   class="column-item div-container"
   #colum
   role="region"
-  [attr.aria-label]="columnMetaData().title">
-  <h4 id="{{ columnMetaData().id }}-title">{{ columnMetaData().title }}</h4>
+  [attr.aria-label]="columnMetaData().title()">
+  <h4 id="{{ columnMetaData().id }}-title">{{ columnMetaData().title() }}</h4>
 
   @if (columnMetaData().tasks$ | async; as tasks) {
     <div

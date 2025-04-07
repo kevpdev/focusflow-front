@@ -2,10 +2,13 @@
   "APP": {
     "TITLE": "FocusFlow",
     "PROFILE": "Profile",
-    "LOGOUT": "Logout",
+    "LOGOUT": "Log out",
     "SETTINGS": "Settings",
     "FOOTER": {
       "COPYRIGHT": "All rights reserved"
+    },
+    "DASHBOARD": {
+      "TITLE": "Dashboard"
     }
   },
   "LOGIN": {
@@ -32,68 +35,103 @@
       "ERROR_MESSAGE": "An error occurred"
     }
   },
+  "PROJECT": {
+    "TITLE": "Project management",
+    "FORM": {
+      "EDIT_MODE_TITLE": "Edit a project",
+      "ADD_MODE_TITLE": "Create a project",
+      "NAME": {
+        "LABEL": "Name",
+        "PLACEHOLDER": "Name",
+        "ERROR_REQUIRED": "Name is required"
+      },
+      "DESCRIPTION": {
+        "LABEL": "Description",
+        "PLACEHOLDER": "Description",
+        "ERROR_REQUIRED": "Description is required"
+      },
+      "ACTIONS": {
+        "CANCEL": "Cancel",
+        "SUBMIT": "Submit"
+      }
+    },
+    "LIST": {
+      "TITLE": "My Projects",
+      "NB_PROJECTS": "Number of projects: ",
+      "SEE_MORE": "See more"
+    },
+    "ACTIONS": {
+      "CANCEL": "Delete project",
+      "ADD_PROJECT": "Create a new project"
+    }
+  },
   "KANBAN": {
     "COLUMN": {
-      "PENDING": "Pending",
+      "PENDING": "To Do",
       "IN_PROGRESS": "In Progress",
       "DONE": "Done"
     }
   },
-  "TASK_MANAGEMENT": {
-    "TITLE": "Task Management",
-    "CARD": {
-      "LIST": {
-        "TITLES": {
-          "PENDING": "Pending tasks",
-          "IN_PROGRESS": "Tasks in progress",
-          "DONE": "Completed tasks"
-        },
-        "DELETE": "Are you sure you want to delete the task: ",
-        "PLACEHOLDER": "Drag a task here",
-        "TITLE": "Title",
-        "DUE_DATE": "Due Date: ",
-        "PRIORITY": "Priority: ",
-        "STATUS": "Status: "
+  "CARD": {
+    "LIST": {
+      "TITLES": {
+        "PENDING": "Pending tasks",
+        "IN_PROGRESS": "Tasks in progress",
+        "DONE": "Completed tasks"
       },
-      "EDIT": {
-        "EDIT_MODE_TITLE": "Edit a Task",
-        "ADD_MODE_TITLE": "Create a Task",
-        "FORM": {
-          "TITLE": {
-            "LABEL": "Title",
-            "PLACEHOLDER": "Title",
-            "ERROR_REQUIRED": "Title is required"
-          },
-          "DESCRIPTION": {
-            "LABEL": "Description",
-            "PLACEHOLDER": "Description",
-            "ERROR_REQUIRED": "Description is required"
-          },
-          "PRIORITY": {
-            "LABEL": "Priority",
-            "OPTIONS": {
-              "CHOOSE": "Choose a priority",
-              "1": "1: Low priority (non-urgent)",
-              "2": "2: Medium priority (to be addressed soon)",
-              "3": "3: High priority (critical or urgent)"
-            }
-          },
-          "STATUS": {
-            "LABEL": "Status",
-            "OPTIONS": {
-              "CHOOSE": "Choose a status",
-              "PENDING": "To Do",
-              "IN_PROGRESS": "In Progress",
-              "DONE": "Completed"
-            }
-          },
-          "DUE_DATE": {
-            "LABEL": "Choose a due date"
-          },
-          "ACTIONS": {
-            "CANCEL": "Cancel",
-            "SUBMIT": "Submit"
+      "DELETE": "Are you sure you want to delete the task: ",
+      "PLACEHOLDER": "Drag a task here",
+      "TITLE": "Title",
+      "DUE_DATE": "Due date: ",
+      "PRIORITY": "Priority: ",
+      "STATUS": "Status: "
+    },
+    "EDIT": {
+      "EDIT_MODE_TITLE": "Edit a task",
+      "ADD_MODE_TITLE": "Create a task",
+      "FORM": {
+        "TITLE": {
+          "LABEL": "Title",
+          "PLACEHOLDER": "Title",
+          "ERROR_REQUIRED": "Title is required"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Description",
+          "PLACEHOLDER": "Description",
+          "ERROR_REQUIRED": "Description is required"
+        },
+        "PRIORITY": {
+          "LABEL": "Priority",
+          "OPTIONS": {
+            "CHOOSE": "Choose a priority",
+            "1": "1: Low priority (non-urgent)",
+            "2": "2: Medium priority (to be addressed soon)",
+            "3": "3: High priority (critical or urgent)"
           }
+        },
+        "STATUS": {
+          "LABEL": "Status",
+          "OPTIONS": {
+            "CHOOSE": "Choose a status",
+            "PENDING": "To Do",
+            "IN_PROGRESS": "In Progress",
+            "DONE": "Done"
+          }
+        },
+        "TYPE": {
+          "LABEL": "Task type",
+          "OPTIONS": {
+            "CHOOSE": "Choose a task type",
+            "TASK": "Task",
+            "BUG": "Bug"
+          }
+        },
+        "DUE_DATE": {
+          "LABEL": "Choose a due date"
+        },
+        "ACTIONS": {
+          "CANCEL": "Cancel",
+          "SUBMIT": "Submit"
         }
       }
     }

@@ -26,15 +26,15 @@ describe('Task Management Dashboard - General Tests', () => {
     cy.get('@translations').then((translate: any) => {
       cy.get('[data-cy="column-pending"]')
         .should('be.visible')
-        .contains(translate.TASK_MANAGEMENT.CARD.LIST.TITLES.PENDING);
+        .contains(translate.CARD.LIST.TITLES.PENDING);
 
       cy.get('[data-cy="column-in-progress"]')
         .should('be.visible')
-        .contains(translate.TASK_MANAGEMENT.CARD.LIST.TITLES.IN_PROGRESS);
+        .contains(translate.CARD.LIST.TITLES.IN_PROGRESS);
 
       cy.get('[data-cy="column-done"]')
         .should('be.visible')
-        .contains(translate.TASK_MANAGEMENT.CARD.LIST.TITLES.DONE);
+        .contains(translate.CARD.LIST.TITLES.DONE);
     });
   });
 
@@ -80,7 +80,7 @@ describe('Task Card - Elements and Actions', () => {
       cy.get('[data-cy="edit-container"]').should('be.visible');
       cy.get('[data-cy="edit-dialog-title"]')
         .should('be.visible')
-        .contains(translate.TASK_MANAGEMENT.CARD.EDIT.EDIT_MODE_TITLE);
+        .contains(translate.CARD.EDIT.EDIT_MODE_TITLE);
       cy.get('[data-cy="edit-title-field"]').should('be.visible');
     });
   });
@@ -92,7 +92,7 @@ describe('Task Card - Elements and Actions', () => {
       cy.get('[data-cy="edit-container"]').should('be.visible');
       cy.get('[data-cy="edit-dialog-title"]')
         .should('be.visible')
-        .contains(translate.TASK_MANAGEMENT.CARD.EDIT.ADD_MODE_TITLE);
+        .contains(translate.CARD.EDIT.ADD_MODE_TITLE);
       cy.get('[data-cy="edit-title-field"]').should('be.visible');
       cy.get('[data-cy="edit-submit-button"]').should('be.disabled');
     });

@@ -1,5 +1,5 @@
 <div class="project-list-container div-container">
-  <h2>Mes projets</h2>
+  <h2>{{ 'PROJECT.LIST.TITLE' | translate }}</h2>
   <div class="project-list">
     @if (projects$ | async; as projects) {
       @for (project of projects; track project.id) {

@@ -41,6 +41,7 @@ export class EditTaskCardComponent implements OnInit, OnDestroy, EditItemFormCom
   unsubscribe$ = new Subject<void>();
   title!: string;
   isEditMode: boolean;
+  projectId: number;
   task: Task;
   ETaskType = ETaskType;
   editForm = new FormGroup({
@@ -55,10 +56,11 @@ export class EditTaskCardComponent implements OnInit, OnDestroy, EditItemFormCom
   constructor(
     private taskStoreService: TaskStoreService,
     private translationService: TranslationService,
-    @Inject(MAT_DIALOG_DATA) data: { isEditMode: boolean; task: Task }
+    @Inject(MAT_DIALOG_DATA) data: { isEditMode: boolean; task: Task; projectId: number }
   ) {
     this.task = data.task;
     this.isEditMode = data.isEditMode;
+    this.projectId = data.projectId;
   }
 
   ngOnInit(): void {
@@ -85,7 +87,7 @@ export class EditTaskCardComponent implements OnInit, OnDestroy, EditItemFormCom
    * Configuration spécifique au mode édition
    */
   private setEditMode(): void {
-    this.title = this.translationService.instant('TASK_MANAGEMENT.CARD.EDIT.EDIT_MODE_TITLE');
+    this.title = this.translationService.instant('CARD.EDIT.EDIT_MODE_TITLE');
     this.editForm.get('status')?.enable(); // S'assure que le champ est actif
   }
 
@@ -93,7 +95,7 @@ export class EditTaskCardComponent implements OnInit, OnDestroy, EditItemFormCom
    * Configuration spécifique au mode ajout
    */
   private setAddMode(): void {
-    this.title = this.translationService.instant('TASK_MANAGEMENT.CARD.EDIT.ADD_MODE_TITLE');
+    this.title = this.translationService.instant('CARD.EDIT.ADD_MODE_TITLE');
     this.editForm.get('status')?.disable();
   }
 
@@ -119,7 +121,7 @@ export class EditTaskCardComponent implements OnInit, OnDestroy, EditItemFormCom
       status: this.isEditMode ? formData.status : EStatus.PENDING,
       priority: Number(formData.priority),
       dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
-      projectId: this.isEditMode ? this.task.projectId : undefined,
+      projectId: this.isEditMode ? this.task.projectId : this.projectId,
       type: formData.type,
     } as Task;
   }

@@ -10,7 +10,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { SidebarMenuComponent } from 'src/shared/components/ui/sidebar-menu/sidebar-menu.component';
-import { AuthStoreService, LayoutService } from '../core/services';
+import { AuthStoreService, LayoutService, TranslationService } from '../core/services';
 
 @Component({
   selector: 'app-root',
@@ -41,7 +41,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthStoreService,
     private router: Router,
     private renderer: Renderer2,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private translationService: TranslationService
   ) {}
 
   public ngOnInit(): void {
@@ -62,6 +63,10 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  switchLang(lang: string): void {
+    this.translationService.changeLang(lang);
   }
 
   public logout(): void {

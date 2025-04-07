@@ -46,7 +46,7 @@ export class TaskCardComponent {
   delete(task: Task): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: `${this.translationService.instant('TASK_MANAGEMENT.CARD.LIST.DELETE')} \n ${task.title} ?`,
+        message: `${this.translationService.instant('CARD.LIST.DELETE')} \n ${task.title} ?`,
       },
     });
 
@@ -70,6 +70,7 @@ export class TaskCardComponent {
         isEditMode: true,
         task,
       },
+      panelClass: 'my-custom-dialog',
     });
   }
 }

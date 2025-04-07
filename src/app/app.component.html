@@ -19,25 +19,39 @@
       {{ 'APP.TITLE' | translate }}
     </span>
 
-    @if (isLoggedIn) {
-      <button mat-button [matMenuTriggerFor]="menu" class="profile-toolbar-button">
-        {{ 'APP.PROFILE' | translate }}
+    <div class="toolbar-options">
+      @if (isLoggedIn) {
+        <button mat-button [matMenuTriggerFor]="menu" class="profile-toolbar-button">
+          {{ 'APP.PROFILE' | translate }}
+        </button>
+      }
+      <button mat-icon-button [matMenuTriggerFor]="langMenu" aria-label="Choisir une langue">
+        <mat-icon>translate</mat-icon>
       </button>
+    </div>
 
-      <mat-menu #menu="matMenu" class="custom-mat-menu">
-        <button mat-menu-item aria-label="logout" (click)="logout()">
-          <mat-icon>logout</mat-icon>
-          <span>{{ 'APP.LOGOUT' | translate }}</span>
-        </button>
-        <mat-slide-toggle [checked]="isDarkMode()" (change)="enableDarkMode($event)"
-          ><span class="theme-toggle-text">Thème sombre</span></mat-slide-toggle
-        >
-        <button mat-menu-item>
-          <mat-icon>settings</mat-icon>
-          <span>{{ 'APP.SETTINGS' | translate }}</span>
-        </button>
-      </mat-menu>
-    }
+    <mat-menu #menu="matMenu" class="custom-mat-menu">
+      <button mat-menu-item aria-label="logout" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>{{ 'APP.LOGOUT' | translate }}</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>{{ 'APP.SETTINGS' | translate }}</span>
+      </button>
+      <mat-slide-toggle [checked]="isDarkMode()" (change)="enableDarkMode($event)"
+        ><span class="theme-toggle-text">Thème sombre</span></mat-slide-toggle
+      >
+    </mat-menu>
+
+    <mat-menu #langMenu="matMenu">
+      <button mat-menu-item (click)="switchLang('fr')">
+        <span>🇫🇷</span>
+      </button>
+      <button mat-menu-item (click)="switchLang('en')">
+        <span>🇬🇧</span>
+      </button>
+    </mat-menu>
   </mat-toolbar>
 </header>
 

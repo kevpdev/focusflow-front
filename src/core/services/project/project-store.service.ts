@@ -43,6 +43,18 @@ export class ProjectStoreService implements IProjectStoreService {
     );
   }
 
+  fetchCreateProject(project: Project): Observable<Project> {
+    return this.projectApiService.fetchCreateProject(project).pipe(
+      map(createdProject => {
+        this.updateStoreProject(createdProject);
+        return createdProject;
+      }),
+      catchError(err =>
+        this.handleError(err, 'Une erreur est survenue lors de la création du projet.')
+      )
+    );
+  }
+
   deleteProject(id: number): Observable<void> {
     const currentStoreProjects = [...this.getProjects()];
     this.deleteProjectFromStore(id);
@@ -71,8 +83,6 @@ export class ProjectStoreService implements IProjectStoreService {
 
   deleteProjectFromStore(id: number): void {
     const updatedProjects = this.getProjects().filter(project => project.id !== id);
-    console.log('updatedProjects', updatedProjects);
-
     this.projectsSubject.next(updatedProjects);
   }
 
